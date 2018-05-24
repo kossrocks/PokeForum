@@ -41,6 +41,12 @@ public class UserModel implements java.io.Serializable {
 	
 	private String topic;
 	
+	private List<EntryModel> entry
+	
+	private Date dayOfAdmission;
+	
+	
+	
 	
 	
 }
