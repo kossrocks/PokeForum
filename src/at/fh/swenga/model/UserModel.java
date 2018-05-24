@@ -2,6 +2,7 @@ package at.fh.swenga.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -39,9 +40,9 @@ public class UserModel implements java.io.Serializable {
 	
 	private Date dayOfBirth;
 	
-	private String topic;
+	private List<TopicModel> topics;
 	
-	private List<EntryModel> entry
+	private List<EntryModel> entries;
 	
 	private Date dayOfAdmission;
 	
