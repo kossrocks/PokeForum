@@ -18,7 +18,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
