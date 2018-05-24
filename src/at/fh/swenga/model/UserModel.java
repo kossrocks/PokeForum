@@ -39,6 +39,8 @@ public class UserModel implements java.io.Serializable {
 	
 	private Date dayOfBirth;
 	
+	private String topic;
+	
 	
 	
 }
