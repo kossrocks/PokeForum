@@ -2,4 +2,5 @@ package test;
 
 public class test {
 
-		Thomas was here
+		// Thomas was here
+}
