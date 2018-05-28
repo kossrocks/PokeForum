@@ -4,7 +4,7 @@ public class test {
 
 
 		// HO-OH
-		// JUHU es geht endlich!!!!!!!!!!!!!!! :D
+		// JUHU es geht endlich!!!!!!!!!!!!!!! 
 
 
 }
