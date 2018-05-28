@@ -1,6 +1,3 @@
-package test;
-
-public class test {
 
 package test;
 
@@ -8,7 +5,7 @@ public class test {
 
 
 
-		// JUHU! 
+		// JUHU es geht endlich! 
 
 
 }
