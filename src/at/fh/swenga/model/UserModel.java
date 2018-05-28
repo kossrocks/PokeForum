@@ -49,11 +49,11 @@ public class UserModel implements java.io.Serializable {
 	@Column(name = "dayofbirth", nullable = false)
 	private Date dayOfBirth;
 	
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-	private List<TopicModel> topics;
+//	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//	private List<TopicModel> topics;
 	
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-	private List<EntryModel> entries;
+//	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+//	private List<EntryModel> entries;
 	
 	@Column(name = "dayofentry", nullable = false)
 	private Date dayOfEntry;
@@ -72,7 +72,7 @@ public class UserModel implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserModel(String userName, String password, boolean disabled, String firstName, String lastName,
+/*	public UserModel(String userName, String password, boolean disabled, String firstName, String lastName,
 			Date dayOfBirth, List<TopicModel> topics, List<EntryModel> entries, Date dayOfEntry, byte[] profilePicture,
 			String contentType, Date created, Set<at.fh.swenga.model.UserRole> userRoles) {
 		super();
@@ -89,7 +89,7 @@ public class UserModel implements java.io.Serializable {
 		this.contentType = contentType;
 		this.created = created;
 		this.userRoles = userRoles;
-	}
+	}*/
 
 	public int getId() {
 		return id;
@@ -143,7 +143,7 @@ public class UserModel implements java.io.Serializable {
 		this.dayOfBirth = dayOfBirth;
 	}
 
-	public List<TopicModel> getTopics() {
+/*	public List<TopicModel> getTopics() {
 		return topics;
 	}
 
@@ -158,7 +158,7 @@ public class UserModel implements java.io.Serializable {
 	public void setEntries(List<EntryModel> entries) {
 		this.entries = entries;
 	}
-
+*/
 	public Date getDayOfEntry() {
 		return dayOfEntry;
 	}
