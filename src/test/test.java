@@ -1,3 +1,6 @@
+package test;
+
+public class test {
 
 package test;
 
