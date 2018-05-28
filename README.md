@@ -4,4 +4,3 @@ Arneitz Jakob
 Neumann Nadine
 Pützl Mathias
 Rinnhofer Thomas
-Glumanda
