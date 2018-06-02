@@ -1,8 +1,10 @@
 package at.fh.swenga.jpa.model;
  
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
- 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +13,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
- 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  
 @Entity
@@ -28,13 +34,36 @@ public class User implements java.io.Serializable {
 	private String userName;
  
 	@Column(name = "password", nullable = false, length = 60)
-	private String password;
- 
+	private String password;	
+	
 	@Column(name = "enabled", nullable = false)
-	private boolean enabled;
- 
+	private boolean enabled;	
+	
 	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)//if user has roles that are not in database, they will be created(PERSIST)
 	private Set<UserRole> userRoles;
+	
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
+	private Set<EntryModel> entries;
+
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
+	private Set<TopicModel> topics;
+	
+	@Column(name = "firstname", length = 60)
+	private String firstName;
+	
+	@Column(name = "lastname", length = 60)
+	private String lastName;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dateOfEntry;
+	
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
+	private List<PokemonModel> team;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private DocumentModel picture;
+	
+	
  
 	public User() {
 	}
@@ -97,6 +126,22 @@ public class User implements java.io.Serializable {
 	public void encryptPassword() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		password = passwordEncoder.encode(password);		
+	}
+
+	public Set<EntryModel> getEntries() {
+		return entries;
+	}
+
+	public void setEntries(Set<EntryModel> entries) {
+		this.entries = entries;
+	}
+
+	public Set<TopicModel> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(Set<TopicModel> topics) {
+		this.topics = topics;
 	}
  
 }

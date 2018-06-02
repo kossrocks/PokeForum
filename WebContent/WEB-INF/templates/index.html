@@ -43,21 +43,20 @@
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>DOB</th>
+							<th>Topic name</th>
+							<th>User</th>
+							<th>last updated</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
+						
 						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="employee : ${employees}">
-							<td th:text="${employee.id}"></td>
-							<td th:text="${employee.firstName}"></td>
-							<td th:text="${employee.lastName}"></td>
-							<td th:text="${#calendars.format(employee.dayOfBirth,'dd.MM.yyyy')}"></td>
-							<td><a sec:authorize="hasRole('ADMIN')" th:href="@{/delete(id=${employee.id})}">Delete</a></td>
+						<tr >
+							<td>example topic</td>
+							<td>MaxMustermann</td>
+							<td>01.01.2000</td>
+							<td>Delete</td>
 							
 						</tr>
 						<!--  list all items ----------------------------------------------------------- -->
