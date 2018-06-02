@@ -35,7 +35,7 @@ public class TopicModel implements java.io.Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date lastEdited;
 	
-	@OneToMany(mappedBy = "topic",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "topic",fetch=FetchType.LAZY)
 	private Set<EntryModel> entries;
 	
 	@Version

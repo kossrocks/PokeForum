@@ -35,7 +35,7 @@ public class TypeModel implements java.io.Serializable{
 	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
 	private Set<TypeModel> noDamageAgainst;
 	
-	@OneToMany(mappedBy = "type",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "type",fetch=FetchType.LAZY)
 	private Set<AttackModel> attacks;
 	
 	@ManyToMany(mappedBy = "types")

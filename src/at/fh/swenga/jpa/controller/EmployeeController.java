@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.jpa.dao.EmployeeDao;
 import at.fh.swenga.jpa.model.EmployeeModel;
@@ -80,14 +82,12 @@ public class EmployeeController {
 	}
 	
 	// when 403 is returned(do something you are not allowed to do) -> go to login page
-	/*
-	 * @ExceptionHandler()
-	 * 
-	 * @ResponseStatus(code=HttpStatus.FORBIDDEN) public String handle403(Exception
-	 * ex) {
-	 * 
-	 * return "login";
-	 * 
-	 * }
-	 */
+	 @ExceptionHandler()	 
+	 @ResponseStatus(code=HttpStatus.FORBIDDEN) 
+	 public String handle403(Exception ex) {
+	 
+	 return "login";
+	 
+	 }
+	
 }

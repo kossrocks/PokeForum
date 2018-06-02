@@ -43,7 +43,7 @@ public class AttackModel implements java.io.Serializable {
 	@Column(name = "effect")
 	private String battleEffect;
 	
-	@ManyToMany(mappedBy = "attacks",fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy = "attacks",fetch=FetchType.LAZY)
 	private List<PokemonModel> pokemons;
 	
 	@Version

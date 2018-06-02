@@ -47,7 +47,7 @@ public class SpeciesModel implements java.io.Serializable{
 	@Column(name = "baseSPE")
 	private int baseSpeed;	
 	
-	@OneToMany(mappedBy = "species",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "species",fetch=FetchType.LAZY)
 	private Set<PokemonModel> pokemons;
 
 	@Version
