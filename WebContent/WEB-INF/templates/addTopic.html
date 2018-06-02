@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Homepage</title>
+<title>PokeForum - New Topic</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 </head>
 <body>
@@ -14,7 +14,6 @@
 		<div class="page-header">
 			<a href="index"><img src="images/logo_fh.jpg"></a>
 		</div>
-
 		<!--  Error message ----------------------------------------------------------- -->
 		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
 			class="alert alert-danger" role="alert"></div>
@@ -33,38 +32,7 @@
 		<nav th:replace="~{includes/searchNav :: search}"></nav>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
-		<div class="row">
-		</div>
-		<!--  1 simple button ----------------------------------------------------------- -->
-
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-
-				<table data-toggle="table" class="table table-striped">
-					<thead>
-						<tr>
-							<th>Topic name</th>
-							<th>User</th>
-							<th>last updated</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<!--  list all items ----------------------------------------------------------- -->
-						<tr >
-							<td>example topic</td>
-							<td>MaxMustermann</td>
-							<td>01.01.2000</td>
-							<td>Delete</td>
-							
-						</tr>
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
-				</table>
-								
-			</div>
-		</div>
+		add a new Topic and its first entry
 		
 	</div>
 	<!--  End of container -->

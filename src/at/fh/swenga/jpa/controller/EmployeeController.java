@@ -24,14 +24,7 @@ public class EmployeeController {
 	@Autowired
 	EmployeeDao employeeDao;
 
-	@RequestMapping(value = { "/", "list" })
-	public String index(Model model) {
-
-		List<EmployeeModel> employees = employeeDao.getEmployees();
-
-		model.addAttribute("employees", employees);
-		return "index";
-	}
+	
 
 	@RequestMapping("/fillData")
 	@Transactional
