@@ -33,7 +33,34 @@
 		<nav th:replace="~{includes/searchNav :: search}"></nav>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
-		list all Entries of specific Topic Page
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+
+				<table data-toggle="table" class="table table-striped">
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Created</th>
+							<th>Contend</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<!--  list all items ----------------------------------------------------------- -->
+						<tr th:each="entry : ${entries}">
+							<td th:text="${entry.owner.userName}"></td>
+							<td th:text="${entry.dateOfCreation}"></td>
+							<td th:text="${entry.content}"></td>
+							<td>Delete</td>
+							
+						</tr>
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+				</table>
+								
+			</div>
+		</div>
 		
 	</div>
 	<!--  End of container -->

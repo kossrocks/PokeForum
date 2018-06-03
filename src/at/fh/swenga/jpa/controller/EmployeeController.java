@@ -26,26 +26,7 @@ public class EmployeeController {
 
 	
 
-	@RequestMapping("/fillData")
-	@Transactional
-	public String fillData(Model model) {
-
-		Date now = new Date();
-
-		EmployeeModel p1 = new EmployeeModel("Johann", "Blauensteiner", now);
-		employeeDao.persist(p1);
-
-		EmployeeModel p2 = new EmployeeModel("Max", "Mustermann", now);
-		employeeDao.persist(p2);
-
-		EmployeeModel p3 = new EmployeeModel("Jane", "Doe", now);
-		employeeDao.persist(p3);
-
-		EmployeeModel p4 = new EmployeeModel("Franz", "Wachter", now);
-		employeeDao.persist(p4);
-
-		return "forward:list";
-	}
+	
 
 	@RequestMapping("/searchEmployees")
 	public String search(Model model, @RequestParam String searchString) {

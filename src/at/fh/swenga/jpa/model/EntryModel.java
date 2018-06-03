@@ -27,11 +27,12 @@ public class EntryModel implements java.io.Serializable {
 	private User owner;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dayOfCreation;
+	public Date dateOfCreation;
 	
-	@Column(name = "content", nullable = false, length = 1000)
+	@Column(name = "content", length = 1000)
 	private String content;
 	
+	@Column(name = "edited")
 	private boolean edited;
 	
 	@ManyToOne (cascade = CascadeType.PERSIST)
@@ -47,12 +48,13 @@ public class EntryModel implements java.io.Serializable {
 
 
 
-	public EntryModel(User owner, Date dayOfCreation, String content, TopicModel topic) {
+	public EntryModel(User owner, String content, TopicModel topic, boolean edited) {
 		super();
 		this.owner = owner;
-		this.dayOfCreation = dayOfCreation;
+		this.dateOfCreation = new Date();
 		this.content = content;
 		this.topic = topic;
+		this.edited = edited;
 	}
 
 
@@ -70,13 +72,13 @@ public class EntryModel implements java.io.Serializable {
 
 
 	public Date getDayOfCreation() {
-		return dayOfCreation;
+		return dateOfCreation;
 	}
 
 
 
 	public void setDayOfCreation(Date dayOfCreation) {
-		this.dayOfCreation = dayOfCreation;
+		this.dateOfCreation = dayOfCreation;
 	}
 
 

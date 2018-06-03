@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.DocumentDao;
@@ -16,6 +17,7 @@ import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
+import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
 
 @Controller
@@ -51,9 +53,12 @@ public class NavigationController {
 	@RequestMapping(value = { "/", "index" })
 	public String index(Model model) {
 
-		List<TopicModel> topics = topicDao.getTopics();
-
+		List<TopicModel> topics = topicDao.getAllTopics();
 		model.addAttribute("topics", topics);
+		
+		
+		
+		
 		return "index";
 	}
 	
@@ -67,13 +72,21 @@ public class NavigationController {
 	}
 	
 	@RequestMapping("/listEntries")
-	public String listEntries(Model model) {
-
+	public String listEntries(Model model, @RequestParam int id) {
+		
+		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
+		model.addAttribute("entries",entries);
 
 
 		
 		return "listEntries";
 	}	
+	
+	/*public String deleteData(Model model, @RequestParam int id) {
+		employeeDao.delete(id);
+
+		return "forward:list";
+	}*/
 	
 	@RequestMapping("/profile")
 	public String profile(Model model) {

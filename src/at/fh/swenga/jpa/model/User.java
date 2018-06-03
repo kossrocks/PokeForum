@@ -19,8 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
- 
+
+import at.fh.swenga.jpa.dao.UserRoleDao;
+
+
 @Entity
 @Table(name = "users")
 public class User implements java.io.Serializable {
@@ -68,10 +72,22 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
  
-	public User(String userName, String password, boolean enabled) {
+	public User(String userName, String password) {
 		this.userName = userName;
 		this.password = password;
-		this.enabled = enabled;
+		this.enabled = true;
+		
+		Set<UserRole> userRoles = new HashSet<UserRole>();
+		
+		
+		
+		userRoles.add(new UserRole("ROLE_" + userName));
+		
+		this.userRoles = userRoles;
+		
+		
+		
+		this.dateOfEntry = new Date();
 	}
  
  

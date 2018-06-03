@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "entries")
+@Table(name = "topics")
 public class TopicModel implements java.io.Serializable{
 	
 	@Id
@@ -26,7 +26,7 @@ public class TopicModel implements java.io.Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "name", unique = true, nullable = false, length = 100)
+	@Column(name = "title", unique = true, nullable = false, length = 100)
 	private String title;
 	
 	@ManyToOne (cascade = CascadeType.PERSIST)
@@ -35,7 +35,7 @@ public class TopicModel implements java.io.Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date lastEdited;
 	
-	@OneToMany(mappedBy = "topic",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "topic",fetch=FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<EntryModel> entries;
 	
 	@Version
@@ -45,12 +45,13 @@ public class TopicModel implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public TopicModel(String title, User owner, Date lastEdited, Set<EntryModel> entries) {
+	public TopicModel(String title, User owner) {
 		super();
 		this.title = title;
 		this.owner = owner;
-		this.lastEdited = lastEdited;
-		this.entries = entries;
+		this.lastEdited = new Date();
+		
+		
 	}
 
 	public String getTitle() {
