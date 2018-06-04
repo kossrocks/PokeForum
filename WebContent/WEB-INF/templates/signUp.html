@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Homepage</title>
+<title>PokeForum - Sign Up</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 </head>
 <body>
@@ -33,52 +33,7 @@
 		<nav th:replace="~{includes/searchNav :: search}"></nav>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
-		<div class="row">
-		</div>
-		<!--  1 simple button ----------------------------------------------------------- -->
-
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-
-				<table data-toggle="table" class="table table-striped">
-					<thead>
-						<tr>
-							<th>Topic name</th>
-							<th>User</th>
-							<th>last edited</th>
-							<th>Entries</th>				
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="topic : ${topics}">
-							<td th:text="${topic.title}"></td>
-							<td th:text="${topic.owner.userName}"></td>
-							<td th:text="${topic.lastEdited}"></td>
-							<td th:text="${topic.entries.size()}"></td>
-							<td><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-									Visit
-								</a>
-
-								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
-									
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-									Delete
-								</a>
-							</td>
-							
-						</tr>
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
-				</table>
-								
-			</div>
-		</div>
+		Sign UP and Edit User Page
 		
 	</div>
 	<!--  End of container -->

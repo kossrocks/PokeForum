@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>Employee Manager</title>
+<title>PokeForum - Login</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 </head>
 <body>
@@ -14,7 +14,7 @@
 				<form th:action="@{/login}" method="post">
 					<h2 class="form-signin-heading">Please sign in</h2>
 					
-					<div th:if="${param.error}" class="alert alert-danger">Invalid username and password.</div>
+					<div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
 					
 					<div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
 
