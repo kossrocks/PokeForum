@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.TopicDao;
@@ -24,7 +25,7 @@ public class TopicController {
 	@Autowired
 	UserRoleDao userRoleDao;
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping("/deleteTopic")
 	public String deleteData(Model model, @RequestParam int id) {
 		topicDao.delete(id);

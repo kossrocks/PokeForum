@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +40,12 @@ public class TopicDao {
 		entityManager.persist(topic);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void delete(TopicModel topic) {
 		entityManager.remove(topic);
 	}
 	
+	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
 		TopicModel topic = getTopic(id);
 		if (topic != null)

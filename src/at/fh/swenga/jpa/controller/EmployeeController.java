@@ -56,12 +56,6 @@ public class EmployeeController {
 	}
 	
 	// when 403 is returned(do something you are not allowed to do) -> go to login page
-	 @ExceptionHandler()	 
-	 @ResponseStatus(code=HttpStatus.FORBIDDEN) 
-	 public String handle403(Exception ex) {
 	 
-	 return "login";
-	 
-	 }
 	
 }
