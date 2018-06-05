@@ -3,10 +3,13 @@ package at.fh.swenga.jpa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.DocumentDao;
@@ -142,14 +145,6 @@ public class NavigationController {
 		return "addEntry";
 	}
 	
-	@RequestMapping("/addTopic")
-	public String addTopic(Model model) {
-
-
-
-		
-		return "addTopic";
-	}
 	
 	@RequestMapping("/editSpecies")
 	public String editSpecies(Model model) {
@@ -160,7 +155,12 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
-	
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
 	
 }
 
