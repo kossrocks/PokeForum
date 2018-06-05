@@ -3,13 +3,11 @@ package at.fh.swenga.jpa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.DocumentDao;
@@ -22,6 +20,7 @@ import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
+import at.fh.swenga.jpa.model.TypeModel;
 
 @Controller
 public class NavigationController {
@@ -58,6 +57,11 @@ public class NavigationController {
 
 		List<TopicModel> topics = topicDao.getAllTopics();
 		model.addAttribute("topics", topics);
+		
+		List<TypeModel> types = typeDao.getAllTypes();
+		model.addAttribute("types", types);
+		
+		
 		
 		
 		

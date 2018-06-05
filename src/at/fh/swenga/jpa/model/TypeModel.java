@@ -1,9 +1,7 @@
 package at.fh.swenga.jpa.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "types")
@@ -28,27 +26,39 @@ public class TypeModel implements java.io.Serializable{
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 	
-	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
-	private Set<TypeModel> goodAgainst;
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private List<TypeModel> goodAgainst;
 
-	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
-	private Set<TypeModel> weakAgainst;
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private List<TypeModel> weakAgainst;
 	
-	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
-	private Set<TypeModel> noDamageAgainst;
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private List<TypeModel> noDamageAgainst;
 	
-	@OneToMany(mappedBy = "type",fetch=FetchType.LAZY)
-	private Set<AttackModel> attacks;
+	@OneToMany(mappedBy = "type",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<AttackModel> attacks;
 	
-	@ManyToMany(mappedBy = "types")
-	private Set<SpeciesModel> specieses;
+	@ManyToMany(mappedBy = "types",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<SpeciesModel> specieses;
 	
-	@ManyToMany(mappedBy = "types",fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy = "types",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<PokemonModel> pokemons;
+	
+	@Version
+	long version;
 	
 	public TypeModel() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public TypeModel(String name) {
+		super();
+		this.name = name;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -62,35 +72,35 @@ public class TypeModel implements java.io.Serializable{
 		this.name = name;
 	}
 
-	public Set<TypeModel> getGoodAgainst() {
+	public List<TypeModel> getGoodAgainst() {
 		return goodAgainst;
 	}
 
-	public void setGoodAgainst(Set<TypeModel> goodAgainst) {
+	public void setGoodAgainst(List<TypeModel> goodAgainst) {
 		this.goodAgainst = goodAgainst;
 	}
 
-	public Set<TypeModel> getWeakAgainst() {
+	public List<TypeModel> getWeakAgainst() {
 		return weakAgainst;
 	}
 
-	public void setWeakAgainst(Set<TypeModel> weakAgainst) {
+	public void setWeakAgainst(List<TypeModel> weakAgainst) {
 		this.weakAgainst = weakAgainst;
 	}
 
-	public Set<TypeModel> getNoDamageAgainst() {
+	public List<TypeModel> getNoDamageAgainst() {
 		return noDamageAgainst;
 	}
 
-	public void setNoDamageAgainst(Set<TypeModel> noDamageAgainst) {
+	public void setNoDamageAgainst(List<TypeModel> noDamageAgainst) {
 		this.noDamageAgainst = noDamageAgainst;
 	}
 
-	public Set<AttackModel> getAttacks() {
+	public List<AttackModel> getAttacks() {
 		return attacks;
 	}
 
-	public Set<SpeciesModel> getSpecieses() {
+	public List<SpeciesModel> getSpecieses() {
 		return specieses;
 	}
 
@@ -99,11 +109,11 @@ public class TypeModel implements java.io.Serializable{
 		return pokemons;
 	}
 
-	public void setAttacks(Set<AttackModel> attacks) {
+	public void setAttacks(List<AttackModel> attacks) {
 		this.attacks = attacks;
 	}
 
-	public void setSpecieses(Set<SpeciesModel> specieses) {
+	public void setSpecieses(List<SpeciesModel> specieses) {
 		this.specieses = specieses;
 	}
 
@@ -113,21 +123,21 @@ public class TypeModel implements java.io.Serializable{
 	
 	public void addGoodAgainst(TypeModel type) {
 		if (goodAgainst== null) {
-			goodAgainst= new HashSet<TypeModel>();
+			goodAgainst= new ArrayList<TypeModel>();
 		}
 		goodAgainst.add(type);
 	}
 	
 	public void addWeakAgainst(TypeModel type) {
 		if (weakAgainst== null) {
-			weakAgainst= new HashSet<TypeModel>();
+			weakAgainst= new ArrayList<TypeModel>();
 		}
 		weakAgainst.add(type);
 	}
 	
 	public void addNoDamageAgainst(TypeModel type) {
 		if (noDamageAgainst== null) {
-			noDamageAgainst= new HashSet<TypeModel>();
+			noDamageAgainst= new ArrayList<TypeModel>();
 		}
 		noDamageAgainst.add(type);
 	}

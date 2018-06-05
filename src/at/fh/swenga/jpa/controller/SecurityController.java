@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import at.fh.swenga.jpa.dao.EntryDao;
+import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
@@ -35,6 +37,9 @@ public class SecurityController {
 	
 	@Autowired
 	TypeDao typeDao;
+	
+	@Autowired
+	SpeciesDao speciesDao;
 
 	@RequestMapping("/fillUsers")
 	@Transactional
@@ -106,24 +111,24 @@ public class SecurityController {
 				false);
 		entryDao.persist(entry202);
 		
-		TypeModel normal = new TypeModel();
-		TypeModel fire = new TypeModel();
-		TypeModel fighting = new TypeModel();
-		TypeModel water = new TypeModel();
-		TypeModel flying = new TypeModel();
-		TypeModel grass = new TypeModel();
-		TypeModel poison = new TypeModel();
-		TypeModel electric = new TypeModel();
-		TypeModel ground = new TypeModel();
-		TypeModel psychic = new TypeModel();
-		TypeModel rock = new TypeModel();
-		TypeModel ice = new TypeModel();
-		TypeModel bug = new TypeModel();
-		TypeModel dragon = new TypeModel();
-		TypeModel ghost = new TypeModel();
-		TypeModel dark = new TypeModel();		
-		TypeModel steel = new TypeModel();
-		TypeModel fairy = new TypeModel();
+		TypeModel normal = new TypeModel("Normal");
+		TypeModel fire = new TypeModel("Fire");
+		TypeModel fighting = new TypeModel("Fighting");
+		TypeModel water = new TypeModel("Water");
+		TypeModel flying = new TypeModel("Flying");
+		TypeModel grass = new TypeModel("Grass");
+		TypeModel poison = new TypeModel("Poison");
+		TypeModel electric = new TypeModel("Electric");
+		TypeModel ground = new TypeModel("Ground");
+		TypeModel psychic = new TypeModel("Psychic");
+		TypeModel rock = new TypeModel("Rock");
+		TypeModel ice = new TypeModel("Ice");
+		TypeModel bug = new TypeModel("Bug");
+		TypeModel dragon = new TypeModel("Dragon");
+		TypeModel ghost = new TypeModel("Ghost");
+		TypeModel dark = new TypeModel("Dark");
+		TypeModel steel = new TypeModel("Steel");
+		TypeModel fairy = new TypeModel("Fairy");
 		
 		normal.addWeakAgainst(rock);
 		normal.addWeakAgainst(steel);
@@ -253,6 +258,8 @@ public class SecurityController {
 		fairy.addWeakAgainst(fire);
 		
 		typeDao.persist(normal);
+		
+		/*
 		typeDao.persist(water);
 		typeDao.persist(fire);
 		typeDao.persist(grass);
@@ -271,9 +278,50 @@ public class SecurityController {
 		typeDao.persist(dragon);
 		typeDao.persist(poison);
 		
+		SpeciesModel bulbasaur = new SpeciesModel("Bulbasaur",45,49,49,65,65,45);
+		SpeciesModel ivysaur = new SpeciesModel("Ivysaur",60,62,63,80,80,60);
+		SpeciesModel venusaur = new SpeciesModel("Venusaur",80,82,83,100,100,80);
+		SpeciesModel charmander = new SpeciesModel("Charmander",39,52,43,60,50,65);
+		SpeciesModel charmeleon = new SpeciesModel("Charmeleon",58,64,58,80,65,80);
+		SpeciesModel charizard = new SpeciesModel("Charizard",78,84,78,109,85,109);
+		SpeciesModel squirtle = new SpeciesModel("Squirtle",44,48,65,50,64,43);
+		SpeciesModel wartortle = new SpeciesModel("Wartortle",59,63,80,65,80,58);
+		SpeciesModel blastoise = new SpeciesModel("Blastoise",79,83,100,85,105,78);
+		SpeciesModel pikachu = new SpeciesModel("Pikachu",35,55,40,50,50,90);
+		SpeciesModel raichu = new SpeciesModel("Raichu",60,90,55,90,80,110);
 		
-		
+		bulbasaur.addType(grass);
+		bulbasaur.addType(poison);
+		ivysaur.addType(grass);
+		ivysaur.addType(poison);
+		venusaur.addType(grass);
+		venusaur.addType(poison);
 
+		charmander.addType(fire);
+		charmeleon.addType(fire);
+		charizard.addType(fire);
+		charizard.addType(flying);
+		
+		squirtle.addType(water);
+		wartortle.addType(water);
+		blastoise.addType(water);
+
+		pikachu.addType(electric);
+		raichu.addType(electric);
+		
+		speciesDao.persist(bulbasaur);
+		speciesDao.persist(ivysaur);
+		speciesDao.persist(venusaur);
+		speciesDao.persist(charmander);
+		speciesDao.persist(charmeleon);
+		speciesDao.persist(charizard);
+		speciesDao.persist(squirtle);
+		speciesDao.persist(wartortle);
+		speciesDao.persist(blastoise);
+		speciesDao.persist(pikachu);
+		speciesDao.persist(raichu);
+		
+		*/
 		return "forward:login";
 	}
 
