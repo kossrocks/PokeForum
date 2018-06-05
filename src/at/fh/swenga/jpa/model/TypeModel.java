@@ -1,5 +1,7 @@
 package at.fh.swenga.jpa.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -107,6 +109,27 @@ public class TypeModel implements java.io.Serializable{
 
 	public void setPokemons(List<PokemonModel> pokemons) {
 		this.pokemons = pokemons;
+	}
+	
+	public void addGoodAgainst(TypeModel type) {
+		if (goodAgainst== null) {
+			goodAgainst= new HashSet<TypeModel>();
+		}
+		goodAgainst.add(type);
+	}
+	
+	public void addWeakAgainst(TypeModel type) {
+		if (weakAgainst== null) {
+			weakAgainst= new HashSet<TypeModel>();
+		}
+		weakAgainst.add(type);
+	}
+	
+	public void addNoDamageAgainst(TypeModel type) {
+		if (noDamageAgainst== null) {
+			noDamageAgainst= new HashSet<TypeModel>();
+		}
+		noDamageAgainst.add(type);
 	}
 	
 	

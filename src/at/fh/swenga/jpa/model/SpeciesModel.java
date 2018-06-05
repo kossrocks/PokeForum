@@ -1,5 +1,6 @@
 package at.fh.swenga.jpa.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -56,6 +57,20 @@ public class SpeciesModel implements java.io.Serializable{
 	public SpeciesModel() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public SpeciesModel(String name, int baseHealthPoints, int baseAttack, int baseDefense, int baseSpecialAttack,
+			int baseSpecialDefense, int baseSpeed) {
+		super();
+		this.name = name;
+		this.baseHealthPoints = baseHealthPoints;
+		this.baseAttack = baseAttack;
+		this.baseDefense = baseDefense;
+		this.baseSpecialAttack = baseSpecialAttack;
+		this.baseSpecialDefense = baseSpecialDefense;
+		this.baseSpeed = baseSpeed;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -133,5 +148,10 @@ public class SpeciesModel implements java.io.Serializable{
 		this.pokemons = pokemons;
 	}
 	
-	
+	public void addType(TypeModel type) {
+		if (types== null) {
+			types= new HashSet<TypeModel>();
+		}
+		types.add(type);
+	}
 }
