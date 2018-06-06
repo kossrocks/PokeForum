@@ -159,5 +159,9 @@ public class User implements java.io.Serializable {
 	public void setTopics(Set<TopicModel> topics) {
 		this.topics = topics;
 	}
- 
+
+	public Date getDateOfEntry() {
+		return dateOfEntry;
+	}
+
 }

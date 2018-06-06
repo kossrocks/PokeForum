@@ -1,5 +1,6 @@
 package at.fh.swenga.jpa.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
+import at.fh.swenga.jpa.model.User;
 
 @Controller
 public class NavigationController {
@@ -95,11 +97,14 @@ public class NavigationController {
 		return "forward:list";
 	}*/
 	
+	
+	
 	@RequestMapping("/profile")
-	public String profile(Model model) {
+	public String profile(Model model,Principal principal) {
 
-
-
+		int id = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
 		
 		return "profile";
 	}

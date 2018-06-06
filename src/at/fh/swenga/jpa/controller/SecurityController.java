@@ -257,7 +257,7 @@ public class SecurityController {
 		fairy.addWeakAgainst(steel);
 		fairy.addWeakAgainst(fire);
 		
-		typeDao.persist(normal);
+		//typeDao.persist(normal);
 		
 		/*
 		typeDao.persist(water);
