@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
-import at.fh.swenga.jpa.dao.DocumentDao;
 import at.fh.swenga.jpa.dao.EntryDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
@@ -33,9 +32,6 @@ public class NavigationController {
 	
 	@Autowired
 	AttackDao attackDao;
-	
-	@Autowired
-	DocumentDao documentDao;
 	
 	@Autowired
 	EntryDao entryDao;
@@ -168,14 +164,14 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
-	@RequestMapping("/uploadPicture")
+	/*@RequestMapping("/uploadPicture")
 	public String uploadPicture(Model model, @RequestParam int id ) {
 
-		DocumentModel picture = documentDao.getDocumentById(id);
-		model.addAttribute("picture", picture);
+		//DocumentModel picture = documentDao.getDocumentById(id);
+		//model.addAttribute("picture", picture);
 		
 		return "uploadPicture";
-	}
+	}*/
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
