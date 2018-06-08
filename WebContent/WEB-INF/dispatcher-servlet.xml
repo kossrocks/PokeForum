@@ -32,6 +32,13 @@
 	<context:component-scan base-package="at.fh.swenga" /><!--  where to look for java beans   -->
 
 	<!-- JSR-303/JSR-349 support will be detected on classpath and enabled automatically -->
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the several properties available; the maximum file size in 
+			bytes -->
+		<property name="maxUploadSizePerFile" value="15242880" />
+	</bean>
 	<mvc:annotation-driven />
 
 	<mvc:default-servlet-handler /> <!--  when resource (image) is not found -> spring delegates request to tomcat   -->

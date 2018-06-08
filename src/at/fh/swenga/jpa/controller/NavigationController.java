@@ -19,6 +19,7 @@ import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
+import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
@@ -62,11 +63,7 @@ public class NavigationController {
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
-		
-		
-		
-		
-		
+	
 		
 		return "index";
 	}
@@ -102,11 +99,18 @@ public class NavigationController {
 	@RequestMapping("/profile")
 	public String profile(Model model,Principal principal) {
 
+		List<TopicModel> topics = topicDao.getAllTopics();
+		model.addAttribute("topics", topics);
+		
+		List<EntryModel> entries = entryDao.getAllEntries();
+		model.addAttribute("entries", entries);
+		
 		int id = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(id);
 		model.addAttribute("user",user);
 		
 		return "profile";
+		
 	}
 	
 	@RequestMapping("/users")
@@ -162,6 +166,15 @@ public class NavigationController {
 
 		
 		return "editSpecies";
+	}
+	
+	@RequestMapping("/uploadPicture")
+	public String uploadPicture(Model model, @RequestParam int id ) {
+
+		DocumentModel picture = documentDao.getDocumentById(id);
+		model.addAttribute("picture", picture);
+		
+		return "uploadPicture";
 	}
 	
 	@ExceptionHandler(Exception.class)
