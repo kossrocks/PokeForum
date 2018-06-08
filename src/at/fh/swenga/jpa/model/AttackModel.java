@@ -29,7 +29,8 @@ public class AttackModel implements java.io.Serializable {
 	private TypeModel type;
 	
 	@Column(name = "category", nullable = false, length = 45)
-	private String category;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private CategoryModel category;
 	
 	@Column(name = "PP", nullable = false)
 	private int powerPoints;
@@ -53,6 +54,18 @@ public class AttackModel implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public AttackModel(String name, TypeModel type, CategoryModel category, int basePower, int accuracy, int powerPoints,
+			String battleEffect) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.category = category;
+		this.powerPoints = powerPoints;
+		this.basePower = basePower;
+		this.accuracy = accuracy;
+		this.battleEffect = battleEffect;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -69,11 +82,11 @@ public class AttackModel implements java.io.Serializable {
 		this.type = type;
 	}
 
-	public String getCategory() {
+	public CategoryModel getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(CategoryModel category) {
 		this.category = category;
 	}
 

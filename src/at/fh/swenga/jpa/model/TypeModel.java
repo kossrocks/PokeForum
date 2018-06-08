@@ -10,10 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "types")
@@ -26,13 +30,19 @@ public class TypeModel implements java.io.Serializable{
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 	
-	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinTable(name = "goodAgainst")
 	private List<TypeModel> goodAgainst;
 
-	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinTable(name = "weakAgainst")
 	private List<TypeModel> weakAgainst;
 	
-	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinTable(name = "noDamageAgainst")
 	private List<TypeModel> noDamageAgainst;
 	
 	@OneToMany(mappedBy = "type",cascade=CascadeType.ALL,fetch=FetchType.LAZY)

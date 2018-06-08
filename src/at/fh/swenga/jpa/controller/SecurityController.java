@@ -7,12 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import at.fh.swenga.jpa.dao.AttackDao;
+import at.fh.swenga.jpa.dao.CategoryDao;
 import at.fh.swenga.jpa.dao.EntryDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
+import at.fh.swenga.jpa.model.AttackModel;
+import at.fh.swenga.jpa.model.CategoryModel;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
@@ -40,6 +44,12 @@ public class SecurityController {
 	
 	@Autowired
 	SpeciesDao speciesDao;
+	
+	@Autowired
+	CategoryDao categoryDao;
+	
+	@Autowired
+	AttackDao attackDao;
 
 	@RequestMapping("/fillUsers")
 	@Transactional
@@ -257,9 +267,7 @@ public class SecurityController {
 		fairy.addWeakAgainst(steel);
 		fairy.addWeakAgainst(fire);
 		
-		//typeDao.persist(normal);
-		
-		/*
+		typeDao.persist(normal);
 		typeDao.persist(water);
 		typeDao.persist(fire);
 		typeDao.persist(grass);
@@ -321,7 +329,50 @@ public class SecurityController {
 		speciesDao.persist(pikachu);
 		speciesDao.persist(raichu);
 		
-		*/
+		CategoryModel physical = new CategoryModel("Physical");
+		CategoryModel special = new CategoryModel("Special");
+		CategoryModel status = new CategoryModel("Status");
+		
+		categoryDao.persist(status);
+		categoryDao.persist(special);
+		categoryDao.persist(physical);
+		
+		
+		
+		AttackModel tackle = new AttackModel("Tackle",normal,physical,40,100,35,"Attacks opponent.");
+		AttackModel thunderShock = new AttackModel("Thunder Shock",electric,special,40,100,30,"May paralyze opponent.");
+		AttackModel waterGun = new AttackModel("Water Gun",water,special,40,100,25,"Attacks opponent.");
+		AttackModel vineWhip = new AttackModel("Vine Whip", grass,physical,45,100,25,"Attacks opponent.");
+		AttackModel ember = new AttackModel("Ember", fire,special,40,100,25,"May burn opponent.");
+		AttackModel cut = new AttackModel("Cut",normal,physical,50,95,30,"Attacks opponent.");
+		AttackModel dig = new AttackModel("Dig",ground,physical,80,100,10,"Digs underground on first turn, attacks on second. Can also escape from caves.");
+		AttackModel doubleKick = new AttackModel("Double Kick",fighting,physical,60,100,10,"Hits twice in one turn.");
+		AttackModel earthquake = new AttackModel("Earthquake",ground,physical,100,100,10,"Power is doubled if opponent is underground from using Dig.");
+		AttackModel flamethrower = new AttackModel("Flamethrower",fire,special,90,100,15,"May burn opponent.");
+		AttackModel thunder = new AttackModel("Thunder",electric,special,110,70,10,"May paralyze opponent.");
+		AttackModel toxic = new AttackModel("Toxic",poison,status,0,90,10,"Badly poisons opponent.");
+		AttackModel solarBeam = new AttackModel("Solar Beam",grass,special,120,100,10,"Charges on first turn, attacks on second.");
+		AttackModel surf = new AttackModel("Surf",water,special,90,100,15,"Hits all adjacent Pokémon.");
+		AttackModel razorLeaf = new AttackModel("Razor Leaf",grass,physical,55,95,25,"High critical hit ratio.");
+		
+		attackDao.persist(tackle);
+		attackDao.persist(thunderShock);
+		attackDao.persist(waterGun);
+		attackDao.persist(vineWhip);
+		attackDao.persist(ember);
+		attackDao.persist(cut);
+		attackDao.persist(dig);
+		attackDao.persist(doubleKick);
+		attackDao.persist(earthquake);
+		attackDao.persist(flamethrower);
+		attackDao.persist(thunder);
+		attackDao.persist(toxic);
+		attackDao.persist(solarBeam);
+		attackDao.persist(surf);
+		attackDao.persist(razorLeaf);
+		
+		
+		
 		return "forward:login";
 	}
 
