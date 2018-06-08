@@ -28,6 +28,17 @@ public class UserDao {
 			return null;
 		}
 	}
+	
+	public User getUserById(int id) {
+		try {
+			TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u where u.id = :id",
+					User.class);
+			typedQuery.setParameter("id", id);
+			return typedQuery.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	public void persist(User user) {
 		entityManager.persist(user);
