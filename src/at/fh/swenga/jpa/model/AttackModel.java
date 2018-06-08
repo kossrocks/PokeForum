@@ -28,11 +28,10 @@ public class AttackModel implements java.io.Serializable {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private TypeModel type;
 	
-	@Column(name = "category", nullable = false, length = 45)
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private CategoryModel category;
 	
-	@Column(name = "PP", nullable = false)
+	@Column(name = "PP")
 	private int powerPoints;
 	
 	@Column(name = "BP")
@@ -46,9 +45,6 @@ public class AttackModel implements java.io.Serializable {
 	
 	@ManyToMany(mappedBy = "attacks",fetch=FetchType.LAZY)
 	private List<PokemonModel> pokemons;
-	
-	@Version
-	long version;
 	
 	public AttackModel() {
 		// TODO Auto-generated constructor stub

@@ -55,7 +55,6 @@
 						<!--  list all items ----------------------------------------------------------- -->
 						<tr th:each="topic : ${topics}">
 							<td th:text="${topic.title}"></td>
-							<td th:text="${types.get(0).getWeakAgainst().size()}"></td>
 							<td th:text="${topic.owner.userName}"></td>
 							<td th:text="${topic.lastEdited}"></td>
 							<td th:text="${topic.entries.size()}"></td>
