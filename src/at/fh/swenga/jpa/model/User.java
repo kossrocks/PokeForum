@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import at.fh.swenga.jpa.dao.UserRoleDao;
@@ -59,6 +60,7 @@ public class User implements java.io.Serializable {
 	private String lastName;
 	
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date dateOfEntry;
 	
 	@OneToMany(mappedBy = "owner",fetch=FetchType.LAZY)
@@ -163,5 +165,43 @@ public class User implements java.io.Serializable {
 	public Date getDateOfEntry() {
 		return dateOfEntry;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public List<PokemonModel> getTeam() {
+		return team;
+	}
+
+	public void setTeam(List<PokemonModel> team) {
+		this.team = team;
+	}
+
+	public DocumentModel getPicture() {
+		return picture;
+	}
+
+	public void setPicture(DocumentModel picture) {
+		this.picture = picture;
+	}
+
+	public void setDateOfEntry(Date dateOfEntry) {
+		this.dateOfEntry = dateOfEntry;
+	}
+	
+	
 
 }
