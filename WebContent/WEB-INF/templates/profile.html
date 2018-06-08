@@ -55,8 +55,8 @@
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
 							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
 							<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy') != null ? #dates.format(user.dateOfEntry,'dd.MM.yyyy') : 'not entry date yet'}"></td>
-							<td th:text="${user.topics.size()}"></td>
-							<td th:text="${user.entries.size()}"></td>
+							<td th:text="${#lists.size(user.topics)}"></td>
+							<td th:text="${#lists.size(user.entries)}"></td>
 						</tr>
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
