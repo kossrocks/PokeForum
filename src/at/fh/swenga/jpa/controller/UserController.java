@@ -40,17 +40,6 @@ public class UserController {
         return principal.getName();
     }
 	
-	/**
-	 * Display the upload form
-	 * @param model
-	 * @param employeeId
-	 * @return
-	 */
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String showUploadForm(Model model) {
-		
-		return "forward:uploadPicture";
-	}
 
 	/**
 	 * Save uploaded file to the database (as 1:1 relationship to employee)
@@ -60,14 +49,14 @@ public class UserController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value = "/profile", method = RequestMethod.POST)
-	public String uploadDocument(Model model, @RequestParam("id") int employeeId,
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String uploadDocument(Model model, @RequestParam("id") int userId,
 			@RequestParam("myFile") MultipartFile file) {
  
 		try {
  
-			Optional<User> userOpt = userDocumentDao.findById(employeeId);
-			if (!userOpt.isPresent()) throw new IllegalArgumentException("No user with id "+employeeId);
+			Optional<User> userOpt = userDocumentDao.findById(userId);
+			if (!userOpt.isPresent()) throw new IllegalArgumentException("No user with id "+ userId);
  
 			User user = userOpt.get();
  
