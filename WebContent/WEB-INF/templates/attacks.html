@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	>
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - attacks</title>
@@ -21,8 +20,9 @@
 		<!--  Error message ----------------------------------------------------------- -->
 
 		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
-			class="alert alert-warning" role="warning"></div>
+		<div th:unless="${warningMessage} == null"
+			th:utext="${warningMessage}" class="alert alert-warning"
+			role="warning"></div>
 		<!--  Warning message ----------------------------------------------------------- -->
 
 		<!--   message ----------------------------------------------------------- -->
@@ -33,10 +33,50 @@
 		<nav th:replace="~{includes/sidebar}"></nav>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
-		List of all attacks
+		<center> <h1>List of all attacks</h1> </center>
+
+		<div class="row"></div>
+		<!-- 1 simple button ----------------------------------------------------------- -->
+
 		
-	</div>
-	<!--  End of container -->
-	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<table data-toggle="table" class="table table-striped">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Attack</th>
+							<th>Type</th>
+							<th>Category</th>
+							<th>PowerPoints</th>
+							<th>BasePower</th>
+							<th>Accuracy</th>
+							<th>BattleEffet</th>
+							<th>Pokemons</th>
+
+
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<!--  list all items ----------------------------------------------------------- -->
+						<tr th:each="attack : ${attacks}">
+							<td th:text="${attack.name}"></td>
+							<td th:text="${attack.type}"></td>
+							<td th:text="${attack.category}"></td>
+							<td th:text="${attack.pp}"></td>
+							
+
+						</tr>
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+
+
+				</table>
+
+			</div>
+			<!--  End of container -->
+			<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
 </html>
