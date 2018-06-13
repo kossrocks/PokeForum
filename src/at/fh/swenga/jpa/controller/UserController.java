@@ -8,6 +8,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,68 +42,59 @@ public class UserController {
         return principal.getName();
     }
 	
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
+	public String showUploadForm(Model model) {
+			
+			//get current User
+			Object curUser = SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			if (curUser instanceof UserDetails) {
+				String userName = ((UserDetails) curUser).getUsername();
+				User user = userDao.getUser(userName);
+			
+			if (user!=null) {
+				model.addAttribute("user", user);
+				return "profile";
+			} else {
+				model.addAttribute("errorMessage", "Couldn't find user " + userName);
+				return "forward:list";
+			}
+			}
+			else {return "forward:list";}
+	}
 
-	/**
-	 * Save uploaded file to the database (as 1:1 relationship to employee)
-	 * 
-	 * @param model
-	 * @param employeeId
-	 * @param file
-	 * @return
-	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadDocument(Model model, @RequestParam("id") int userId,
-			@RequestParam("myFile") MultipartFile file) {
- 
+	public String uploadPicture(Model model, @RequestParam("myFile") MultipartFile file) {
+		//get current User
+		Object curUser = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (curUser instanceof UserDetails) {
+			String userName = ((UserDetails) curUser).getUsername();
+			
 		try {
  
-			Optional<User> userOpt = userDocumentDao.findById(userId);
-			if (!userOpt.isPresent()) throw new IllegalArgumentException("No user with id "+ userId);
+			User user = userDao.getUser(userName);
  
-			User user = userOpt.get();
- 
-			// Already a document available -> delete it
-			if (user.getPicture() != null) {
+			// Already a picture available -> delete it
+			if (user.getPicture()!=null) {
 				documentDao.delete(user.getPicture());
-				// Don't forget to remove the relationship too
 				user.setPicture(null);
 			}
- // !!!!! MIME TYPE images -> if(!contentType.startsWith("image/"))
-			// Create a new document and set all available infos
  
-			DocumentModel document = new DocumentModel();
-			document.setContent(file.getBytes());
-			document.setContentType(file.getContentType());
-			document.setCreated(new Date());
-			document.setFilename(file.getOriginalFilename());
-			document.setName(file.getName());
-			user.setPicture(document);
+			//Create a new picture and set all available infos 
+			DocumentModel pic = new DocumentModel();
+			pic.setContent(file.getBytes());
+			pic.setContentType(file.getContentType());
+			pic.setCreated(new Date());
+			pic.setFilename(file.getOriginalFilename());
+			pic.setName(file.getName());
+			user.setPicture(pic);
 			userDocumentDao.save(user);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Error:" + e.getMessage());
-		}
+		}}
  
-		return "forward:/profile";
-	}
-	
-	@RequestMapping("/download")
-	public void download(@RequestParam("pictureId") int documentId, HttpServletResponse response) {
- 
-		Optional<DocumentModel> docOpt = documentDao.findById(documentId);
-		if (!docOpt.isPresent()) throw new IllegalArgumentException("No document with id "+documentId);
- 
-		DocumentModel doc = docOpt.get();
- 
-		try {
-			response.setHeader("Content-Disposition", "inline;filename=\"" + doc.getFilename() + "\"");
-			OutputStream out = response.getOutputStream();
-				// application/octet-stream
-			response.setContentType(doc.getContentType());
-			out.write(doc.getContent());
-			out.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return "forward:profile";
 	}
 	
 }
