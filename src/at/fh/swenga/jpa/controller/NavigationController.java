@@ -18,6 +18,7 @@ import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
+import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
@@ -59,6 +60,9 @@ public class NavigationController {
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
+		
+		
+	
 	
 		
 		return "index";
@@ -120,9 +124,9 @@ public class NavigationController {
 	
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
-
-
-
+		
+		
+	
 		
 		return "attacks";
 	}
