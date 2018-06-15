@@ -3,6 +3,7 @@ package at.fh.swenga.jpa.controller;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -13,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.EntryDao;
+import at.fh.swenga.jpa.dao.EntryRepository;
 import at.fh.swenga.jpa.dao.TopicDao;
-import at.fh.swenga.jpa.dao.TopicRepository;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
-import at.fh.swenga.jpa.model.User;
 
 @Controller
 public class TopicController {
@@ -33,7 +33,7 @@ public class TopicController {
 	UserDao userDao;
 	
 	@Autowired
-	TopicRepository topicRepository;
+	EntryRepository entryRepository;
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping("/deleteTopic")
@@ -119,17 +119,35 @@ public class TopicController {
 		
 		entryDao.merge(newEntry);
 		
-		return "forward:/index";
+		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topicId);
+		model.addAttribute("entries", entries);
+		
+		model.addAttribute("topic", topic);
+
+		return "listEntries";
 
 	}
 	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping("/deleteEntry")
-	public String deleteEntry(Model model, @RequestParam int id) {
-		entryDao.delete(id);
+	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId) {
+		
+		EntryModel deletedEntry = entryDao.getEntry(id);
+		
+		entryRepository.delete(deletedEntry);;
+		
+		
+		
 	
+		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topicId);
+		model.addAttribute("entries", entries);
+		
+		TopicModel topic = topicDao.getTopic(topicId);
+		
+		model.addAttribute("topic", topic);
 
-		return "forward:index";
+		return "listEntries";
+		
 	}
 
 	/*
