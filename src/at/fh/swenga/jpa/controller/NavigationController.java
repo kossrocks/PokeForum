@@ -116,8 +116,8 @@ public class NavigationController {
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
 		
-		
-	
+		List<AttackModel> attacks = attackDao.getAllAttacks();
+		model.addAttribute("attacks", attacks);	
 		
 		return "attacks";
 	}
