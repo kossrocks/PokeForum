@@ -54,7 +54,7 @@ public class NavigationController {
 	@RequestMapping(value = { "/", "index" })
 	public String index(Model model) {
 
-		List<TopicModel> topics = topicDao.getAllTopics();
+		List<TopicModel> topics = topicDao.getAllTopicsSortById();
 		model.addAttribute("topics", topics);
 		
 		List<TypeModel> types = typeDao.getAllTypes();
@@ -73,16 +73,7 @@ public class NavigationController {
 		return "signUp";
 	}
 	
-	@RequestMapping("/listEntries")
-	public String listEntries(Model model, @RequestParam int id) {
 		
-		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
-		model.addAttribute("entries",entries);
-
-
-		
-		return "listEntries";
-	}	
 	
 	/*public String deleteData(Model model, @RequestParam int id) {
 		employeeDao.delete(id);
