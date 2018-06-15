@@ -1,6 +1,8 @@
 package at.fh.swenga.jpa.dao;
 
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -39,6 +41,14 @@ public class UserDao {
 			return null;
 		}
 	}
+	
+	public List<User> findByUsername(String userName) {
+		TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u where u.userName = :name",
+				User.class);
+		typedQuery.setParameter("name", userName);
+		List<User> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+}
 
 	public void persist(User user) {
 		entityManager.persist(user);
