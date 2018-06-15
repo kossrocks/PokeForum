@@ -107,19 +107,19 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
-	public String showChangeUserForm(Model model, @RequestParam int id) {
-		User user = userDao.getUserById(id);
+	public String showChangeUserForm(Model model, Principal principal) {
+		User user = userDao.getUser(principal.getName());
 		if (user != null) {
 			model.addAttribute("user", user);
-			return "signUp";
+			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user " + id);
+			model.addAttribute("errorMessage", "Couldn't find user " + username);
 			return "forward:/login";
 		}
 	}
 	
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public String changeEmployee(@Valid @ModelAttribute User changedUser, BindingResult bindingResult,
+	public String editUser(@RequestParam ("username") String username, @Valid User changedUser, BindingResult bindingResult,
 			Model model) {
 
 		if (bindingResult.hasErrors()) {
@@ -131,18 +131,18 @@ public class UserController {
 			return "forward:/profile";
 		}
 
-		User user = userDao.getUserById(changedUser.getId());
+		User user = userDao.getUser(username);
 
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
+			
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
 			user.setDateOfEntry(changedUser.getDateOfEntry());
-			user.setPicture(changedUser.getPicture());
-			model.addAttribute("message", "Changed user " + changedUser.getId());
+			model.addAttribute("message", "Changed user " + changedUser.getUserName());
 		}
 
-		return "forward:/SignUp";
+		return "forward:/profile";
 	}
 }

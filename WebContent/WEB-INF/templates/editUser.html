@@ -35,17 +35,14 @@
 		<!--  1 simple button ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post" th:action="@{/addUser}">
+				<form class="form-horizontal" method="post" th:action="@{/editUser}">
 					<fieldset>
-					
-						<input type="hidden" th:name="username" th:value="${user.userName}">
-						<input type="hidden" th:name="password" th:value="${user.password}">
 					
 						<!-- --------------  username ---------------- -->
 						<div class="form-group">
 							<label for="inputUserName" class="col-md-2 control-label">User Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputUserName" type="text" required name="userName" th:value="${user.userName}">
+								<input class="form-control" id="inputUserName" type="text" required name="userName" th:value="${user.userName}" th:readonly="true">
 							</div>
 						</div>
 						
@@ -70,14 +67,14 @@
 							<label for="inputFirstName" class="col-md-2 control-label">First Name
 							</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputFirstName" type="text" name="firstName">
+								<input class="form-control" id="inputFirstName" type="text" name="firstName" th:value="${user.firstName}">
 							</div>
 						</div>
 						<!-- --------------  last Name ---------------- -->
 						<div class="form-group">
 							<label for="inputLastName" class="col-md-2 control-label">Last Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputLastName" type="text" name="lastName">
+								<input class="form-control" id="inputLastName" type="text" name="lastName" th:value="${user.lastName}">
 							</div>
 						</div>
 						

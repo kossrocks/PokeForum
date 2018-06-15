@@ -66,9 +66,13 @@ public class NavigationController {
 	}
 	
 	@RequestMapping("/signUp")
-	public String signUp(Model model) {
+	public String signUp(Model model, Principal principal) {
 
-
+		int id = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+		
+		
 
 		
 		return "signUp";
@@ -154,6 +158,17 @@ public class NavigationController {
 
 		
 		return "editSpecies";
+	}
+	
+	@RequestMapping("/editUser")
+	public String editUser(Model model, Principal principal) {
+
+		int id = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+
+		
+		return "editUser";
 	}
 	
 	/*@RequestMapping("/uploadPicture")
