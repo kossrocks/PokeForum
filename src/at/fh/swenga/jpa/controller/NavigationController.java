@@ -21,6 +21,7 @@ import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
@@ -124,9 +125,9 @@ public class NavigationController {
 	
 	@RequestMapping("/pokemon")
 	public String pokemon(Model model) {
-
-
-
+		
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemons();
+		model.addAttribute("pokemons", pokemons);	
 		
 		return "pokemon";
 	}
