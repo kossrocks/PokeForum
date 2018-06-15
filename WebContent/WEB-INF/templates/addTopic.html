@@ -12,42 +12,47 @@
 	<div class="container" role="main">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post" th:action="@{/addTopic}">
+				<form class="form-horizontal" method="post"
+					th:action="@{/addTopic}">
 					<fieldset>
-						<legend th:text="'New Topic'">New Topic</legend>
+						<legend th:text="'New Topic'">New
+							Topic</legend>
 
+						
 						<!-- --------------  Title ---------------- -->
 						<div class="form-group">
 							<label for="inputTitle" class="col-md-2 control-label">Title
 							</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputTitle" type="text" name="title">
+								<input class="form-control" id="inputTitle" type="text"
+									name="title">
 							</div>
 						</div>
-						<!-- --------------  first Entry ---------------- 
+
+						<!-- --------------  firstEntry ---------------- -->
 						<div class="form-group">
-							<label for="inputFirstEntry" class="col-md-2 control-label">first Entry
+							<label for="inputFirstEntry" class="col-md-2 control-label">First Entry
 							</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputFirstEntry" type="text" name="firstEntry" >
+								<input class="form-control" id="inputFirstEntry" type="text"
+									name="firstEntry">
 							</div>
 						</div>
+
 						<!-- --------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="index" class="btn btn-default">
-									Cancel
-								</a>
+								<a href="index" class="btn btn-default"> Cancel </a>
 							</div>
 						</div>
-
 					</fieldset>
 				</form>
 			</div>
 		</div>
 
 	</div>
+
 	<!--  End of container -->
 	<div th:include="~{includes/bootstrap :: bootstrapJS}" th:remove="tag" />
 

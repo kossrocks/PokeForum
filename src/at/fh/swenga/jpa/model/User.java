@@ -47,10 +47,10 @@ public class User implements java.io.Serializable {
 	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)//if user has roles that are not in database, they will be created(PERSIST)
 	private Set<UserRole> userRoles;
 	
-	@OneToMany(mappedBy = "owner",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
 	private Set<EntryModel> entries;
 
-	@OneToMany(mappedBy = "owner",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
 	private Set<TopicModel> topics;
 	
 	@Column(name = "firstname", length = 60)
@@ -200,6 +200,16 @@ public class User implements java.io.Serializable {
 
 	public void setDateOfEntry(Date dateOfEntry) {
 		this.dateOfEntry = dateOfEntry;
+	}
+	
+	public void addEntry(EntryModel entry) {
+		if (entries==null) entries = new HashSet<EntryModel>();
+		entries.add(entry);
+	}
+	
+	public void addTopic(TopicModel topic) {
+		if (topics==null) topics = new HashSet<TopicModel>();
+		topics.add(topic);
 	}
 	
 	

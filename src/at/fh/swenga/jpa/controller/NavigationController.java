@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
-import at.fh.swenga.jpa.dao.DocumentDao;
 import at.fh.swenga.jpa.dao.EntryDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
@@ -19,6 +18,8 @@ import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
+import at.fh.swenga.jpa.model.AttackModel;
+import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
@@ -32,9 +33,6 @@ public class NavigationController {
 	
 	@Autowired
 	AttackDao attackDao;
-	
-	@Autowired
-	DocumentDao documentDao;
 	
 	@Autowired
 	EntryDao entryDao;
@@ -57,16 +55,15 @@ public class NavigationController {
 	@RequestMapping(value = { "/", "index" })
 	public String index(Model model) {
 
-		List<TopicModel> topics = topicDao.getAllTopics();
+		List<TopicModel> topics = topicDao.getAllTopicsSortById();
 		model.addAttribute("topics", topics);
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
 		
 		
-		
-		
-		
+	
+	
 		
 		return "index";
 	}
@@ -80,16 +77,7 @@ public class NavigationController {
 		return "signUp";
 	}
 	
-	@RequestMapping("/listEntries")
-	public String listEntries(Model model, @RequestParam int id) {
 		
-		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
-		model.addAttribute("entries",entries);
-
-
-		
-		return "listEntries";
-	}	
 	
 	/*public String deleteData(Model model, @RequestParam int id) {
 		employeeDao.delete(id);
@@ -102,11 +90,18 @@ public class NavigationController {
 	@RequestMapping("/profile")
 	public String profile(Model model,Principal principal) {
 
+		List<TopicModel> topics = topicDao.getAllTopics();
+		model.addAttribute("topics", topics);
+		
+		List<EntryModel> entries = entryDao.getAllEntries();
+		model.addAttribute("entries", entries);
+		
 		int id = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(id);
 		model.addAttribute("user",user);
 		
 		return "profile";
+		
 	}
 	
 	@RequestMapping("/users")
@@ -120,9 +115,9 @@ public class NavigationController {
 	
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
-
-
-
+		
+		
+	
 		
 		return "attacks";
 	}
@@ -163,6 +158,15 @@ public class NavigationController {
 		
 		return "editSpecies";
 	}
+	
+	/*@RequestMapping("/uploadPicture")
+	public String uploadPicture(Model model, @RequestParam int id ) {
+
+		//DocumentModel picture = documentDao.getDocumentById(id);
+		//model.addAttribute("picture", picture);
+		
+		return "uploadPicture";
+	}*/
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {

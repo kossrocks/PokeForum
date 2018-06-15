@@ -393,7 +393,6 @@ public class SecurityController {
 			@RequestParam("usernamesignup") String username,
 			@RequestParam("passwordsignup") String password1,
 			@RequestParam("passwordsignup_confirm") String password2) {
-		
 		List<User> users = userDao.findByUsername(username);
 		if (CollectionUtils.isEmpty(users)) {
 			if (password1.equals(password2)) {
