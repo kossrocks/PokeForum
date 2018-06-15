@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.EntryDao;
@@ -19,9 +18,8 @@ import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
-import at.fh.swenga.jpa.model.PokemonModel;
+import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
@@ -126,7 +124,7 @@ public class NavigationController {
 	@RequestMapping("/pokemon")
 	public String pokemon(Model model) {
 		
-		List<PokemonModel> pokemons = pokemonDao.getAllPokemons();
+		List<SpeciesModel> pokemons = speciesDao.getAllSpecies();
 		model.addAttribute("pokemons", pokemons);	
 		
 		return "pokemon";
