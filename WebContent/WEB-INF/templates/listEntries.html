@@ -53,7 +53,7 @@
 							<td th:text="${entry.owner.userName}"></td>
 							<td th:text="${entry.dateOfCreation}"></td>
 							<td th:text="${entry.content}"></td>
-							<td><a th:href="@{/deleteEntry(id=${entry.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
+							<td><a th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									

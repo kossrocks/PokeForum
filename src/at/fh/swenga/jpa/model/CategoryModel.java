@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "attacks")
+@Table(name = "category")
 public class CategoryModel implements java.io.Serializable {
 	
 	@Id

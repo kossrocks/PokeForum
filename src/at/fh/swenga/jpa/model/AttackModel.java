@@ -37,7 +37,7 @@ public class AttackModel implements java.io.Serializable {
 	@Column(name = "BP")
 	private int basePower;
 	
-	@Column(name = "acc")
+	@Column(nullable=true, name="acc")
 	private int accuracy;
 	
 	@Column(name = "effect")
@@ -101,15 +101,15 @@ public class AttackModel implements java.io.Serializable {
 	public void setBasePower(int basePower) {
 		this.basePower = basePower;
 	}
-
+	
+	public void setAccuracy(int accuracy) {
+	        this.accuracy = 1;
+	}
+	
 	public int getAccuracy() {
 		return accuracy;
 	}
-
-	public void setAccuracy(int accuracy) {
-		this.accuracy = accuracy;
-	}
-
+	
 	public String getBattleEffect() {
 		return battleEffect;
 	}

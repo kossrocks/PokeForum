@@ -113,7 +113,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user " + username);
+			model.addAttribute("errorMessage", "Couldn't find user ");
 			return "forward:/login";
 		}
 	}
