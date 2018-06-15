@@ -104,45 +104,7 @@ public class UserController {
 		return "forward:profile";
 	}
 	
-	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-	public String showAddEmployeeForm(Model model) {
-		return "signUp";
-	}
 	
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public String addData(@RequestParam String pwd, @Valid @ModelAttribute User newUserModel, BindingResult bindingResult,Model model) {
-		
-		if (bindingResult.hasErrors()) {
-			String errorMessage = "";
-			for (FieldError fieldError : bindingResult.getFieldErrors()) {
-				errorMessage += fieldError.getField() + " is invalid<br>";
-			}
-			model.addAttribute("errorMessage", errorMessage);
-			return "login";
-		}
-		
-		User user = userDao.getUserById(newUserModel.getId());
-		
-		if(user!=null){
-			model.addAttribute("errorMessage", "User already exists!<br>");
-		}
-		else {
-			UserRole userRole = userRoleDao.getRole("ROLE_USER");
-			User u = new User();
-			u.setUserName(newUserModel.getUserName());
-			u.setPassword(pwd);
-			u.setFirstName(newUserModel.getFirstName());
-			u.setLastName(newUserModel.getLastName());
-			u.setDateOfEntry(newUserModel.getDateOfEntry());
-			u.setEnabled(true);
-			userDao.persist(u);
-			userRoleDao.persist(userRole);
-						
-			model.addAttribute("message", "New user " + newUserModel.getUserName() + " added.");
-		}
-		
-		return "login";
-	}
 	
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
 	public String showChangeUserForm(Model model, @RequestParam int id) {

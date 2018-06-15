@@ -63,12 +63,9 @@ public class TopicController {
 	}
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
-	public String addTopic(Model model,
-			@RequestParam("title") String title, @RequestParam("firstEntry") String firstEntry, Principal principal) {
+	public String addTopic(Model model, @RequestParam("title") String title, @RequestParam("firstEntry")
+							String firstEntry, Principal principal) {
 
-		
-		
-		
 		Date date = new Date();
 		
 		
