@@ -1,6 +1,7 @@
 package at.fh.swenga.jpa.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -26,7 +27,7 @@ public class TopicModel implements java.io.Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "title", unique = true, nullable = false, length = 100)
+	@Column(name = "title", length = 100)
 	private String title;
 	
 	@ManyToOne (cascade = CascadeType.PERSIST)
@@ -88,6 +89,17 @@ public class TopicModel implements java.io.Serializable{
 
 	public int getId() {
 		return id;
+	}
+	
+	public boolean isEmpty() {
+		return title.isEmpty();
+	}
+	
+	public void addEntry(EntryModel entry) {
+		if (entries== null) {
+			entries= new HashSet<EntryModel>();
+		}
+		entries.add(entry);
 	}
 
 	
