@@ -33,6 +33,18 @@
 
 		<nav th:replace="~{includes/sidebar}"></nav>
 		
+		<!-- --------------  buttons ---------------- -->
+		<div class="form-group">
+			<div class="col-md-10 col-md-offset-2">
+				<a href="signUp" class="btn btn-default">
+						Edit
+					</a>
+					<a href="profile" class="btn btn-default">
+						Cancel
+					</a>
+			</div>
+		</div>
+		
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<form class="form-horizontal" enctype="multipart/form-data" method="post" action="upload"> 
@@ -84,13 +96,11 @@
 						<!--  list all items for the user profile of the current user ----------------------------------------------------------- -->
 						<tr>
 							<td th:text="${user.userName}"></td>
-							<td
-								th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
-							<td
-								th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
+							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
+							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
 							<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}"></td>
 							<!--  <td th:text="${user.topics.size()}"></td>
-							<td th:text="${user.entries.size()}"></td>-->
+							<td th:text="${user.entries.size()}"></td> -->
 							<td><span th:if="${user.picture != null}"> 
 								<a th:href="@{download(pictureId=${user.picture.id})}"
 											target="_blank" th:text="${user.picture.filename}"></a>

@@ -60,10 +60,7 @@ public class NavigationController {
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
-		
-		
-	
-	
+
 		
 		return "index";
 	}
