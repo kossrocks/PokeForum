@@ -1,11 +1,16 @@
 package at.fh.swenga.jpa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.CategoryDao;
@@ -23,6 +28,7 @@ import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
 import at.fh.swenga.jpa.model.UserRole;
+
 
 @Controller
 public class SecurityController {
@@ -376,7 +382,37 @@ public class SecurityController {
 		return "forward:login";
 	}
 
-	
+	@RequestMapping(value = { "/signUp1" }, method = RequestMethod.GET)
+	public String signUp() {
+		return "signUp";
+	}
+
+
+	@RequestMapping(value = { "/signUp1" }, method = RequestMethod.POST)
+	public String signUp1(Model model, 
+			@RequestParam("usernamesignup") String username,
+			@RequestParam("passwordsignup") String password1,
+			@RequestParam("passwordsignup_confirm") String password2) {
+		
+		List<User> users = userDao.findByUsername(username);
+		if (CollectionUtils.isEmpty(users)) {
+			if (password1.equals(password2)) {
+			User user = new User(username, password1);
+			user.encryptPassword();
+			
+			
+			
+			user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+			userDao.persist(user);
+			model.addAttribute("message", "User " + username + " created!");
+			} else {
+				model.addAttribute("errorMessage", "Error: Passwords doesn't match!");
+			}
+		} else {
+			model.addAttribute("errorMessage", "Error: " + username + " already exists!");
+		}
+		return "signUp1";
+}
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
