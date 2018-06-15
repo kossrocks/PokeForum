@@ -24,6 +24,12 @@ public class AttackDao {
 	public void persist(AttackModel attack) {
 		entityManager.persist(attack);
 	}
+	public List<AttackModel> getAllAttacks() {
+		TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select e from AttackModel e order by e.id",
+				AttackModel.class);
+		List<AttackModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 	
 
