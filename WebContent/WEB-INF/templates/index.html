@@ -86,11 +86,11 @@
 									Visit
 								</a>
 
-								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
+								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									
-									<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 									Delete
 								</a>
 							</td>
