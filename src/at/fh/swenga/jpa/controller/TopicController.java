@@ -3,11 +3,11 @@ package at.fh.swenga.jpa.controller;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,11 +35,12 @@ public class TopicController {
 	@Autowired
 	EntryRepository entryRepository;
 
-	@Secured({ "ROLE_ADMIN" })
+	
 	@RequestMapping("/deleteTopic")
+	@Transactional
 	public String deleteData(Model model, @RequestParam int id) {
-		topicDao.delete(id);
-
+		entryDao.deleteById(id);
+		topicDao.deleteById(id);
 		return "forward:index";
 	}
 
@@ -129,9 +130,9 @@ public class TopicController {
 	@RequestMapping("/deleteEntry")
 	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId) {
 		
-		EntryModel deletedEntry = entryDao.getEntry(id);
 		
-		entryRepository.delete(deletedEntry);;
+		
+		entryDao.delete(id);
 		
 		
 		
