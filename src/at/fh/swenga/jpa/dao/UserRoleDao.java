@@ -32,3 +32,4 @@ public class UserRoleDao {
 		entityManager.persist(userRole);
 	}
 }
+
