@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,7 @@ public class UserController {
 	}
 	
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/disableUser", method = RequestMethod.GET)
     public String disableUser(Model model, @RequestParam int id) {
 		
@@ -72,6 +74,7 @@ public class UserController {
 		return "users";
     }
 	
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
     public String enableUser(Model model, @RequestParam int id) {
 		
