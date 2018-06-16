@@ -13,6 +13,11 @@
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="includes/table.css">
 <style>
+
+body {
+background-color: ligtblue;
+
+}
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -31,6 +36,7 @@
 </head>
 <body>
 	<div class="container" role="main">
+	<div class="col-md-10">
 
 		<div class="page-header">
 			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
@@ -52,15 +58,16 @@
 		<!--   message ----------------------------------------------------------- -->
 
 		<nav th:replace="~{includes/sidebar}"></nav>
+		<div th:include="~{includes/background}"></div>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
 		<div class="row">
 		</div>
 		<!--  1 simple button ----------------------------------------------------------- -->
 
-
+	</div>
 	<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-10">
 
 				<!-- HTML form with search textbox and submit button-->
 		<form class="navbar-form navbar-right" action="searchTopics">
