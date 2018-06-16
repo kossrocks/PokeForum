@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	>
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - Homepage</title>
@@ -12,6 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- Our Custom CSS -->
 <link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="includes/table.css">
 <style>
 .wrapper {
     display: flex;
@@ -62,13 +62,22 @@
 	<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 
+				<!-- HTML form with search textbox and submit button-->
+		<form class="navbar-form navbar-right" action="searchTopics">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span>
+			</div>
+		</form>
 				<table data-toggle="table" class="table table-striped">
-					<thead>
+					<thead class="thead-dark">
 						<tr>
 							<th>Topic name</th>
-							<th>User</th>
-							<th>last edited</th>
-							<th>Entries</th>				
+							<th><span class="glyphicon glyphicon-user"></span>User</th>
+							<th><span class="glyphicon glyphicon-pencil"></span>Last edited</th>
+							<th><span class="glyphicon glyphicon-th-list"></span>Entries</th>				
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -85,7 +94,7 @@
 									Visit
 								</a>
 
-								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
+								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									

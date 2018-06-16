@@ -29,4 +29,5 @@ public class TypeDao {
 		return typedResultList;
 	}
 
+
 }

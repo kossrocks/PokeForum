@@ -3,12 +3,13 @@ package at.fh.swenga.jpa.controller;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,16 +32,23 @@ public class TopicController {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	EntryRepository entryRepository;
 
-	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping("/deleteTopic")
-	public String deleteData(Model model, @RequestParam int id) {
-		topicDao.delete(id);
+	@Transactional
+	public String deleteData(Model model, @RequestParam int id, Principal principal) {
 
-		return "forward:index";
+		TopicModel topic = topicDao.getTopic(id);
+		String username = topic.getOwner().getUserName();
+		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
+			entryDao.deleteById(id);
+			topicDao.deleteById(id);
+			return "forward:index";
+		} else {
+			throw new AccessDeniedException("You are not allowed to delete this!");
+		}
 	}
 
 	@RequestMapping("/listEntries")
@@ -48,7 +56,7 @@ public class TopicController {
 
 		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
 		model.addAttribute("entries", entries);
-		
+
 		TopicModel topic = topicDao.getTopic(id);
 		model.addAttribute("topic", topic);
 
@@ -57,28 +65,23 @@ public class TopicController {
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.GET)
 	public String showAddTopicForm(Model model) {
-		
 
 		return "addTopic";
 	}
 
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
-	public String addTopic(Model model,
-			@RequestParam("title") String title, @RequestParam("firstEntry") String firstEntry, Principal principal) {
+	public String addTopic(Model model, @RequestParam("title") String title,
+			@RequestParam("firstEntry") String firstEntry, Principal principal) {
 
-		
-		
-		
 		Date date = new Date();
-		
-		
+
 		TopicModel topic = new TopicModel();
 		topicDao.persist(topic);
 		topic.setTitle(title);
 		topic.setOwner(userDao.getUser(principal.getName()));
 		topic.setLastEdited(date);
 		topicDao.merge(topic);
-		
+
 		EntryModel entry = new EntryModel();
 		entryDao.persist(entry);
 		entry.setContent(firstEntry);
@@ -86,13 +89,13 @@ public class TopicController {
 		entry.setEdited(false);
 		entry.setOwner(userDao.getUser(principal.getName()));
 		entry.setTopic(topic);
-		
+
 		entryDao.merge(entry);
-		
+
 		return "forward:/index";
 
 	}
-	
+
 	@RequestMapping(value = "/addEntry", method = RequestMethod.GET)
 	public String showAddEntryForm(Model model, @RequestParam int topicId) {
 		model.addAttribute("topicId", topicId);
@@ -101,14 +104,12 @@ public class TopicController {
 	}
 
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
-	public String addEntry(Model model, @RequestParam("entry") String entry,  @RequestParam("topicId") int topicId, Principal principal) {
+	public String addEntry(Model model, @RequestParam("entryText") String entry, @RequestParam("topicId") int topicId,
+			Principal principal) {
 
-		
-		
-		
 		Date date = new Date();
-		TopicModel topic = topicDao.getTopic(topicId); 
-		
+		TopicModel topic = topicDao.getTopic(topicId);
+
 		EntryModel newEntry = new EntryModel();
 		entryDao.persist(newEntry);
 		newEntry.setContent(entry);
@@ -116,49 +117,93 @@ public class TopicController {
 		newEntry.setEdited(false);
 		newEntry.setOwner(userDao.getUser(principal.getName()));
 		newEntry.setTopic(topic);
-		
+
 		entryDao.merge(newEntry);
-		
+
 		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topicId);
 		model.addAttribute("entries", entries);
-		
+
 		model.addAttribute("topic", topic);
 
 		return "listEntries";
 
 	}
-	
-	@Secured({ "ROLE_ADMIN" })
-	@RequestMapping("/deleteEntry")
-	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId) {
-		
-		EntryModel deletedEntry = entryDao.getEntry(id);
-		
-		entryRepository.delete(deletedEntry);;
-		
-		
-		
-	
-		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topicId);
+
+	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
+	public String showEditEntry(Model model, @RequestParam int id, Principal principal) {
+
+		EntryModel entry = entryDao.getEntry(id);
+
+		String username = entry.getOwner().getUserName();
+		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
+
+			model.addAttribute("entry", entry);
+
+			return "addEntry";
+		} else {
+			throw new AccessDeniedException("You are not allowed to edit this, Bitch!");
+		}
+	}
+
+	@RequestMapping(value = "/editEntry", method = RequestMethod.POST)
+	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text) {
+		EntryModel entry = entryDao.getEntry(id);
+		entry.setContent(text);
+		entry.setEdited(true);
+		entryDao.merge(entry);
+
+		TopicModel topic = topicDao.getTopic(entry.getTopic().getId());
+		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topic.getId());
 		model.addAttribute("entries", entries);
-		
-		TopicModel topic = topicDao.getTopic(topicId);
-		
+
 		model.addAttribute("topic", topic);
 
 		return "listEntries";
+	}
+
+	@RequestMapping("/deleteEntry")
+	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId, Principal principal) {
+
+		EntryModel entry = entryDao.getEntry(id);
+		String username = entry.getOwner().getUserName();
+		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
+			entryDao.delete(id);
+
+			List<EntryModel> entries = entryDao.getAllEntriesInTopic(topicId);
+			model.addAttribute("entries", entries);
+
+			TopicModel topic = topicDao.getTopic(topicId);
+
+			model.addAttribute("topic", topic);
+
+			return "listEntries";
+		} else {
+			throw new AccessDeniedException("You are not allowed to delete this!");
+		}
+
+	}
+
+	@RequestMapping("/searchTopics")
+	public String searchIt(Model model, @RequestParam String searchString) {
+			
+		List<TopicModel> topics = topicDao.searchTopic(searchString);
 		
+		model.addAttribute("topics", topics);
+
+		return "index";
+	}
+	
+	
+	
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
 	}
 
 	/*
-	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception
-	 * ex) {
-	 * 
-	 * return "error";
-	 * 
-	 * }
-	 * 
-	 * /*@ExceptionHandler()
+	 * @ExceptionHandler()
 	 * 
 	 * @ResponseStatus(code=HttpStatus.FORBIDDEN) public String handle403(Exception
 	 * ex) {

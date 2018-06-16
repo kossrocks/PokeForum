@@ -154,4 +154,12 @@ public class SpeciesModel implements java.io.Serializable{
 		}
 		types.add(type);
 	}
+	
+	public String getType1(TypeModel type) {
+		if (types == null) {
+			return "";
+		}
+		TypeModel type1 = this.getTypes().iterator().next();
+		return type1.getName();
+	}
 }

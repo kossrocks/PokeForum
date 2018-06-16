@@ -1,4 +1,6 @@
-<html !DOCTYPE>
+<html !DOCTYPE xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head>
 <title>Bootstrap 3 Collapsible Sidebar</title>
 <!-- Bootstrap CSS CDN -->
@@ -299,10 +301,11 @@ html { height: 100%;}
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand"><a href="#">Menu</a></li>
+                <li><a href="index">Home</a></li>
                 <li><a href="profile">Profile</a></li>
-                <li><a href="users">Users</a></li>
+                <li sec:authorize="hasRole('ADMIN')"><a href="users">Users</a></li>
                 <li><a href="attacks">Attacks</a></li>
-                <li><a href="pokemon">Pokémon</a></li>
+                <li><a href="pokemon">Pokemon</a></li>
                 <li><a href="signUp">Sign Up</a></li>
                 <li><a href="login">Sign Out</a></li>
             </ul>

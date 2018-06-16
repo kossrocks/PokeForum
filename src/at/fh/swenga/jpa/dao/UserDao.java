@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.User;
 
 @Repository
@@ -48,9 +49,31 @@ public class UserDao {
 		typedQuery.setParameter("name", userName);
 		List<User> typedResultList = typedQuery.getResultList();
 		return typedResultList;
-}
+	}
 
+	/*
+	 * VERSUCH getAllUsers
+	 */
+	
+	public List<User> getAllUsers() {
+		TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u order by u.id",
+				User.class);
+		List<User> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
+	
+	
 	public void persist(User user) {
 		entityManager.persist(user);
 	}
+	
+	public void merge(User user) {
+		entityManager.merge(user);
+	}
+	
+	public int addIt(User user) {
+		int count = entityManager.createQuery("INSERT INTO UserModel (userName,password,enabled,dateOfEntry) VALUES (:username,:password,:enabled,:dateOfEntry)").setParameter("username", user.getUserName()).setParameter("password", user.getPassword()).setParameter("enabled", user.isEnabled()).setParameter("dateOfEntry", user.getDateOfEntry()).executeUpdate();
+		return count;
+	}
+	
 }

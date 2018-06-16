@@ -59,24 +59,18 @@ public class NavigationController {
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
-		
-		
-	
-	
+
 		
 		return "index";
 	}
 	
+	
 	@RequestMapping("/signUp")
 	public String signUp(Model model) {
 
-
-
-		
 		return "signUp";
 	}
 	
-		
 	
 	/*public String deleteData(Model model, @RequestParam int id) {
 		employeeDao.delete(id);
@@ -106,7 +100,8 @@ public class NavigationController {
 	@RequestMapping("/users")
 	public String users(Model model) {
 
-
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
 
 		
 		return "users";
@@ -125,7 +120,12 @@ public class NavigationController {
 	public String pokemon(Model model) {
 		
 		List<SpeciesModel> pokemons = speciesDao.getAllSpecies();
-		model.addAttribute("pokemons", pokemons);	
+		model.addAttribute("pokemons", pokemons);
+		
+		List<TypeModel> types = typeDao.getAllTypes();
+		model.addAttribute("types", types);	
+		
+		
 		
 		return "pokemon";
 	}
@@ -158,6 +158,17 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
+	@RequestMapping("/editUser")
+	public String editUser(Model model, Principal principal) {
+
+		int id = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+
+		
+		return "editUser";
+	}
+	
 	/*@RequestMapping("/uploadPicture")
 	public String uploadPicture(Model model, @RequestParam int id ) {
 
@@ -165,14 +176,14 @@ public class NavigationController {
 		//model.addAttribute("picture", picture);
 		
 		return "uploadPicture";
-	}*/
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 
 		return "error";
 
-	}
+	}*/
 	
 }
 

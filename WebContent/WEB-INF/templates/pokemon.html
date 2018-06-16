@@ -55,7 +55,12 @@
 
 		<!--  1 simple button ----------------------------------------------------------- -->
 
+
 		<h1>List of all pokemon species</h1>
+
+		
+
+
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
@@ -80,7 +85,11 @@
 					<tbody>
 
 						<!--  list all items ----------------------------------------------------------- -->
+						
+						
+							
 						<tr th:each="species : ${pokemons}">	
+							<td th:text="${species.name}"></td>
 							<td th:text="${species.name}"></td>
 							<td th:text="${species.baseHealthPoints}"></td>
 							<td th:text="${species.baseAttack}"></td>

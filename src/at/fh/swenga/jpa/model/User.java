@@ -79,14 +79,14 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.enabled = true;
 		
-		Set<UserRole> userRoles = new HashSet<UserRole>();
+		/*Set<UserRole> userRoles = new HashSet<UserRole>();
 		
 		
 		
 		userRoles.add(new UserRole("ROLE_" + userName));
 		
 		this.userRoles = userRoles;
-		
+		*/
 		
 		
 		this.dateOfEntry = new Date();
