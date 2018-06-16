@@ -61,14 +61,10 @@ public class TypeModel implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 	public TypeModel(String name) {
 		super();
 		this.name = name;
 	}
-
-
 
 	public int getId() {
 		return id;
