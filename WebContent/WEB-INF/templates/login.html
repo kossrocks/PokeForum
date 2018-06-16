@@ -19,7 +19,7 @@
 }
 
 .container {
-  background-image: url(images/loginWallpaper.jpg);
+  background:url(http://kb4images.com/images/pokemon-wallpaper-hd/37515768-pokemon-wallpaper-hd.jpg);
   width: 100%;
   position: absolute;
   top: 0;
@@ -115,25 +115,15 @@
     						<input type="password" class="form-control password" id="password" placeholder="Password" required name="password">
   						</div>
   
-
  					 	<button type="submit" class="btn customLogin">Log In</button>
  					 	<a th:href="@{/signUp}" class="btn custom custom1">Sign up</a>
- 					 	<button onclick="fillFields()" type="submit" class="btn custom custom2"> Guest</button>
-
+ 					 	<a th:href="@{/index}" class="btn custom custom2"> Guest</a>
 					</form>
 				
 				</div>
 				<div class="col-md-4 col-sm-4 col-xs-12"></div>
 		</div>
 	</div>
-	<script>
-	function fillFields() {
-    document.getElementById("password").value = "guest";
-    document.getElementById("username").value = "guest";
-    
-}
-</script>
 </body>
-
 
 </html>
