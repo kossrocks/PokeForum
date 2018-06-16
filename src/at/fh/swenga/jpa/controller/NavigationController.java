@@ -98,7 +98,7 @@ public class NavigationController {
 		
 	}
 	
-	@Secured({ "ROLE_ADMIN" })
+	
 	@RequestMapping("/users")
 	public String users(Model model) {
 

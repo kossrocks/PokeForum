@@ -119,9 +119,12 @@ input:checked + .slider:before {
 						<tr>
 							<th>User Name</th>
 							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Enabled</th>
-							<th>Enable/Disable User</th>				
+							<th sec:authorize="hasRole('ADMIN')">Last Name</th>
+							<th>Date of Entry</th>
+							<th>Number of Topics</th>
+							<th>Number of Entries</th>
+							<th sec:authorize="hasRole('ADMIN')">Enabled</th>
+							<th sec:authorize="hasRole('ADMIN')">Enable/Disable User</th>				
 							
 						</tr>
 					</thead>
@@ -131,10 +134,13 @@ input:checked + .slider:before {
 						<tr th:each="user : ${users}">
 							<td th:text="${user.userName != null ? user.userName : 'no user name yet'}"></td>
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet' }"></td>
-							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
-							<td th:text="${user.enabled}"></td>
+							<td sec:authorize="hasRole('ADMIN')" th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
+							<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}"></td>
+							<td th:text="${user.topics.size()}"></td>
+							<td th:text="${user.entries.size()}"></td>
+							<td sec:authorize="hasRole('ADMIN')" th:text="${user.enabled}"></td>
  							
-							<td> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
+							<td sec:authorize="hasRole('ADMIN')"> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
 							 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>
 							
 						

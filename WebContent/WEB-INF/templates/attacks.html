@@ -48,6 +48,10 @@
 							<th>Type</th>
 							<th>Category</th>
 							<th>PowerPoints</th>
+							<th>BasePower</th>
+							<th>Accuracy</th>
+							<th>BattleEffect</th>
+							
 
 
 
@@ -57,10 +61,16 @@
 					<tbody>
 
 						<!--  list all items ----------------------------------------------------------- -->
-							<td th:text="sadf"></td>
-							<td th:text="sadf"></td>
-							<td th:text="sadf"></td>
-							<td th:text="sadf"></td>
+							
+							<tr th:each="attack : ${attacks}">	
+							<td th:text="${attack.name}"></td>
+							<td th:text="${attack.type.name}"></td>
+							<td th:text="${attack.category.name}"></td>
+							<td th:text="${attack.powerPoints}"></td>
+							<td th:text="${attack.basePower}"></td>
+							<td th:text="${attack.accuracy}"></td>
+							<td th:text="${attack.battleEffect}"></td>
+						</tr>
 						
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
