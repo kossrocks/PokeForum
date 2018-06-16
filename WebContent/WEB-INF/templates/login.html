@@ -118,7 +118,7 @@
 
  					 	<button type="submit" class="btn customLogin">Log In</button>
  					 	<a th:href="@{/signUp}" class="btn custom custom1">Sign up</a>
- 					 	<a th:href="@{/index}" class="btn custom custom2"> Guest</a>
+ 					 	<button onclick="fillFields()" type="submit" class="btn custom custom2"> Guest</button>
 
 					</form>
 				
@@ -126,10 +126,14 @@
 				<div class="col-md-4 col-sm-4 col-xs-12"></div>
 		</div>
 	</div>
+	<script>
+	function fillFields() {
+    document.getElementById("password").value = "guest";
+    document.getElementById("username").value = "guest";
+    
+}
+</script>
 </body>
-<<<<<<< HEAD
-				
-=======
->>>>>>> e08e93725fc9b25a50ee129258c5797203479aee
+
 
 </html>

@@ -85,7 +85,7 @@ background-color: ligtblue;
 							<th><span class="glyphicon glyphicon-user"></span>User</th>
 							<th><span class="glyphicon glyphicon-pencil"></span>Last edited</th>
 							<th><span class="glyphicon glyphicon-th-list"></span>Entries</th>				
-							<th>Action</th>
+							<th sec:authorize="hasRole('USER')">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,7 +96,7 @@ background-color: ligtblue;
 							<td th:text="${topic.owner.userName}"></td>
 							<td th:text="${topic.lastEdited}"></td>
 							<td th:text="${topic.entries.size()}"></td>
-							<td><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-xs btn-success">
+							<td sec:authorize="hasRole('USER')"><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-xs btn-success">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 									Visit
 								</a>
@@ -114,7 +114,7 @@ background-color: ligtblue;
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-				<a href="addTopic" class="btn btn-default">
+				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-default">
 				New Topic
 				</a>				
 			</div>
