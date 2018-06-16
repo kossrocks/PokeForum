@@ -406,6 +406,9 @@ public class SecurityController {
 		attackDao.persist(solarBeam);
 		attackDao.persist(surf);
 		attackDao.persist(razorLeaf);
+		
+		
+		
 
 		return "forward:login";
 	}

@@ -89,7 +89,7 @@
 						<tr th:each="species : ${pokemons}">	
 							<td th:text="${species.name}">NAME</td>
 							<td th:text="${species.types.get(0).name}">TYPE1</td>
-							<td th:text="${species.types.get(1) =! null ? species.types.get(1).name : 'null' }">TYPE2</td>
+							<td th:text="${species.types.size() > 1 ? species.types.get(1).name : '------' }">TYPE2</td>
 							<td th:text="${species.baseHealthPoints}">HP</td>
 							<td th:text="${species.baseAttack}">ATK</td>
 							<td th:text="${species.baseDefense}">DEF</td>
