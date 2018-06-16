@@ -12,9 +12,11 @@
 		<csrf /> 
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/fillUsers" access="permitAll" />
+		<intercept-url pattern="/signUp" access="permitAll" />
+		<intercept-url pattern="/addUser" access="permitAll" />
 		<!-- intercept-url pattern="/**" access="hasRole('USER')" / 
 		<intercept-url pattern="/**" access="hasAnyRole('USER','ADMIN','GUEST')" / -->
-		<intercept-url pattern="/**" access="hasRole('USER')" />
+		<intercept-url pattern="/**" access="authenticated" />
 		<intercept-url pattern="/delete" access="hasRole('ADMIN')" />
 
 		<form-login login-page="/login" default-target-url='/' always-use-default-target='true' />

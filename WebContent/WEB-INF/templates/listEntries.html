@@ -52,8 +52,12 @@
 						<tr th:each="entry : ${entries}">
 							<td th:text="${entry.owner.userName}"></td>
 							<td th:text="${entry.dateOfCreation}"></td>
-							<td th:text="${entry.content}"></td>
-							<td><a th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger" sec:authorize="hasRole('ADMIN')">
+							<td th:text="${entry.edited} ? ${entry.content}+' {entry was edited by owner or admin}' : ${entry.content}"></td>
+							<td><a th:href="@{/editEntry(id=${entry.id})}" class="btn btn-xs btn-success">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+									Edit
+								</a>
+								<a th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger">
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									

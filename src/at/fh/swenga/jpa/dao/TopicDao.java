@@ -29,7 +29,7 @@ public class TopicDao {
 	}
 	
 	public List<TopicModel> getAllTopicsSortById() {
-		TypedQuery<TopicModel> typedQuery = entityManager.createQuery("select e from TopicModel e ORDER BY e.id",
+		TypedQuery<TopicModel> typedQuery = entityManager.createQuery(" select e from TopicModel e ",
 				TopicModel.class);
 		List<TopicModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
@@ -62,15 +62,12 @@ public class TopicDao {
 		entityManager.merge(topic);
 	}
 
-	@Secured("ROLE_ADMIN")
-	public void delete(TopicModel topic) {
-		entityManager.remove(topic);
-	}
 	
-	@Secured("ROLE_ADMIN")
-	public void delete(int id) {
-		TopicModel topic = getTopic(id);
-		if (topic != null)
-			delete(topic);
+
+	
+	public int deleteById(int id) {
+		int count = entityManager.createQuery("DELETE FROM TopicModel WHERE id = :id").setParameter("id", id).executeUpdate();
+		return count;
 	}
+
 }

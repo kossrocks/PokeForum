@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.EntryDao;
@@ -19,8 +18,8 @@ import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
@@ -60,24 +59,20 @@ public class NavigationController {
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);
-		
-		
-	
-	
+
 		
 		return "index";
 	}
 	
+	
 	@RequestMapping("/signUp")
 	public String signUp(Model model) {
 
+	
 
-
-		
 		return "signUp";
 	}
 	
-		
 	
 	/*public String deleteData(Model model, @RequestParam int id) {
 		employeeDao.delete(id);
@@ -117,17 +112,17 @@ public class NavigationController {
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
 		
-		
-	
+		List<AttackModel> attacks = attackDao.getAllAttacks();
+		model.addAttribute("attacks", attacks);	
 		
 		return "attacks";
 	}
 	
 	@RequestMapping("/pokemon")
 	public String pokemon(Model model) {
-
-
-
+		
+		List<SpeciesModel> pokemons = speciesDao.getAllSpecies();
+		model.addAttribute("pokemons", pokemons);	
 		
 		return "pokemon";
 	}
@@ -160,6 +155,17 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
+	@RequestMapping("/editUser")
+	public String editUser(Model model, Principal principal) {
+
+		int id = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+
+		
+		return "editUser";
+	}
+	
 	/*@RequestMapping("/uploadPicture")
 	public String uploadPicture(Model model, @RequestParam int id ) {
 
@@ -167,14 +173,14 @@ public class NavigationController {
 		//model.addAttribute("picture", picture);
 		
 		return "uploadPicture";
-	}*/
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 
 		return "error";
 
-	}
+	}*/
 	
 }
 

@@ -50,15 +50,13 @@ public class EntryDao {
 		entityManager.merge(entry);
 	}
 	
-	@Secured("ROLE_ADMIN")
-	public void delete(EntryModel entry) {
-		entityManager.remove(entry);
+	public int delete(int id) {
+		int count = entityManager.createQuery("DELETE FROM EntryModel WHERE id = :id").setParameter("id", id).executeUpdate();
+		return count;
 	}
 	
-	@Secured("ROLE_ADMIN")
-	public void delete(int id) {
-		EntryModel entry = getEntry(id);
-		if (entry != null)
-			delete(entry);
+	public int deleteById(int id) {
+		int count = entityManager.createQuery("DELETE FROM EntryModel WHERE topic.id = :id").setParameter("id", id).executeUpdate();
+		return count;
 	}
 }

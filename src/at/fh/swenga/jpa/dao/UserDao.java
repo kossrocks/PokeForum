@@ -66,4 +66,14 @@ public class UserDao {
 	public void persist(User user) {
 		entityManager.persist(user);
 	}
+	
+	public void merge(User user) {
+		entityManager.merge(user);
+	}
+	
+	public int addIt(User user) {
+		int count = entityManager.createQuery("INSERT INTO UserModel (userName,password,enabled,dateOfEntry) VALUES (:username,:password,:enabled,:dateOfEntry)").setParameter("username", user.getUserName()).setParameter("password", user.getPassword()).setParameter("enabled", user.isEnabled()).setParameter("dateOfEntry", user.getDateOfEntry()).executeUpdate();
+		return count;
+	}
+	
 }

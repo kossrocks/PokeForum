@@ -7,6 +7,27 @@
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - Pokemon</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Our Custom CSS -->
+<link rel="stylesheet" href="css/custom.css">
+<style>
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+</style>
 </head>
 <body>
 	<div class="container" role="main">
@@ -34,7 +55,8 @@
 
 		<!--  1 simple button ----------------------------------------------------------- -->
 
-		<center> <h1>List of all pokemon species</h1> </center>
+		<h1>List of all pokemon species</h1> 
+
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
@@ -43,8 +65,8 @@
 						<tr>
 							<th></th>
 							<th>Name</th>
-							<th>Spezies</th>
-							<th>Typ</th>
+							<th>Species</th>
+							<th>Type</th>
 							<th>Level</th>
 							<th>HP</th>
 							<th>Attack</th>
@@ -62,11 +84,20 @@
 					<tbody>
 
 						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="attack : ${attacks}">
-							<td th:text="${attack.name}"></td>
-							<td th:text="${attack.type}"></td>
-							<td th:text="${attack.category}"></td>
-							<td th:text="${attack.pp}"></td>
+						<tr th:each="pokemon : ${pokemons}">
+							<td th:text="${pokemon.name}"></td>
+							<td th:text="${pokemon.species}"></td>
+							<td th:text="${pokemon.types}"></td>
+							<td th:text="${pokemon.level}"></td>
+							<td th:text="${pokemon.hp}"></td>
+							<td th:text="${pokemon.attack}"></td>
+							<td th:text="${pokemon.defense}"></td>
+							<td th:text="${pokemon.specialAttack}"></td>
+							<td th:text="${pokemon.specialDefense}"></td>
+							<td th:text="${pokemon.speed}"></td>
+							<td th:text="${pokemon.gender}"></td>
+							<td th:text="${pokemon.shiny}"></td>
+							
 							
 
 						</tr>
@@ -77,6 +108,7 @@
 				</table>
 
 			</div>
+		</div>
 	</div>
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
