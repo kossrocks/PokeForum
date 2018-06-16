@@ -24,7 +24,7 @@ import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.User;
-import at.fh.swenga.jpa.model.UserRole;
+
 
 
 public class UserController {
@@ -113,13 +113,13 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user ");
+			model.addAttribute("errorMessage", "Couldn't find user");
 			return "forward:/login";
 		}
 	}
 	
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public String editUser(@RequestParam ("username") String username, @Valid User changedUser, BindingResult bindingResult,
+	public String editUser(Principal principal, @Valid User changedUser, BindingResult bindingResult,
 			Model model) {
 
 		if (bindingResult.hasErrors()) {
@@ -131,15 +131,17 @@ public class UserController {
 			return "forward:/profile";
 		}
 
-		User user = userDao.getUser(username);
+		User user = userDao.getUser(principal.getName());
 
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			
+			userDao.persist(user);
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
-			user.setDateOfEntry(changedUser.getDateOfEntry());
+			
+			userDao.merge(user);
+			
 			model.addAttribute("message", "Changed user " + changedUser.getUserName());
 		}
 

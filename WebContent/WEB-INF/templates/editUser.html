@@ -42,7 +42,7 @@
 						<div class="form-group">
 							<label for="inputUserName" class="col-md-2 control-label">User Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputUserName" type="text" required name="userName" th:value="${user.userName}" th:readonly="true">
+								<input class="form-control" id="userName" type="text" required name="userName" th:value="${user.userName}" th:readonly="true">
 							</div>
 						</div>
 						
@@ -50,7 +50,7 @@
 						<div class="form-group">
 							<label for="inputPassword" class="col-md-2 control-label">Password</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputPassword" type="password" required name="password">
+								<input class="form-control" id="password" type="password" required name="password">
 							</div>
 						</div>
 						
@@ -58,7 +58,7 @@
 						<div class="form-group">
 							<label for="inputPassword1" class="col-md-2 control-label">Confirm Password</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputPassword1" type="password" required name="password1">
+								<input class="form-control" id="password1" type="password" required name="password1">
 							</div>
 						</div>
 
@@ -67,21 +67,21 @@
 							<label for="inputFirstName" class="col-md-2 control-label">First Name
 							</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputFirstName" type="text" name="firstName" th:value="${user.firstName}">
+								<input class="form-control" id="firstName" type="text" name="firstName" th:value="${user.firstName}">
 							</div>
 						</div>
 						<!-- --------------  last Name ---------------- -->
 						<div class="form-group">
 							<label for="inputLastName" class="col-md-2 control-label">Last Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputLastName" type="text" name="lastName" th:value="${user.lastName}">
+								<input class="form-control" id="lastName" type="text" name="lastName" th:value="${user.lastName}">
 							</div>
 						</div>
 						
 						<!-- --------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">Sign Up</button>
+								<button type="submit" class="btn btn-primary">Submit</button>
 								<a href="profile" class="btn btn-default">
 									Cancel
 								</a>

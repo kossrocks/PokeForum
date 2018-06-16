@@ -64,20 +64,17 @@ public class NavigationController {
 		return "index";
 	}
 	
+	
 	@RequestMapping("/signUp")
 	public String signUp(Model model, Principal principal) {
 
 		int id = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(id);
 		model.addAttribute("user",user);
-		
-		
 
-		
 		return "signUp";
 	}
 	
-		
 	
 	/*public String deleteData(Model model, @RequestParam int id) {
 		employeeDao.delete(id);

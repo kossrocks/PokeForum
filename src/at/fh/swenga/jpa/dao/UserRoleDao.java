@@ -7,7 +7,8 @@ import javax.persistence.TypedQuery;
  
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
- 
+
+import at.fh.swenga.jpa.model.User;
 import at.fh.swenga.jpa.model.UserRole;
  
 @Repository
@@ -30,6 +31,10 @@ public class UserRoleDao {
  
 	public void persist(UserRole userRole) {
 		entityManager.persist(userRole);
+	}
+	
+	public void merge(UserRole userRole) {
+		entityManager.merge(userRole);
 	}
 }
 

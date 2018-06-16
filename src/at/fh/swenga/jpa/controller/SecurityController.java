@@ -1,11 +1,14 @@
 package at.fh.swenga.jpa.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +23,7 @@ import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
+import at.fh.swenga.jpa.dao.UserRepository;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
@@ -56,6 +60,9 @@ public class SecurityController {
 	
 	@Autowired
 	AttackDao attackDao;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@RequestMapping("/fillUsers")
 	@Transactional
@@ -392,13 +399,13 @@ public class SecurityController {
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-	public String showAddEmployeeForm(Model model) {
+	public String showAddUserForm(Model model) {
 		return "signUp";
 	}
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public String addUser(@RequestParam ("username") String username, @RequestParam ("password") String password, @RequestParam ("password1") 
-							String password1, @Valid  User newUserModel, BindingResult bindingResult,Model model) {
+	public String addNewUser(@RequestParam ("username") String userName, @RequestParam ("password") String password, @RequestParam ("password1") 
+							String password1, BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -406,38 +413,29 @@ public class SecurityController {
 				errorMessage += fieldError.getField() + " is invalid<br>";
 			}
 			model.addAttribute("errorMessage", errorMessage);
-			return "login";
+			return "forward:login";
 		}
 		
+		List<User> users = userRepository.findByUserName(userName);
 		
-		User user = userDao.getUser(username);
-		
-		if(user!=null){
-			model.addAttribute("errorMessage", "User already exists!<br>");
-		}
-		else {
+		if (CollectionUtils.isEmpty(users)) {
 			if (password.equals(password1)) {
-			UserRole userRole = userRoleDao.getRole("ROLE_USER");
-			User u = new User();
-			u.setUserName(newUserModel.getUserName());
-			u.setPassword(password);
-			u.encryptPassword();
-			u.setFirstName(newUserModel.getFirstName());
-			u.setLastName(newUserModel.getLastName());
-			u.setDateOfEntry(newUserModel.getDateOfEntry());
-			u.setEnabled(true);
-			userDao.persist(u);
-			userRoleDao.persist(userRole);
-						
-			model.addAttribute("message", "New user " + newUserModel.getUserName() + " added.");
-			
+			User user = new User();
+			user.setUserName(userName);
+			user.setPassword(password);
+			user.encryptPassword();
+			user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+			userRepository.save(user);
 			} 
 			else {
 				model.addAttribute("errorMessage", "Error: Passwords doesn't match!");
 			}
+		} else {
+			model.addAttribute("errorMessage", "Error: The" + userName + "already exists");
 		}
 		
 		return "profile";
 	}
+  }
+
 	
-}
