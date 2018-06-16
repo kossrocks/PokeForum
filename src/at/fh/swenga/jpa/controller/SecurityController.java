@@ -69,12 +69,12 @@ public class SecurityController {
 		return "login";
 	}
 	
-	/*@RequestMapping(value = "/guest", method = RequestMethod.GET)
-	public String handleGuestLogin( @RequestParam String) {
+	@RequestMapping(value = "/guest", method = RequestMethod.GET)
+	public void fillGuestData() {
+		Input
 		
-		
-		return "login";
-	}*/
+		handleLogin();
+	}
 	
 	
 	@RequestMapping("/fillUsers")
