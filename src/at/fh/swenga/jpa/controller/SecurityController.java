@@ -444,7 +444,7 @@ public class SecurityController {
 		return "login";
 	}
 	/*
-	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception
+	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception 
 	 * ex) {
 	 * 
 	 * return "error";
