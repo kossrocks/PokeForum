@@ -95,6 +95,7 @@ public class SecurityController {
 		User firstUser = new User("user1", "password");
 		firstUser.encryptPassword();
 		firstUser.addUserRole(userRole);
+		firstUser.setEnabled(false);
 		userDao.persist(firstUser);
 
 		User secondUser = new User("GoPokemon", "password");
