@@ -69,6 +69,14 @@ public class SecurityController {
 		return "login";
 	}
 	
+	@RequestMapping(value = "/guest", method = RequestMethod.GET)
+	public void fillGuestData() {
+		Input
+		
+		handleLogin();
+	}
+	
+	
 	@RequestMapping("/fillUsers")
 	@Transactional
 	public String fillData(Model model) {
@@ -80,6 +88,10 @@ public class SecurityController {
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null)
 			adminRole = new UserRole("ROLE_ADMIN");
+		
+		UserRole guestRole = userRoleDao.getRole("ROLE_GUEST");
+		if (guestRole == null)
+			guestRole = new UserRole("ROLE_GUEST");
 
 		User admin = new User("ADMIN", "password");
 		admin.encryptPassword();
@@ -91,6 +103,11 @@ public class SecurityController {
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
+		
+		User guest = new User("guest","guest");
+		guest.encryptPassword();
+		guest.addUserRole(guestRole);
+		userDao.persist(guest);
 
 		User firstUser = new User("user1", "password");
 		firstUser.encryptPassword();
