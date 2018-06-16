@@ -1,6 +1,7 @@
 package at.fh.swenga.jpa.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -27,8 +27,8 @@ public class SpeciesModel implements java.io.Serializable{
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	private Set<TypeModel> types;
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<TypeModel> types;
 	
 	@Column(name = "baseHP")
 	private int baseHealthPoints;
@@ -69,8 +69,7 @@ public class SpeciesModel implements java.io.Serializable{
 		this.baseSpecialDefense = baseSpecialDefense;
 		this.baseSpeed = baseSpeed;
 	}
-
-
+	
 
 	public String getName() {
 		return name;
@@ -80,13 +79,14 @@ public class SpeciesModel implements java.io.Serializable{
 		this.name = name;
 	}
 
-	public Set<TypeModel> getTypes() {
+	public List<TypeModel> getTypes() {
 		return types;
 	}
 
-	public void setTypes(Set<TypeModel> types) {
+	public void setTypes(List<TypeModel> types) {
 		this.types = types;
 	}
+	
 
 	public int getBaseHealthPoints() {
 		return baseHealthPoints;
@@ -150,8 +150,16 @@ public class SpeciesModel implements java.io.Serializable{
 	
 	public void addType(TypeModel type) {
 		if (types== null) {
-			types= new HashSet<TypeModel>();
+			types= new ArrayList<TypeModel>();
 		}
 		types.add(type);
+	}
+	
+	public String getType1(TypeModel type) {
+		if (types == null) {
+			return "";
+		}
+		TypeModel type1 = this.getTypes().iterator().next();
+		return type1.getName();
 	}
 }

@@ -31,6 +31,13 @@ public class AttackDao {
 		return typedResultList;
 	}
 
-	
+	public List<AttackModel> searchAttack(String searchString) {
+		TypedQuery<AttackModel> typedQuery = entityManager.createQuery(
+				"select e from AttackModel e where e.name like :search or e.category like :search order by e.name",
+				AttackModel.class);
+		typedQuery.setParameter("search", "%" + searchString + "%");
+		List<AttackModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 }

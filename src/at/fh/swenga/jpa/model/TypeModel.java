@@ -30,20 +30,14 @@ public class TypeModel implements java.io.Serializable{
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "goodAgainst")
-	private List<TypeModel> goodAgainst;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "weakAgainst")
-	private List<TypeModel> weakAgainst;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinTable(name = "noDamageAgainst")
-	private List<TypeModel> noDamageAgainst;
+	private String goodAgainst;
+
+	
+	private String weakAgainst;
+	
+	
+	private String noDamageAgainst;
 	
 	@OneToMany(mappedBy = "type",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<AttackModel> attacks;
@@ -61,14 +55,10 @@ public class TypeModel implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 	public TypeModel(String name) {
 		super();
 		this.name = name;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -82,27 +72,27 @@ public class TypeModel implements java.io.Serializable{
 		this.name = name;
 	}
 
-	public List<TypeModel> getGoodAgainst() {
+	public String getGoodAgainst() {
 		return goodAgainst;
 	}
 
-	public void setGoodAgainst(List<TypeModel> goodAgainst) {
+	public void setGoodAgainst(String goodAgainst) {
 		this.goodAgainst = goodAgainst;
 	}
 
-	public List<TypeModel> getWeakAgainst() {
+	public String getWeakAgainst() {
 		return weakAgainst;
 	}
 
-	public void setWeakAgainst(List<TypeModel> weakAgainst) {
+	public void setWeakAgainst(String weakAgainst) {
 		this.weakAgainst = weakAgainst;
 	}
 
-	public List<TypeModel> getNoDamageAgainst() {
+	public String getNoDamageAgainst() {
 		return noDamageAgainst;
 	}
 
-	public void setNoDamageAgainst(List<TypeModel> noDamageAgainst) {
+	public void setNoDamageAgainst(String noDamageAgainst) {
 		this.noDamageAgainst = noDamageAgainst;
 	}
 
@@ -131,25 +121,25 @@ public class TypeModel implements java.io.Serializable{
 		this.pokemons = pokemons;
 	}
 	
-	public void addGoodAgainst(TypeModel type) {
+	public void addGoodAgainst(String type) {
 		if (goodAgainst== null) {
-			goodAgainst= new ArrayList<TypeModel>();
+			goodAgainst= new String();
 		}
-		goodAgainst.add(type);
+		goodAgainst += "," + type;
 	}
 	
-	public void addWeakAgainst(TypeModel type) {
+	public void addWeakAgainst(String type) {
 		if (weakAgainst== null) {
-			weakAgainst= new ArrayList<TypeModel>();
+			weakAgainst= new String();
 		}
-		weakAgainst.add(type);
+		weakAgainst += "," + type;
 	}
 	
-	public void addNoDamageAgainst(TypeModel type) {
+	public void addNoDamageAgainst(String type) {
 		if (noDamageAgainst== null) {
-			noDamageAgainst= new ArrayList<TypeModel>();
+			noDamageAgainst= new String();
 		}
-		noDamageAgainst.add(type);
+		noDamageAgainst += "," + type;
 	}
 	
 	

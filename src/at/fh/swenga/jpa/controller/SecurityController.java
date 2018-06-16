@@ -173,132 +173,132 @@ public class SecurityController {
 		TypeModel steel = new TypeModel("Steel");
 		TypeModel fairy = new TypeModel("Fairy");
 
-		normal.addWeakAgainst(rock);
-		normal.addWeakAgainst(steel);
-		normal.addNoDamageAgainst(ghost);
+		normal.addWeakAgainst("rock");
+		normal.addWeakAgainst("steel");
+		normal.addNoDamageAgainst("ghost");
 
-		fighting.addGoodAgainst(normal);
-		fighting.addGoodAgainst(ice);
-		fighting.addGoodAgainst(steel);
-		fighting.addGoodAgainst(rock);
-		fighting.addGoodAgainst(dark);
-		fighting.addWeakAgainst(flying);
-		fighting.addWeakAgainst(poison);
-		fighting.addWeakAgainst(bug);
-		fighting.addWeakAgainst(psychic);
-		fighting.addWeakAgainst(fairy);
-		fighting.addNoDamageAgainst(ghost);
+		fighting.addGoodAgainst("normal");
+		fighting.addGoodAgainst("ice");
+		fighting.addGoodAgainst("steel");
+		fighting.addGoodAgainst("rock");
+		fighting.addGoodAgainst("dark");
+		fighting.addWeakAgainst("flying");
+		fighting.addWeakAgainst("poison");
+		fighting.addWeakAgainst("bug");
+		fighting.addWeakAgainst("psychic");
+		fighting.addWeakAgainst("fairy");
+		fighting.addNoDamageAgainst("ghost");
 
-		flying.addGoodAgainst(grass);
-		flying.addGoodAgainst(bug);
-		flying.addGoodAgainst(fighting);
-		flying.addWeakAgainst(rock);
-		flying.addWeakAgainst(steel);
-		flying.addWeakAgainst(electric);
+		flying.addGoodAgainst("grass");
+		flying.addGoodAgainst("bug");
+		flying.addGoodAgainst("fighting");
+		flying.addWeakAgainst("rock");
+		flying.addWeakAgainst("steel");
+		flying.addWeakAgainst("electric");
 
-		poison.addGoodAgainst(grass);
-		poison.addGoodAgainst(fairy);
-		poison.addWeakAgainst(poison);
-		poison.addWeakAgainst(ground);
-		poison.addWeakAgainst(rock);
-		poison.addWeakAgainst(ghost);
-		poison.addNoDamageAgainst(steel);
+		poison.addGoodAgainst("grass");
+		poison.addGoodAgainst("fairy");
+		poison.addWeakAgainst("poison");
+		poison.addWeakAgainst("ground");
+		poison.addWeakAgainst("rock");
+		poison.addWeakAgainst("ghost");
+		poison.addNoDamageAgainst("steel");
 
-		ground.addGoodAgainst(fire);
-		ground.addGoodAgainst(electric);
-		ground.addGoodAgainst(rock);
-		ground.addGoodAgainst(steel);
-		ground.addGoodAgainst(poison);
-		ground.addWeakAgainst(bug);
-		ground.addWeakAgainst(grass);
-		ground.addNoDamageAgainst(flying);
+		ground.addGoodAgainst("fire");
+		ground.addGoodAgainst("electric");
+		ground.addGoodAgainst("rock");
+		ground.addGoodAgainst("steel");
+		ground.addGoodAgainst("poison");
+		ground.addWeakAgainst("bug");
+		ground.addWeakAgainst("grass");
+		ground.addNoDamageAgainst("flying");
 
-		rock.addGoodAgainst(ice);
-		rock.addGoodAgainst(flying);
-		rock.addGoodAgainst(fire);
-		rock.addGoodAgainst(bug);
-		rock.addWeakAgainst(fighting);
-		rock.addWeakAgainst(ground);
-		rock.addWeakAgainst(steel);
+		rock.addGoodAgainst("ice");
+		rock.addGoodAgainst("flying");
+		rock.addGoodAgainst("fire");
+		rock.addGoodAgainst("bug");
+		rock.addWeakAgainst("fighting");
+		rock.addWeakAgainst("ground");
+		rock.addWeakAgainst("steel");
 
-		bug.addGoodAgainst(psychic);
-		bug.addGoodAgainst(dark);
-		bug.addGoodAgainst(grass);
-		bug.addWeakAgainst(fighting);
-		bug.addWeakAgainst(flying);
-		bug.addWeakAgainst(poison);
-		bug.addWeakAgainst(ghost);
-		bug.addWeakAgainst(steel);
-		bug.addWeakAgainst(fire);
-		bug.addWeakAgainst(fairy);
+		bug.addGoodAgainst("psychic");
+		bug.addGoodAgainst("dark");
+		bug.addGoodAgainst("grass");
+		bug.addWeakAgainst("fighting");
+		bug.addWeakAgainst("flying");
+		bug.addWeakAgainst("poison");
+		bug.addWeakAgainst("ghost");
+		bug.addWeakAgainst("steel");
+		bug.addWeakAgainst("fire");
+		bug.addWeakAgainst("fairy");
 
-		ghost.addGoodAgainst(ghost);
-		ghost.addGoodAgainst(psychic);
-		ghost.addWeakAgainst(dark);
-		ghost.addNoDamageAgainst(normal);
+		ghost.addGoodAgainst("ghost");
+		ghost.addGoodAgainst("psychic");
+		ghost.addWeakAgainst("dark");
+		ghost.addNoDamageAgainst("normal");
 
-		steel.addGoodAgainst(ice);
-		steel.addGoodAgainst(rock);
-		steel.addGoodAgainst(fairy);
-		steel.addWeakAgainst(steel);
-		steel.addWeakAgainst(fire);
-		steel.addWeakAgainst(water);
-		steel.addWeakAgainst(electric);
+		steel.addGoodAgainst("ice");
+		steel.addGoodAgainst("rock");
+		steel.addGoodAgainst("fairy");
+		steel.addWeakAgainst("steel");
+		steel.addWeakAgainst("fire");
+		steel.addWeakAgainst("water");
+		steel.addWeakAgainst("electric");
 
-		fire.addGoodAgainst(grass);
-		fire.addGoodAgainst(steel);
-		fire.addGoodAgainst(ice);
-		fire.addGoodAgainst(bug);
-		fire.addWeakAgainst(dragon);
-		fire.addWeakAgainst(water);
-		fire.addWeakAgainst(rock);
-		fire.addWeakAgainst(fire);
+		fire.addGoodAgainst("grass");
+		fire.addGoodAgainst("steel");
+		fire.addGoodAgainst("ice");
+		fire.addGoodAgainst("bug");
+		fire.addWeakAgainst("dragon");
+		fire.addWeakAgainst("water");
+		fire.addWeakAgainst("rock");
+		fire.addWeakAgainst("fire");
 
-		water.addGoodAgainst(fire);
-		water.addGoodAgainst(rock);
-		water.addGoodAgainst(ground);
-		water.addWeakAgainst(water);
-		water.addWeakAgainst(grass);
-		water.addWeakAgainst(dragon);
+		water.addGoodAgainst("fire");
+		water.addGoodAgainst("rock");
+		water.addGoodAgainst("ground");
+		water.addWeakAgainst("water");
+		water.addWeakAgainst("grass");
+		water.addWeakAgainst("dragon");
 
-		electric.addGoodAgainst(flying);
-		electric.addGoodAgainst(water);
-		electric.addWeakAgainst(electric);
-		electric.addWeakAgainst(grass);
-		electric.addWeakAgainst(dragon);
-		electric.addNoDamageAgainst(ground);
+		electric.addGoodAgainst("flying");
+		electric.addGoodAgainst("water");
+		electric.addWeakAgainst("electric");
+		electric.addWeakAgainst("grass");
+		electric.addWeakAgainst("dragon");
+		electric.addNoDamageAgainst("ground");
 
-		psychic.addGoodAgainst(fighting);
-		psychic.addGoodAgainst(poison);
-		psychic.addWeakAgainst(steel);
-		psychic.addWeakAgainst(psychic);
-		psychic.addNoDamageAgainst(dark);
+		psychic.addGoodAgainst("fighting");
+		psychic.addGoodAgainst("poison");
+		psychic.addWeakAgainst("steel");
+		psychic.addWeakAgainst("psychic");
+		psychic.addNoDamageAgainst("dark");
 
-		ice.addGoodAgainst(dragon);
-		ice.addGoodAgainst(flying);
-		ice.addGoodAgainst(grass);
-		ice.addGoodAgainst(ground);
-		ice.addWeakAgainst(steel);
-		ice.addWeakAgainst(fire);
-		ice.addWeakAgainst(water);
-		ice.addWeakAgainst(ice);
+		ice.addGoodAgainst("dragon");
+		ice.addGoodAgainst("flying");
+		ice.addGoodAgainst("grass");
+		ice.addGoodAgainst("ground");
+		ice.addWeakAgainst("steel");
+		ice.addWeakAgainst("fire");
+		ice.addWeakAgainst("water");
+		ice.addWeakAgainst("ice");
 
-		dragon.addGoodAgainst(dragon);
-		dragon.addWeakAgainst(steel);
-		dragon.addNoDamageAgainst(fairy);
+		dragon.addGoodAgainst("dragon");
+		dragon.addWeakAgainst("steel");
+		dragon.addNoDamageAgainst("fairy");
 
-		dark.addGoodAgainst(ghost);
-		dark.addGoodAgainst(psychic);
-		dark.addWeakAgainst(fighting);
-		dark.addWeakAgainst(dark);
-		dark.addWeakAgainst(fairy);
+		dark.addGoodAgainst("ghost");
+		dark.addGoodAgainst("psychic");
+		dark.addWeakAgainst("fighting");
+		dark.addWeakAgainst("dark");
+		dark.addWeakAgainst("fairy");
 
-		fairy.addGoodAgainst(dragon);
-		fairy.addGoodAgainst(fighting);
-		fairy.addGoodAgainst(dark);
-		fairy.addWeakAgainst(poison);
-		fairy.addWeakAgainst(steel);
-		fairy.addWeakAgainst(fire);
+		fairy.addGoodAgainst("dragon");
+		fairy.addGoodAgainst("fighting");
+		fairy.addGoodAgainst("dark");
+		fairy.addWeakAgainst("poison");
+		fairy.addWeakAgainst("steel");
+		fairy.addWeakAgainst("fire");
 
 		typeDao.persist(normal);
 		typeDao.persist(water);
@@ -406,6 +406,9 @@ public class SecurityController {
 		attackDao.persist(solarBeam);
 		attackDao.persist(surf);
 		attackDao.persist(razorLeaf);
+		
+		
+		
 
 		return "forward:login";
 	}

@@ -4,10 +4,12 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.EntryDao;
@@ -97,6 +99,15 @@ public class NavigationController {
 		
 	}
 	
+	@RequestMapping("/userProfile")
+	public String userProfile(Model model,@RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+		
+		return "profile";
+	}
+	
 	@RequestMapping("/users")
 	public String users(Model model) {
 
@@ -120,7 +131,13 @@ public class NavigationController {
 	public String pokemon(Model model) {
 		
 		List<SpeciesModel> pokemons = speciesDao.getAllSpecies();
-		model.addAttribute("pokemons", pokemons);	
+		model.addAttribute("pokemons", pokemons);
+		
+		List<TypeModel> types = typeDao.getAllTypes();
+		model.addAttribute("types", types);	
+		
+		
+		
 		
 		return "pokemon";
 	}
@@ -153,16 +170,7 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
-	@RequestMapping("/editUser")
-	public String editUser(Model model, Principal principal) {
-
-		int id = userDao.getUser(principal.getName()).getId();
-		User user = userDao.getUserById(id);
-		model.addAttribute("user",user);
-
-		
-		return "editUser";
-	}
+	
 	
 	/*@RequestMapping("/uploadPicture")
 	public String uploadPicture(Model model, @RequestParam int id ) {
