@@ -2,6 +2,7 @@ package at.fh.swenga.jpa.controller;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -23,6 +24,7 @@ import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
+import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.User;
 
 
@@ -41,6 +43,36 @@ public class UserController {
 	@Autowired
 	UserRoleDao userRoleDao;
 	
+	
+	@RequestMapping(value = "/disableUser")
+    public String disableUser(Model model, @RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		user.setEnabled(false);
+		userDao.merge(user);
+		
+		
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
+
+		
+		return "users";
+    }
+	
+	@RequestMapping(value = "/enableUser")
+    public String enableUser(Model model, @RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		user.setEnabled(true);
+		userDao.merge(user);
+		
+		
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
+
+		
+		return "users";
+    }
 	
 	
 	@RequestMapping(value = "/username", method = RequestMethod.GET)
