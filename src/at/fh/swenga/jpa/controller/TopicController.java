@@ -184,11 +184,13 @@ public class TopicController {
 	}
 
 	@RequestMapping("/searchTopics")
-	public String search(Model model, @RequestParam String searchString) {
-				
-		model.addAttribute("topics", topicDao.searchTopic(searchString));
+	public String searchIt(Model model, @RequestParam String searchString) {
+			
+		List<TopicModel> topics = topicDao.searchTopic(searchString);
+		
+		model.addAttribute("topics", topics);
 
-		return "forward:index";
+		return "index";
 	}
 	
 	
