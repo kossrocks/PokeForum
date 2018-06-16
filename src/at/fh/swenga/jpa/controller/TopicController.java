@@ -183,6 +183,16 @@ public class TopicController {
 
 	}
 
+	@RequestMapping("/searchTopics")
+	public String search(Model model, @RequestParam String searchString) {
+				
+		model.addAttribute("topics", topicDao.searchTopic(searchString));
+
+		return "forward:index";
+	}
+	
+	
+	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 

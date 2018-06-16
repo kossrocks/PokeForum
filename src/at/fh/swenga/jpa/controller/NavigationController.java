@@ -100,7 +100,8 @@ public class NavigationController {
 	@RequestMapping("/users")
 	public String users(Model model) {
 
-
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
 
 		
 		return "users";
