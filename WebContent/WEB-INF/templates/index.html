@@ -13,6 +13,11 @@
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="includes/table.css">
 <style>
+
+body {
+background-color: red;
+
+}
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -31,6 +36,7 @@
 </head>
 <body>
 	<div class="container" role="main">
+	<div class="col-md-10">
 
 		<div class="page-header">
 			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
@@ -58,9 +64,9 @@
 		</div>
 		<!--  1 simple button ----------------------------------------------------------- -->
 
-
+	</div>
 	<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-10">
 
 				<!-- HTML form with search textbox and submit button-->
 		<form class="navbar-form navbar-right" action="searchTopics">
@@ -94,7 +100,7 @@
 									Visit
 								</a>
 
-								<a th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
+								<a sec:authorize="hasRole('USER')" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									
@@ -107,7 +113,7 @@
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-				<a href="addTopic" class="btn btn-default">
+				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-default">
 				New Topic
 				</a>				
 			</div>

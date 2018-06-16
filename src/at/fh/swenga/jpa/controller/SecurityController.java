@@ -1,17 +1,9 @@
 package at.fh.swenga.jpa.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,7 +63,7 @@ public class SecurityController {
 	
 	@RequestMapping(value = "/guest", method = RequestMethod.GET)
 	public void fillGuestData() {
-		Input
+		
 		
 		handleLogin();
 	}
@@ -112,6 +104,7 @@ public class SecurityController {
 		User firstUser = new User("user1", "password");
 		firstUser.encryptPassword();
 		firstUser.addUserRole(userRole);
+		firstUser.setEnabled(false);
 		userDao.persist(firstUser);
 
 		User secondUser = new User("GoPokemon", "password");
@@ -444,7 +437,7 @@ public class SecurityController {
 		return "login";
 	}
 	/*
-	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception
+	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception 
 	 * ex) {
 	 * 
 	 * return "error";

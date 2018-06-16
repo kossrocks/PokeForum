@@ -2,12 +2,14 @@ package at.fh.swenga.jpa.controller;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -23,10 +25,12 @@ import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
+import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.User;
 
 
-
+@Controller
 public class UserController {
 	
 	@Autowired
@@ -41,13 +45,48 @@ public class UserController {
 	@Autowired
 	UserRoleDao userRoleDao;
 	
+
+	@RequestMapping("/searchUsers")
+	public String searchUser(Model model, @RequestParam String searchString) {
+			
+		List<User> users = userDao.searchUser(searchString); 
+		
+		model.addAttribute("users", users);
+
+		return "users";
+	}
 	
-	
-	@RequestMapping(value = "/username", method = RequestMethod.GET)
-    @ResponseBody
-    public String currentUserName(Principal principal) {
-        return principal.getName();
+
+	@RequestMapping(value = "/disableUser", method = RequestMethod.GET)
+    public String disableUser(Model model, @RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		user.setEnabled(false);
+		userDao.merge(user);
+		
+		
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
+
+		
+		return "users";
     }
+	
+	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
+    public String enableUser(Model model, @RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		user.setEnabled(true);
+		userDao.merge(user);
+		
+		
+		List<User> users = userDao.getAllUsers();
+		model.addAttribute("users",users);
+
+		
+		return "users";
+    }
+	
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadForm(Model model) {

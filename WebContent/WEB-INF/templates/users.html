@@ -101,6 +101,16 @@ input:checked + .slider:before {
 		<nav th:replace="~{includes/sidebar}"></nav>
 
 		
+		<form class="navbar-form navbar-right" action="searchUsers">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span>
+			</div>
+		</form>
+		
+		
 	<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 
@@ -123,11 +133,11 @@ input:checked + .slider:before {
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet' }"></td>
 							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
 							<td th:text="${user.enabled}"></td>
-
-							<td th:if="${user.enabled}"> <button type="button" class="btn btn-danger">Disable</button></td>
-							<td th:if="${user.enabled == false}"> <button type="button" class="btn btn-success">Enable</button></td>
+ 							
+							<td> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
+							 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>
 							
-							
+						
 							
 							
 						<!--	<td> <label class="switch"> <input type="checkbox"> <span class="slider round"></span></label> </td> -->

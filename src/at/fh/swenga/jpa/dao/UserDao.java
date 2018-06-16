@@ -76,4 +76,21 @@ public class UserDao {
 		return count;
 	}
 	
+	
+	
+	
+	
+	/*   TRY USER SEARCH */
+	public List<User> searchUser(String searchString) {
+		TypedQuery<User> typedQuery = entityManager.createQuery(
+				"select u from User u where u.userName like :search or u.firstName like :search or u.lastName like :search order by u.id",
+				User.class);
+		typedQuery.setParameter("search", "%" + searchString + "%");
+		List<User> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
+	
+	
+	
+	
 }
