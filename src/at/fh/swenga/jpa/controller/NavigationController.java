@@ -122,7 +122,12 @@ public class NavigationController {
 	public String pokemon(Model model) {
 		
 		List<SpeciesModel> pokemons = speciesDao.getAllSpecies();
-		model.addAttribute("pokemons", pokemons);	
+		model.addAttribute("pokemons", pokemons);
+		
+		List<TypeModel> types = typeDao.getAllTypes();
+		model.addAttribute("types", types);	
+		
+		
 		
 		return "pokemon";
 	}

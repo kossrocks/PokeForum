@@ -55,7 +55,11 @@
 
 		<!--  1 simple button ----------------------------------------------------------- -->
 
-		<h1>List of all pokemon species</h1> 
+
+		<h1>List of all pokemon species</h1>
+
+		
+
 
 		
 		<div class="row">
@@ -63,20 +67,17 @@
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
-							<th></th>
+							
 							<th>Name</th>
-							<th>Species</th>
-							<th>Type</th>
-							<th>Level</th>
+							<th>Type 1</th>
+							<th>Type 2</th>
 							<th>HP</th>
 							<th>Attack</th>
 							<th>Defense</th>
 							<th>SpecialAttack</th>
 							<th>SpecialDefense</th>
 							<th>Speed</th>
-							<th>Gender</th>
-							<th>Shiny</th>
-
+							
 
 						</tr>
 					</thead>
@@ -84,22 +85,18 @@
 					<tbody>
 
 						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="pokemon : ${pokemons}">
-							<td th:text="${pokemon.name}"></td>
-							<td th:text="${pokemon.species}"></td>
-							<td th:text="${pokemon.types}"></td>
-							<td th:text="${pokemon.level}"></td>
-							<td th:text="${pokemon.hp}"></td>
-							<td th:text="${pokemon.attack}"></td>
-							<td th:text="${pokemon.defense}"></td>
-							<td th:text="${pokemon.specialAttack}"></td>
-							<td th:text="${pokemon.specialDefense}"></td>
-							<td th:text="${pokemon.speed}"></td>
-							<td th:text="${pokemon.gender}"></td>
-							<td th:text="${pokemon.shiny}"></td>
+						
+						
 							
-							
-
+						<tr th:each="species : ${pokemons}">	
+							<td th:text="${species.name}"></td>
+							<td th:text="${species.name}"></td>
+							<td th:text="${species.baseHealthPoints}"></td>
+							<td th:text="${species.baseAttack}"></td>
+							<td th:text="${species.baseDefense}"></td>
+							<td th:text="${species.baseSpecialAttack}"></td>
+							<td th:text="${species.baseSpecialDefense}"></td>
+							<td th:text="${species.baseSpeed}"></td>
 						</tr>
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>

@@ -32,7 +32,7 @@ public class EntryDao {
 		typedQuery.setParameter("id", id);
 		List<EntryModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
-	}
+	}	
 	
 	public EntryModel getEntry(int id){
 		TypedQuery<EntryModel> typedQuery = entityManager.createQuery("select e from EntryModel e where e.id = :id",

@@ -1,6 +1,7 @@
 package at.fh.swenga.jpa.model;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -69,8 +70,7 @@ public class SpeciesModel implements java.io.Serializable{
 		this.baseSpecialDefense = baseSpecialDefense;
 		this.baseSpeed = baseSpeed;
 	}
-
-
+	
 
 	public String getName() {
 		return name;
@@ -153,5 +153,13 @@ public class SpeciesModel implements java.io.Serializable{
 			types= new HashSet<TypeModel>();
 		}
 		types.add(type);
+	}
+	
+	public String getType1(TypeModel type) {
+		if (types == null) {
+			return "";
+		}
+		TypeModel type1 = this.getTypes().iterator().next();
+		return type1.getName();
 	}
 }
