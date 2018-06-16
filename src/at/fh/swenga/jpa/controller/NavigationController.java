@@ -161,16 +161,7 @@ public class NavigationController {
 		return "editSpecies";
 	}
 	
-	@RequestMapping("/editUser")
-	public String editUser(Model model, Principal principal) {
-
-		int id = userDao.getUser(principal.getName()).getId();
-		User user = userDao.getUserById(id);
-		model.addAttribute("user",user);
-
-		
-		return "editUser";
-	}
+	
 	
 	/*@RequestMapping("/uploadPicture")
 	public String uploadPicture(Model model, @RequestParam int id ) {
