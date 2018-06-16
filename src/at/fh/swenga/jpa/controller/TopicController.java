@@ -149,6 +149,7 @@ public class TopicController {
 	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text) {
 		EntryModel entry = entryDao.getEntry(id);
 		entry.setContent(text);
+		entry.setEdited(true);
 		entryDao.merge(entry);
 
 		TopicModel topic = topicDao.getTopic(entry.getTopic().getId());
