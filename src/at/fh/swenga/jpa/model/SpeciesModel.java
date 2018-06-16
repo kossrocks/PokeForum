@@ -27,7 +27,7 @@ public class SpeciesModel implements java.io.Serializable{
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<TypeModel> types;
 	
 	@Column(name = "baseHP")
