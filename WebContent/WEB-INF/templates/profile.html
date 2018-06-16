@@ -87,9 +87,9 @@
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Date of Entry</th>
-							<th>Picture</th>
-							<!--  <th>Number of Topics</th>
-							<th>Number of Entries</th> -->
+							<!--<th>Picture</th>-->
+							<th>Number of Topics</th>
+							<th>Number of Entries</th> 
 						</tr>
 					</thead>
 					<tbody>
@@ -99,8 +99,8 @@
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
 							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
 							<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}"></td>
-							<!--  <td th:text="${user.topics.size()}"></td>
-							<td th:text="${user.entries.size()}"></td> -->
+							<td th:text="${user.topics.size()}"></td>
+							<td th:text="${user.entries.size()}"></td> 
 							<td><span th:if="${user.picture != null}"> 
 								<a th:href="@{download(pictureId=${user.picture.id})}"
 											target="_blank" th:text="${user.picture.filename}"></a>
@@ -112,8 +112,9 @@
 				</table>
 			</div>
 		</div>
-	</div>
-
+		
+		
+		
 	</div>
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />

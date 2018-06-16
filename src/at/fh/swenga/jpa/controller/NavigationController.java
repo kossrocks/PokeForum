@@ -174,14 +174,14 @@ public class NavigationController {
 		//model.addAttribute("picture", picture);
 		
 		return "uploadPicture";
-	}*/
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 
 		return "error";
 
-	}
+	}*/
 	
 }
 
