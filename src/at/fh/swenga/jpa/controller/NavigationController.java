@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.EntryDao;
@@ -98,6 +99,14 @@ public class NavigationController {
 		
 	}
 	
+	@RequestMapping("/userProfile")
+	public String userProfile(Model model,@RequestParam int id) {
+		
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+		
+		return "profile";
+	}
 	
 	@RequestMapping("/users")
 	public String users(Model model) {

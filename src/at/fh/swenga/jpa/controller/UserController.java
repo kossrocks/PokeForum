@@ -64,16 +64,18 @@ public class UserController {
 	public String disableUser(Model model, @RequestParam int id) {
 
 		User user = userDao.getUserById(id);
-		user.setEnabled(false);
-		userDao.merge(user);
-
+		if (user.getUserName().equalsIgnoreCase("admin")) {
+			model.addAttribute("errorMessage", "You cannot disable yourself, moron!");
+		} else {
+			user.setEnabled(false);
+			userDao.merge(user);
+		}
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
 
 		return "users";
 
 	}
-
 
 	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
 	public String enableUser(Model model, @RequestParam int id) {
@@ -154,26 +156,28 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public String editedEntry(Model model, @RequestParam("userName") String username, @RequestParam("password") String password, @RequestParam("password1") String password1, @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+	public String editedEntry(Model model, @RequestParam("userName") String username,
+			@RequestParam("password") String password, @RequestParam("password1") String password1,
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
 		User user = userDao.getUser(username);
-		if(password != null) {
-			if(password.equals(password1)) {
-			user.setPassword(password);
-			user.encryptPassword();
-			}else {
+		if (password != null) {
+			if (password.equals(password1)) {
+				user.setPassword(password);
+				user.encryptPassword();
+			} else {
 				model.addAttribute("errorMessage", "Confirmation password is not the same as password");
 			}
 		}
-		
-		if(firstName != null) {
+
+		if (firstName != null) {
 			user.setFirstName(firstName);
 		}
-		if(lastName != null) {
+		if (lastName != null) {
 			user.setLastName(lastName);
 		}
-		
+
 		userDao.merge(user);
-		
+
 		model.addAttribute("user", user);
 
 		return "profile";
