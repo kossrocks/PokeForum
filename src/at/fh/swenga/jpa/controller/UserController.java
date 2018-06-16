@@ -25,6 +25,7 @@ import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.User;
 
 
@@ -42,6 +43,17 @@ public class UserController {
 	
 	@Autowired
 	UserRoleDao userRoleDao;
+	
+	
+	@RequestMapping("/searchUsers")
+	public String searchUser(Model model, @RequestParam String searchString) {
+			
+		List<User> users = userDao.searchUser(searchString); 
+		
+		model.addAttribute("users", users);
+
+		return "users";
+	}
 	
 	
 	@RequestMapping(value = "/disableUser")
