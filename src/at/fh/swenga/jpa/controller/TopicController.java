@@ -131,36 +131,35 @@ public class TopicController {
 
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
 	public String showEditEntry(Model model, @RequestParam int id, Principal principal) {
-		
+
 		EntryModel entry = entryDao.getEntry(id);
-		
-		TopicModel topic = topicDao.getTopic(entry.getOwner().getId());
-		String username = topic.getOwner().getUserName();
+
+		String username = entry.getOwner().getUserName();
 		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
-		
-		model.addAttribute("entry", entry);
-		
-		
-		return "addEntry";}else {
+
+			model.addAttribute("entry", entry);
+
+			return "addEntry";
+		} else {
 			throw new AccessDeniedException("You are not allowed to edit this, Bitch!");
 		}
 	}
-	
+
 	@RequestMapping(value = "/editEntry", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text) {
 		EntryModel entry = entryDao.getEntry(id);
 		entry.setContent(text);
 		entryDao.merge(entry);
-		
+
 		TopicModel topic = topicDao.getTopic(entry.getTopic().getId());
 		List<EntryModel> entries = entryDao.getAllEntriesInTopic(topic.getId());
 		model.addAttribute("entries", entries);
 
 		model.addAttribute("topic", topic);
-		
+
 		return "listEntries";
 	}
-	
+
 	@RequestMapping("/deleteEntry")
 	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId, Principal principal) {
 
@@ -183,15 +182,15 @@ public class TopicController {
 
 	}
 
-	
-	  @ExceptionHandler(Exception.class) public String handleAllException(Exception
-	  ex) {
-	  
-	  return "error";
-	  
-	 }
-	  
-	  /*@ExceptionHandler()
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
+
+	/*
+	 * @ExceptionHandler()
 	 * 
 	 * @ResponseStatus(code=HttpStatus.FORBIDDEN) public String handle403(Exception
 	 * ex) {
