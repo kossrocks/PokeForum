@@ -66,11 +66,9 @@ public class NavigationController {
 	
 	
 	@RequestMapping("/signUp")
-	public String signUp(Model model, Principal principal) {
+	public String signUp(Model model) {
 
-		int id = userDao.getUser(principal.getName()).getId();
-		User user = userDao.getUserById(id);
-		model.addAttribute("user",user);
+	
 
 		return "signUp";
 	}
