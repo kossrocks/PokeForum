@@ -76,9 +76,7 @@
 							<th>Defense</th>
 							<th>SpecialAttack</th>
 							<th>SpecialDefense</th>
-							<th>Speed</th>
-							
-
+							<th>Speed</th>	
 						</tr>
 					</thead>
 
@@ -89,14 +87,15 @@
 						
 							
 						<tr th:each="species : ${pokemons}">	
-							<td th:text="${species.name}"></td>
-							<td th:text="${species.name}"></td>
-							<td th:text="${species.baseHealthPoints}"></td>
-							<td th:text="${species.baseAttack}"></td>
-							<td th:text="${species.baseDefense}"></td>
-							<td th:text="${species.baseSpecialAttack}"></td>
-							<td th:text="${species.baseSpecialDefense}"></td>
-							<td th:text="${species.baseSpeed}"></td>
+							<td th:text="${species.name}">NAME</td>
+							<td th:text="${species.types.get(0).name}">TYPE1</td>
+							<td th:text="${species.types.get(1) =! null ? species.types.get(1).name : 'null' }">TYPE2</td>
+							<td th:text="${species.baseHealthPoints}">HP</td>
+							<td th:text="${species.baseAttack}">ATK</td>
+							<td th:text="${species.baseDefense}">DEF</td>
+							<td th:text="${species.baseSpecialAttack}">SPATK</td>
+							<td th:text="${species.baseSpecialDefense}">SPDEF</td>
+							<td th:text="${species.baseSpeed}">INIT</td>
 						</tr>
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>

@@ -1,5 +1,6 @@
 package at.fh.swenga.jpa.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,13 +30,13 @@ public class PokemonModel implements java.io.Serializable{
 	private SpeciesModel species;
 	
 	@ManyToMany(cascade=CascadeType.PERSIST)
-	private Set<TypeModel> types;
+	private List<TypeModel> types;
 	
 	@Column(name = "level", nullable = false)
 	private int level;
 	
 	@ManyToMany(cascade=CascadeType.PERSIST)
-	private Set<AttackModel> attacks;
+	private List<AttackModel> attacks;
 	
 	@Column(name = "HP", nullable = false)
 	private float healthPoints;
@@ -70,7 +71,7 @@ public class PokemonModel implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public PokemonModel(String name, SpeciesModel species, int level, Set<AttackModel> attacks, String gender,
+	public PokemonModel(String name, SpeciesModel species, int level, List<AttackModel> attacks, String gender,
 			boolean shiny) {
 		super();
 		this.name = name;
@@ -132,11 +133,11 @@ public class PokemonModel implements java.io.Serializable{
 		
 	}
 
-	public Set<AttackModel> getAttacks() {
+	public List<AttackModel> getAttacks() {
 		return attacks;
 	}
 
-	public void setAttacks(Set<AttackModel> attacks) {
+	public void setAttacks(List<AttackModel> attacks) {
 		this.attacks = attacks;
 	}
 
@@ -160,7 +161,7 @@ public class PokemonModel implements java.io.Serializable{
 		return id;
 	}
 
-	public Set<TypeModel> getTypes() {
+	public List<TypeModel> getTypes() {
 		return types;
 	}
 
@@ -188,7 +189,7 @@ public class PokemonModel implements java.io.Serializable{
 		return speed;
 	}
 
-	public void setTypes(Set<TypeModel> types) {
+	public void setTypes(List<TypeModel> types) {
 		this.types = types;
 	}
 	

@@ -127,6 +127,7 @@ public class NavigationController {
 		
 		
 		
+		
 		return "pokemon";
 	}
 	
