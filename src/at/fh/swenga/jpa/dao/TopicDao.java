@@ -62,7 +62,14 @@ public class TopicDao {
 		entityManager.merge(topic);
 	}
 
-	
+	public List<TopicModel> searchTopic(String searchString) {
+		TypedQuery<TopicModel> typedQuery = entityManager.createQuery(
+				"select e from TopicModel e where e.title like :search or e.owner.userName like :search",
+				TopicModel.class);
+		typedQuery.setParameter("search", "%" + searchString + "%");
+		List<TopicModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 	
 	public int deleteById(int id) {

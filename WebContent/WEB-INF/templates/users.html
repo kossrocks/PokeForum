@@ -123,13 +123,15 @@ input:checked + .slider:before {
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet' }"></td>
 							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
 							<td th:text="${user.enabled}"></td>
+
 							<td th:if="${user.enabled}"> <button type="button" class="btn btn-danger">Disable</button></td>
-							<td th:if="${user.!enabled}"> <button type="button" class="btn btn-success">Enable</button></td>
+							<td th:if="${user.enabled == false}"> <button type="button" class="btn btn-success">Enable</button></td>
 							
 							
 							
 							
 						<!--	<td> <label class="switch"> <input type="checkbox"> <span class="slider round"></span></label> </td> -->
+
 							
 
 						</tr>
