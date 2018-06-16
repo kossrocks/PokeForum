@@ -307,13 +307,7 @@ html { height: 100%;}
                 <li><a href="attacks">Attacks</a></li>
                 <li><a href="pokemon">Pokemon</a></li>
                 <li sec:authorize="hasRole('GUEST')"><a href="signUp">Sign Up</a></li>
-                <li >
                 
-                <form  th:action="@{/logout}" method="post" >
-      			<input type="submit" value="Sign Out"/>
-   				</form> 
-                
-                </li>
             </ul>
         </nav>
         <!-- /#sidebar-wrapper -->
