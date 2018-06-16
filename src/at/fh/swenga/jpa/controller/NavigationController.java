@@ -68,8 +68,6 @@ public class NavigationController {
 	@RequestMapping("/signUp")
 	public String signUp(Model model) {
 
-	
-
 		return "signUp";
 	}
 	

@@ -64,7 +64,7 @@ public class TopicDao {
 
 	public List<TopicModel> searchTopic(String searchString) {
 		TypedQuery<TopicModel> typedQuery = entityManager.createQuery(
-				"select e from TopicModel e where e.title like :search or e.owner.userName like :search",
+				"select e from TopicModel e where e.title like :search or e.owner.userName like :search order by e.id",
 				TopicModel.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<TopicModel> typedResultList = typedQuery.getResultList();

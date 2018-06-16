@@ -63,7 +63,7 @@
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary">Upload</button>
-								<a href="editUser">
+								<a href="profile">
 									<button type="button" class="btn btn-default">Cancel</button>
 								</a>
 							</div>
@@ -113,7 +113,11 @@
 			</div>
 		</div>
 		
-		
+		<form th:action="@{/logout}" method="post">
+			<input type="hidden" th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}" /> <input class="btn btn-xs btn-danger"
+				type="submit" value="Logout" />
+		</form>
 		
 	</div>
 	<!--  End of container -->

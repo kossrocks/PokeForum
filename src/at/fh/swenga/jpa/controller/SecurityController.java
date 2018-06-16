@@ -1,17 +1,9 @@
 package at.fh.swenga.jpa.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +61,14 @@ public class SecurityController {
 		return "login";
 	}
 	
+	@RequestMapping(value = "/guest", method = RequestMethod.GET)
+	public void fillGuestData() {
+		
+		
+		handleLogin();
+	}
+	
+	
 	@RequestMapping("/fillUsers")
 	@Transactional
 	public String fillData(Model model) {
@@ -80,6 +80,10 @@ public class SecurityController {
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null)
 			adminRole = new UserRole("ROLE_ADMIN");
+		
+		UserRole guestRole = userRoleDao.getRole("ROLE_GUEST");
+		if (guestRole == null)
+			guestRole = new UserRole("ROLE_GUEST");
 
 		User admin = new User("ADMIN", "password");
 		admin.encryptPassword();
@@ -91,6 +95,11 @@ public class SecurityController {
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
+		
+		User guest = new User("guest","guest");
+		guest.encryptPassword();
+		guest.addUserRole(guestRole);
+		userDao.persist(guest);
 
 		User firstUser = new User("user1", "password");
 		firstUser.encryptPassword();
@@ -428,7 +437,7 @@ public class SecurityController {
 		return "login";
 	}
 	/*
-	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception
+	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception 
 	 * ex) {
 	 * 
 	 * return "error";
