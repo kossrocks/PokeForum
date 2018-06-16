@@ -35,18 +35,9 @@ public class EmployeeController {
 		return "index";
 	}
 
-	@Secured("ROLE_ADMIN")
-	@RequestMapping("/delete")
-	public String deleteData(Model model, @RequestParam int id) {
-		employeeDao.delete(id);
+	
 
-		return "forward:list";
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String handleLogin() {
-		return "login";
-	}
+	
 
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {

@@ -64,6 +64,11 @@ public class SecurityController {
 	@Autowired
 	UserRepository userRepository;
 
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String handleLogin() {
+		return "login";
+	}
+	
 	@RequestMapping("/fillUsers")
 	@Transactional
 	public String fillData(Model model) {
@@ -71,10 +76,15 @@ public class SecurityController {
 		UserRole userRole = userRoleDao.getRole("ROLE_USER");
 		if (userRole == null)
 			userRole = new UserRole("ROLE_USER");
+		
+		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
+		if (adminRole == null)
+			adminRole = new UserRole("ROLE_ADMIN");
 
 		User admin = new User("ADMIN", "password");
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
+		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
 		User user = new User("user", "password");
@@ -394,13 +404,14 @@ public class SecurityController {
 	public String addNewUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
 			@RequestParam("password1") String password1, Model model) {
 		User user = userDao.getUser(userName);
-		if (user.equals(null)) {
+		if (user == null) {
 			if (password.equals(password1)) {
 
 				user = new User(userName, password);
 				user.encryptPassword();
 
 				UserRole userRole = userRoleDao.getRole("ROLE_USER");
+				
 
 				user.addUserRole(userRole);
 				userDao.merge(user);
