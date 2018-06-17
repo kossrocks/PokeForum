@@ -14,22 +14,6 @@
 <link rel="stylesheet" href="includes/table.css">
 <style>
 
-
-.wrapper {
-    display: flex;
-    align-items: stretch;
-}
-
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
 .signOutButton {
 	float: right;
 	margin-top: 5px;
@@ -47,10 +31,16 @@
 	margin-bottom: -20px;
 }
 
+.title {
+	font-size: 40px;
+	margin-bottom: 20px;
+	margin-left: 385px;
+}
+
 </style>
 </head>
 <body>
-	<div class="container" role="main">
+<div class="container" role="main">
 	<div class="row">
 		<div class="col-md-11 col-md-offset-2 header">
 
@@ -78,67 +68,66 @@
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+</div>
 
-		<div class="col-md-11 col-md-offset-1" >
-
-				<!-- HTML form with search textbox and submit button-->
-		<form class="navbar-form navbar-right" action="searchTopics">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for..." name="searchString">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">Go!</button>
-					</span>
-				</div>
-			</form>
-		
-				<table data-toggle="table" class="table table-striped">
-					<thead class="thead-dark">
-						<tr>
-							<th>Topic name</th>
-							<th><span class="glyphicon glyphicon-user"></span>User</th>
-							<th><span class="glyphicon glyphicon-pencil"></span>Last edited</th>
-							<th><span class="glyphicon glyphicon-th-list"></span>Entries</th>				
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="topic : ${topics}">
-							<td th:text="${topic.title}"></td>
-							<td th:text="${topic.owner.userName}"></td>
-							<td th:text="${topic.lastEdited}"></td>
-							<td th:text="${topic.entries.size()}"></td>
-							<td><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-									Visit
-								</a>
-
-								<a th:if="${topic.owner.id.equals(user.id)} or ${isAdmin}" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
-									
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-									Delete
-								</a>
-							</td>
-							
-						</tr>
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
-				</table>
-				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success newTopicButton">
-				New Topic
-				</a>
-				<form class="signOutButton" th:action="@{/logout}" method="post" >
-	      			<input class="btn btn-xs btn-danger signOutButton" type="submit" value="Sign Out"/>
-	   			</form>				
+<div class="container table">
+	<div class="title">Welcome to PokéForum!</div>
+		<div class="col-md-10 col-md-offset-1" >
+			<form class="navbar-form navbar-right" action="searchTopics">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span>
 			</div>
-		</div>
+		</form>
 		
-		
+		<table data-toggle="table" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Topic name</th>
+					<th><span class="glyphicon glyphicon-user"></span>User</th>
+					<th><span class="glyphicon glyphicon-pencil"></span>Last edited</th>
+					<th><span class="glyphicon glyphicon-th-list"></span>Entries</th>				
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<!--  list all items ----------------------------------------------------------- -->
+				<tr th:each="topic : ${topics}">
+					<td th:text="${topic.title}"></td>
+					<td th:text="${topic.owner.userName}"></td>
+					<td th:text="${topic.lastEdited}"></td>
+					<td th:text="${topic.entries.size()}"></td>
+					<td><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-xs btn-success">
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+							Visit
+						</a>
+
+						<a th:if="${topic.owner.id.equals(user.id)} or ${isAdmin}" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
+							
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							Delete
+						</a>
+					</td>
+					
+				</tr>
+				<!--  list all items ----------------------------------------------------------- -->
+			</tbody>
+		</table>
+				
+		<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success newTopicButton">
+			New Topic
+		</a>
+		<form class="signOutButton" th:action="@{/logout}" method="post" >
+	      	<input class="btn btn-xs btn-danger signOutButton" type="submit" value="Sign Out"/>
+	   	</form>				
 	</div>
-	<!--  End of container -->
-	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+</div>
+<!--  End of container -->
+<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
 </html> 

@@ -5,73 +5,81 @@
 	<div th:include="~{includes/bootstrap :: bootstrapMeta}" th:remove="tag" />
 	<title>PokeForum - Topic Editor</title>
 	<div th:include="~{includes/bootstrap :: bootstrapCSS}" th:remove="tag" />
-	<link href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+	
+<style>
+
+.swoopDown {
+	margin-top: 50px;
+}
+
+</style>
 </head>
 
 <body>
-	<div class="container" role="main">
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post"
-					th:action="@{/addTopic}">
-					<fieldset>
-						<legend th:text="'New Topic'">New
-							Topic</legend>
+<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-11 col-md-offset-2 header">
 
-						
-						<!-- --------------  Title ---------------- -->
-						<div class="form-group">
-							<label for="inputTitle" class="col-md-2 control-label">Title
-							</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputTitle" type="text"
-									name="title" maxlength="100" required>
-							</div>
-						</div>
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
-						<!-- --------------  firstEntry ---------------- -->
-						<div class="form-group">
-							<label for="inputFirstEntry" class="col-md-2 control-label">First Entry
-							</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputFirstEntry" type="text"
-									name="firstEntry" maxlength="1000" required>
-							</div>
-						</div>
-
-						<!-- --------------  buttons ---------------- -->
-						<div class="form-group">
-							<div class="col-md-10 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="index" class="btn btn-default"> Cancel </a>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-			</div>
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
+	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
 		</div>
-
 	</div>
+		
+	<div class="col-md-8 col-md-offset-2 swoopDown">
+		<form class="form-horizontal" method="post"
+			th:action="@{/addTopic}">
+			<fieldset>
+				<legend th:text="'New Topic'">New
+					Topic</legend>
 
+				
+				<!-- --------------  Title ---------------- -->
+				<div class="form-group">
+					<label for="inputTitle" class="col-md-2 control-label">Title
+					</label>
+					<div class="col-md-10">
+						<input class="form-control" id="inputTitle" type="text"
+							name="title" maxlength="100" required>
+					</div>
+				</div>
+
+				<!-- --------------  firstEntry ---------------- -->
+				<div class="form-group">
+					<label for="inputFirstEntry" class="col-md-2 control-label">First Entry
+					</label>
+					<div class="col-md-10">
+						<input class="form-control" id="inputFirstEntry" type="text"
+							name="firstEntry" maxlength="1000" required>
+					</div>
+				</div>
+
+				<!-- --------------  buttons ---------------- -->
+				<div class="form-group">
+					<div class="col-md-10 col-md-offset-2">
+						<button type="submit" class="btn btn-primary">Submit</button>
+						<a href="index" class="btn btn-default"> Cancel </a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
 	<!--  End of container -->
 	<div th:include="~{includes/bootstrap :: bootstrapJS}" th:remove="tag" />
-
-	<!-- JS for Datetime picker -->
-	<script type="text/javascript" src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
-	<script>
-		$(function () {
-
-			$(".form_datetime").datetimepicker({
-				format: "dd.mm.yyyy",
-				autoclose: true,
-				todayBtn: true,
-				pickerPosition: "bottom-left",
-				minView: 2
-			});
-
-		});
-	</script>
 
 </body>
 
