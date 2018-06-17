@@ -103,7 +103,8 @@
 					<th data-sortable="true">Defense</th>
 					<th data-sortable="true">SpecialAttack</th>
 					<th data-sortable="true">SpecialDefense</th>
-					<th data-sortable="true">Speed</th>	
+					<th data-sortable="true">Speed</th>
+					<th>More Infos</th>	
 				</tr>
 			</thead>
 
@@ -119,6 +120,9 @@
 					<td th:text="${species.baseSpecialAttack}">SPATK</td>
 					<td th:text="${species.baseSpecialDefense}">SPDEF</td>
 					<td th:text="${species.baseSpeed}">INIT</td>
+					<td> <a th:href="'http://pokemon.wikia.com/wiki/'+${species.name}" target="_blank" class="btn btn-xs btn-success">
+						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+					</td>
 				</tr>
 				<!--  list all items ----------------------------------------------------------- -->
 			

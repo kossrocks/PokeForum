@@ -155,12 +155,12 @@ input:checked + .slider:before {
 		<table data-toggle="table" class="table table-striped">
 			<thead>
 				<tr>
-					<th>User Name</th>
-					<th>First Name</th>
-					<th sec:authorize="hasRole('ADMIN')">Last Name</th>
-					<th>Date of Entry</th>
-					<th>Number of Topics</th>
-					<th>Number of Entries</th>
+					<th data-sortable="true">User Name</th>
+					<th data-sortable="true">First Name</th>
+					<th sec:authorize="hasRole('ADMIN')" data-sortable="true">Last Name</th>
+					<th data-sortable="true">Date of Entry</th>
+					<th data-sortable="true">Number of Topics</th>
+					<th data-sortable="true">Number of Entries</th>
 					<th sec:authorize="hasRole('ADMIN')">Enabled</th>
 					<th sec:authorize="hasRole('ADMIN')">Enable/Disable User</th>
 					<th> Visit</th>				
