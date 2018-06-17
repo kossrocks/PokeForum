@@ -4,10 +4,8 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +18,7 @@ import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
@@ -86,6 +84,9 @@ public class NavigationController {
 		User user = userDao.getUserById(id);
 		model.addAttribute("user",user);
 		model.addAttribute("id",id);
+		
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+		model.addAttribute("pokemons", pokemons);
 		
 		return "profile";
 		

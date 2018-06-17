@@ -77,6 +77,7 @@ public class UserController {
 
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
 	public String enableUser(Model model, @RequestParam int id) {
 
@@ -158,7 +159,7 @@ public class UserController {
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
 			@RequestParam("password") String password, @RequestParam("password1") String password1,
-			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,Principal principal) {
 		User user = userDao.getUser(username);
 		if (password != null) {
 			if (password.equals(password1)) {
@@ -179,8 +180,12 @@ public class UserController {
 		userDao.merge(user);
 
 		model.addAttribute("user", user);
+		int id = userDao.getUser(principal.getName()).getId();
+		model.addAttribute("id", id);
 
 		return "profile";
 	}
 
+	
+	
 }

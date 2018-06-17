@@ -27,6 +27,14 @@ public class PokemonDao {
 		List<PokemonModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
+	
+	public List<PokemonModel> getAllPokemonsOfUser(String name) {
+		TypedQuery<PokemonModel> typedQuery = entityManager.createQuery("select e from PokemonModel e where e.owner.userName = :id order by e.id",
+				PokemonModel.class);
+		typedQuery.setParameter("id", name);
+		List<PokemonModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 
 }
