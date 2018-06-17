@@ -42,7 +42,7 @@ public class TypeModel implements java.io.Serializable{
 	@OneToMany(mappedBy = "type",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<AttackModel> attacks;
 	
-	@ManyToMany(mappedBy = "types",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy = "typesSpecies",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<SpeciesModel> specieses;
 	
 	@ManyToMany(mappedBy = "types",cascade=CascadeType.ALL,fetch=FetchType.LAZY)

@@ -1,5 +1,6 @@
 package at.fh.swenga.jpa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class PokemonModel implements java.io.Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "name", nullable = false, length = 45)
+	@Column(name = "name", length = 45)
 	private String name;
 	
 	@ManyToOne (cascade = CascadeType.PERSIST)
@@ -32,28 +33,28 @@ public class PokemonModel implements java.io.Serializable{
 	@ManyToMany(cascade=CascadeType.PERSIST)
 	private List<TypeModel> types;
 	
-	@Column(name = "level", nullable = false)
+	@Column(name = "level")
 	private int level;
 	
 	@ManyToMany(cascade=CascadeType.PERSIST)
 	private List<AttackModel> attacks;
 	
-	@Column(name = "HP", nullable = false)
+	@Column(name = "HP")
 	private float healthPoints;
 	
-	@Column(name = "ATK", nullable = false)
+	@Column(name = "ATK")
 	private float attack;
 	
-	@Column(name = "DEF", nullable = false)
+	@Column(name = "DEF")
 	private float defense;
 	
-	@Column(name = "SPATK", nullable = false)
+	@Column(name = "SPATK")
 	private float specialAttack;
 	
-	@Column(name = "SPDEF", nullable = false)
+	@Column(name = "SPDEF")
 	private float specialDefense;
 	
-	@Column(name = "SPE", nullable = false)
+	@Column(name = "SPE")
 	private float speed;
 	
 	@Column(name = "gender")
@@ -71,13 +72,12 @@ public class PokemonModel implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public PokemonModel(String name, SpeciesModel species, int level, List<AttackModel> attacks, String gender,
+	public PokemonModel(String name, SpeciesModel species, int level, String gender,
 			boolean shiny) {
 		super();
 		this.name = name;
 		this.species = species;
 		this.level = level;
-		this.attacks = attacks;
 		this.gender = gender;
 		this.shiny = shiny;
 		
@@ -193,5 +193,56 @@ public class PokemonModel implements java.io.Serializable{
 		this.types = types;
 	}
 	
+	public void addAttack(AttackModel type) {
+		if (attacks== null) {
+			attacks= new ArrayList<AttackModel>();
+		}
+		attacks.add(type);
+	}
+
+	public void addType(TypeModel type) {
+		if (types== null) {
+			types= new ArrayList<TypeModel>();
+		}
+		types.add(type);
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public void setHealthPoints(float healthPoints) {
+		this.healthPoints = healthPoints;
+	}
+
+	public void setAttack(float attack) {
+		this.attack = attack;
+	}
+
+	public void setDefense(float defense) {
+		this.defense = defense;
+	}
+
+	public void setSpecialAttack(float specialAttack) {
+		this.specialAttack = specialAttack;
+	}
+
+	public void setSpecialDefense(float specialDefense) {
+		this.specialDefense = specialDefense;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	
+
 }

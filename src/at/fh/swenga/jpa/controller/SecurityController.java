@@ -1,5 +1,7 @@
 package at.fh.swenga.jpa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.CategoryDao;
 import at.fh.swenga.jpa.dao.EntryDao;
+import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
@@ -20,6 +23,7 @@ import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
 import at.fh.swenga.jpa.model.EntryModel;
+import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
@@ -55,6 +59,9 @@ public class SecurityController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	PokemonDao pokemonDao;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String handleLogin() {
@@ -406,6 +413,42 @@ public class SecurityController {
 		attackDao.persist(solarBeam);
 		attackDao.persist(surf);
 		attackDao.persist(razorLeaf);
+		
+		PokemonModel adminPet = new PokemonModel();
+		
+		
+		int hp = pikachu.getBaseHealthPoints();
+		int atk = pikachu.getBaseAttack();
+		int def = pikachu.getBaseDefense();
+		int spatk = pikachu.getBaseSpecialAttack();
+		int spdef = pikachu.getBaseSpecialDefense();
+		int spe = pikachu.getBaseSpeed();
+		
+		
+		adminPet.setName("Pika");
+		
+		//adminPet.setSpecies(pikachu);
+		
+		adminPet.addType(electric);
+		adminPet.setHealthPoints(hp);
+		adminPet.setAttack(atk);
+		adminPet.setDefense(def);
+		adminPet.setSpecialAttack(spatk);
+		adminPet.setSpecialDefense(spdef);
+		adminPet.setSpeed(spe);
+		/*adminPet.setLevel(50);*/
+		adminPet.setGender("female");
+		adminPet.setShiny(true);
+		adminPet.setOwner(admin);
+		
+		/*
+		adminPet.addAttack(surf);
+		adminPet.addAttack(thunder);
+		adminPet.addAttack(tackle);
+		adminPet.addAttack(thunderShock);
+		adminPet.setOwner(admin);
+		*/
+		pokemonDao.persist(adminPet);
 		
 		
 		
