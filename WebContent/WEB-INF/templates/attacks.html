@@ -6,8 +6,21 @@
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - attacks</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+<style>
+
+.light {background-color: green;}
+
+</style>
+
 </head>
+
 <body>
+
+
+	
+	
+
 	<div class="container" role="main">
 
 		<div class="page-header">
@@ -33,39 +46,41 @@
 		<nav th:replace="~{includes/sidebar}"></nav>
 
 		<!--  1 simple button ----------------------------------------------------------- -->
+		
 				
-		
-  		<div class="jumbotron">
-		<center> <h1>List of all attacks</h1> </center>
-		
+  		<div class="jumbotron jumbotron-fluid">
+  		<div class="container">
+		<h1 class="display-3">List of all attacks</h1>
 		</div>
+		</div>
+		
 	
 		<form class="navbar-form navbar-right" action="searchAttacks">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Search for attacks ..." name="searchString">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">Go!</button>
 				</span>
 			</div>
 		</form>
 		
-		<div class="row"></div>
-		<!-- 1 simple button ----------------------------------------------------------- -->
-		
 		
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
+			
+			
+			
 				<table data-toggle="table" class="table table-striped">
 					
 					<thead>
 						<tr>
-							<th>Attack</th>
-							<th>Type</th>
-							<th>Category</th>
-							<th>PowerPoints</th>
-							<th>BasePower</th>
-							<th>Accuracy</th>
+							<th data-sortable="true">Attack</th>
+							<th data-sortable="true">Type</th>
+							<th data-sortable="true">Category</th>
+							<th data-sortable="true">PowerPoints</th>
+							<th data-sortable="true">BasePower</th>
+							<th data-sortable="true">Accuracy</th>
 							<th>BattleEffect</th>
 							
 
@@ -88,15 +103,23 @@
 							<td th:text="${attack.battleEffect}"></td>
 						</tr>
 						
+						
+						
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 
 				
 				</table>
 
+	
+
+
 			</div>
+			
+			
 			
 			<!--  End of container -->
 			<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+					
 </body>
 </html>
