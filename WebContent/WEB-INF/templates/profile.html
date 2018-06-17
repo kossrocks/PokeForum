@@ -35,7 +35,7 @@
 		
 		<!-- --------------  buttons ---------------- -->
 		<div class="form-group">
-			<div class="col-md-10 col-md-offset-2">
+			<div th:if="${user.id.equals(id)}" class="col-md-10 col-md-offset-2">
 				<a href="editUser" class="btn btn-default">
 						Edit
 					</a>

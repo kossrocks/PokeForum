@@ -56,7 +56,7 @@ public class UserDao {
 	 */
 	
 	public List<User> getAllUsers() {
-		TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u order by u.id",
+		TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u where not u.userName = 'guest' order by u.id",
 				User.class);
 		List<User> typedResultList = typedQuery.getResultList();
 		return typedResultList;
