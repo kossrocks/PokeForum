@@ -8,6 +8,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
 
@@ -49,6 +51,9 @@ public class PokemonDao {
 		PokemonModel typedResultList = typedQuery.getSingleResult();
 		return typedResultList;
 	}
+
+	
+	
 
 
 }

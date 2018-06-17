@@ -32,8 +32,14 @@ public class SpeciesDao {
 	
 	public List<SpeciesModel> searchSpecies(String searchString) {
 		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery( 
-				"select p from SpeciesModel p where p.name like :search",
+				/*
+				"select p from SpeciesModel p where p.name like :search or p.types.get(0) | p.types.name like :search order by p.id",
 				SpeciesModel.class);
+				*/
+				
+				"select p from SpeciesModel p where p.types.name like :search order by p.id",
+				SpeciesModel.class);
+				
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<SpeciesModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;

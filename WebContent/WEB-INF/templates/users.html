@@ -5,7 +5,8 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Users</title>
+<title>PokéForum - Users</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +75,7 @@ input:checked + .slider:before {
 } 
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -83,6 +84,40 @@ input:checked + .slider:before {
 	margin-bottom: 20px;
 	margin-left: 455px;
 }
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	background-color: #47596C;
+	height: 40px;
+}
+.swoopRight {
+	margin-right: 5px;
+	font-size: 16px;
+}
+
+.visit {
+	font-size: 20px;
+}
+
+.visit2 {
+	margin-top: 4px;
+}
+
 </style>
   
   
@@ -133,15 +168,15 @@ input:checked + .slider:before {
 		<table data-toggle="table" class="table table-striped">
 			<thead>
 				<tr>
-					<th>User Name</th>
-					<th>First Name</th>
-					<th sec:authorize="hasRole('ADMIN')">Last Name</th>
-					<th>Date of Entry</th>
-					<th>Number of Topics</th>
-					<th>Number of Entries</th>
-					<th sec:authorize="hasRole('ADMIN')">Enabled</th>
-					<th sec:authorize="hasRole('ADMIN')">Enable/Disable User</th>
-					<th> Visit</th>				
+					<th><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User Name</th>
+					<th><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>First Name</th>
+					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>Last Name</th>
+					<th><i class="fa fa-calendar swoopRight" style="color:#0077b3;"></i>Date of Entry</th>
+					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Topics</th>
+					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>
+					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-question swoopRight" style="color:#0077b3;"></i>Enabled</th>
+					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-toggle-on swoopRight" style="color:#0077b3;"></i>Enable/Disable User</th>
+					<th><i class="fa fa-external-link swoopRight" style="color:#0077b3;"></i> Visit</th>				
 				</tr>
 				</thead>
 			
@@ -159,8 +194,8 @@ input:checked + .slider:before {
 						
 					<td sec:authorize="hasRole('ADMIN')"> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
 					 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>
-					<td> <a th:href="@{/userProfile(id=${user.id})}" class="btn btn-xs btn-success">
-						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+					<td> <a th:href="@{/userProfile(id=${user.id})}" class="btn btn-xs btn-success visit2">
+						<span class="glyphicon glyphicon-edit visit" aria-hidden="true"></span></a>
 					</td>
 				</tr>
 					
@@ -168,9 +203,16 @@ input:checked + .slider:before {
 		</table>					
 	</div>
 </div>
-		
-		
-		
+
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/schiggy.png">
+		</div>
+	</div>
+</footer>	
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
 </html>

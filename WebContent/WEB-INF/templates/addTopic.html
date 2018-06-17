@@ -3,7 +3,7 @@
 
 <head>
 	<div th:include="~{includes/bootstrap :: bootstrapMeta}" th:remove="tag" />
-	<title>PokeForum - Topic Editor</title>
+	<title>PokéForum - Topic Editor</title>
 	<div th:include="~{includes/bootstrap :: bootstrapCSS}" th:remove="tag" />
 	
 <style>
@@ -12,6 +12,32 @@
 	margin-top: 50px;
 }
 
+.header {
+	margin-top: 30px;
+	margin-bottom: -20px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 240px;
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
 </head>
 
@@ -78,6 +104,15 @@
 		</form>
 	</div>
 </div>
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/bisasam.png">
+		</div>
+	</div>
+</footer>	
 	<!--  End of container -->
 	<div th:include="~{includes/bootstrap :: bootstrapJS}" th:remove="tag" />
 

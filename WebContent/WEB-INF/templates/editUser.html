@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Sign Up</title>
+<title>PokéForum - Sign Up</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
 <style>
@@ -15,8 +15,30 @@
 }
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -21px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 80px;
+	background-color: #47596C;
+	height: 40px;
 }
 
 </style>
@@ -142,66 +164,16 @@
 		</div>
 	</div>
 </div>
-	
-<!--  <div class="row">
-	<div class="col-md-8 col-md-offset-2">
-		<form class="form-horizontal" method="post" th:action="@{/editUser}">
-			<fieldset>
-			
-				<!-- --------------  username ---------------- 
-				<div class="form-group">
-					<label for="inputUserName" class="col-md-2 control-label">User Name</label>
-					<div class="col-md-10">
-						<input class="form-control" id="userName" type="text" required name="userName" th:value="${user.userName}" th:readonly="true">
-					</div>
-				</div>
-				
-				<!-- --------------  password ---------------- 
-				<div class="form-group">
-					<label for="inputPassword" class="col-md-2 control-label">New Password</label>
-					<div class="col-md-10">
-						<input class="form-control" id="password" type="password" name="password">
-					</div>
-				</div>
-				
-				<!-- --------------  password1 ---------------- 
-				<div class="form-group">
-					<label for="inputPassword1" class="col-md-2 control-label">Confirm New Password</label>
-					<div class="col-md-10">
-						<input class="form-control" id="password1" type="password" name="password1">
-					</div>
-				</div>
-
-				<!-- --------------  first Name ---------------- 
-				<div class="form-group">
-					<label for="inputFirstName" class="col-md-2 control-label">First Name
-					</label>
-					<div class="col-md-10">
-						<input class="form-control" id="firstName" type="text" name="firstName" th:value="${user.firstName}">
-					</div>
-				</div>
-				<!-- --------------  last Name ---------------- 
-				<div class="form-group">
-					<label for="inputLastName" class="col-md-2 control-label">Last Name</label>
-					<div class="col-md-10">
-						<input class="form-control" id="lastName" type="text" name="lastName" th:value="${user.lastName}">
-					</div>
-				</div>
-				
-				<!-- --------------  buttons ---------------- 
-				<div class="form-group">
-					<div class="col-md-10 col-md-offset-2">
-						<button type="submit" class="btn btn-primary">Submit</button>
-						<a href="profile" class="btn btn-default">
-							Cancel
-						</a>
-					</div>
-				</div>
-
-			</fieldset>
-		</form>
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+ 	
+<div class="footer">
+	<div class="row">
+	<div class="col-md-12 foot">
+		<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+		<img class="icon" src="images/glumanda.png">
 	</div>
-</div> -->
+	</div>
+</div>
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>

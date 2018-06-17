@@ -4,13 +4,13 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - attacks</title>
+<title>PokéForum - attacks</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
 <style>
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -20,6 +20,26 @@
 	margin-left: 436px;
 }
 
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
 
 </head>
@@ -95,7 +115,17 @@
 			</tbody>
 		</table>
 	</div>
-</div>		
+</div>	
+
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/schiggy.png">
+		</div>
+	</div>
+</footer>	
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
 </body>

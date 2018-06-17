@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Pokemon</title>
+<title>PokèForum - Pokemon</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet"
@@ -15,7 +15,7 @@
 <style>
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -25,12 +25,32 @@
 	margin-left: 436px;
 }
 
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
 
 </head>
 <body>
 <div class="container" role="main">
-<div class="row">
+	<div class="row">
 		<div class="col-md-11 col-md-offset-2 header">
 				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
@@ -71,17 +91,19 @@
 		</form>	
 		
 		<table data-toggle="table" class="table table-striped">
+		
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Type 1</th>
-					<th>Type 2</th>
-					<th>HP</th>
-					<th>Attack</th>
-					<th>Defense</th>
-					<th>SpecialAttack</th>
-					<th>SpecialDefense</th>
-					<th>Speed</th>	
+					<th data-sortable="true">Name</th>
+					<th data-sortable="true">Type 1</th>
+					<th data-sortable="true">Type 2</th>
+					<th data-sortable="true">HP</th>
+					<th data-sortable="true">Attack</th>
+					<th data-sortable="true">Defense</th>
+					<th data-sortable="true">SpecialAttack</th>
+					<th data-sortable="true">SpecialDefense</th>
+					<th data-sortable="true">Speed</th>
+					<th>More Infos</th>	
 				</tr>
 			</thead>
 
@@ -97,12 +119,27 @@
 					<td th:text="${species.baseSpecialAttack}">SPATK</td>
 					<td th:text="${species.baseSpecialDefense}">SPDEF</td>
 					<td th:text="${species.baseSpeed}">INIT</td>
+					<td> <a th:href="'http://pokemon.wikia.com/wiki/'+${species.name}" target="_blank" class="btn btn-xs btn-success">
+						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+					</td>
 				</tr>
 				<!--  list all items ----------------------------------------------------------- -->
+			
 			</tbody>
 		</table>
 	</div>
 </div>
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/schiggy.png">
+		</div>
+	</div>
+</footer>
+
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" />	
 </body>

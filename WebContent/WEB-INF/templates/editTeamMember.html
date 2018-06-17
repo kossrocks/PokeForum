@@ -5,8 +5,42 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Add Entry</title>
+
+<title>PokéForum - Edit Team Member</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+<style>
+.header {
+	margin-top: 30px;
+	margin-bottom: -20px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 20px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 290px;
+	background-color: #47596C;
+	height: 40px;
+}
+
+</style>
+</head>
+
+
 
 <style>
 
@@ -155,8 +189,18 @@
 		</fieldset>
 		</form>
 	</div>
-</div>
 
+	
+	<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/glumanda.png">
+		</div>
+	</div>
+</footer>
+</div>
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
