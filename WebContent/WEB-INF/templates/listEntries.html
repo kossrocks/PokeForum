@@ -5,17 +5,18 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - list Entries</title>
+<title>PokéForum - list Entries</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
 <style>
 
 .newTopicButton {
 	margin-top: 10px;
+	float: left;
 }
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -66,14 +67,35 @@
 	
 }
 
-.footer {
+.edited {
 	height: 56px;
 	margin-right: 1px;
 	border-right-style: solid;
 	border-bottom-style: solid;
-
 	margin-left: -30px;
 	margin-top: -20px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-right: 10px;
+	margin-top: -30px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	background-color: #47596C;
+	height: 40px;
+	margin-top: 10px;
 }
 
 
@@ -104,7 +126,6 @@
 		</div>
 	</div>
 	
-
 	<div class="row">
 		<div class="col-md-12">
 			<nav th:replace="~{includes/sidebar}"></nav>
@@ -115,18 +136,18 @@
 	
 <div class="container text-center">
 	<div th:text="${topic.title}" class="col-md-12  textTitle"></div>
-<div th:each="entry : ${entries}">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="autor">
-			<p></p>
-			<p th:text="${entry.owner.userName}"></p>
-			<p><a href="profile">My Profile</a></p>
-				<img src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
-			<p></p>	
-			<p th:text="${entry.dateOfCreation}"></p>
+	<div th:each="entry : ${entries}">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="autor">
+					<p></p>
+					<p th:text="${entry.owner.userName}"></p>
+					<p><a href="profile">My Profile</a></p>
+						<img src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
+					<p></p>	
+					<p th:text="${entry.dateOfCreation}"></p>
+				</div>
 			</div>
-		</div>
 		
 		<div class="col-md-9">
 			<div class="row">
@@ -139,7 +160,7 @@
 		</div>
 		
     	<div class="col-md-9">
-      		<div class="footer">
+      		<div class="edited">
       		<hr>
       			 <i th:text="${entry.edited} ? 'this entry has been edited by owner or admin'"></i>
       			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger editButton">
@@ -157,7 +178,19 @@
 		New Entry
 	</a>
 </div>
-	<!--  End of container -->
-	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+ 	
+<div class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/pikachu.png">
+		</div>
+	</div>
+</div>
+
+<!--  End of container -->
+<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
 </html>

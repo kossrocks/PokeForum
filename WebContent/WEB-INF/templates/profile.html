@@ -5,13 +5,13 @@
 
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - User Profile</title>
+<title>PokèForum - User Profile</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
-
 <style>
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -23,7 +23,7 @@
 
 .profilePicture {
 	
-	padding-top: 28px;
+	padding-top: 30px;
 	border-style: solid;
 	padding-bottom: 20px;	
 }
@@ -43,7 +43,8 @@
 .button {
 	display:block;
 	text-align:center;
-	margin-top: 24px;
+	margin-top: 28px;
+	margin-bottom: 4px;
 }
 
 .team {
@@ -52,6 +53,7 @@
 
 .font {
 	font-size: 20px;
+	color: #0077b3;
 }
 
 .icon {
@@ -70,12 +72,9 @@
 }
 
 .foot {
-	margin-top: 60px;
 	background-color: #47596C;
 	height: 40px;
 }
-
-
 </style>
 </head>
 <body>
@@ -110,30 +109,30 @@
 	</div>
 </div>
 
-<div class="container profile">
+<div class="container">
 	<div class="row">
 
 <!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
 
 		<div class="col-md-3 col-md-offset-1 profilePicture">
-		<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
-		<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
-			Edit Profile
-		</a> </span>
-		
+			<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+			<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+				Edit Profile
+			</a> </span>
 		</div>
 		
 <!-- ----------------------------------- User Information--------------------------------------------------------- -->
 
 		<div class="col-md-7 user">
-			<strong class="font"> User Profile</strong><br>
+			<strong class="font"> User Information</strong><br>
+			<p></p>
             <div class="table-responsive">
             <table class="table table-condensed table-responsive table-user-information">
                 <tbody>
                     <tr>    
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                <i class="fa fa-user" style="color:#0077b3;" ></i>    
                                 Username                                                
                             </strong>
                         </td>
@@ -142,7 +141,7 @@
                     <tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                <i class="fa fa-address-card" style="color:#0077b3;"></i>  
                                 First Name                                                
                             </strong>
                         </td>
@@ -152,7 +151,7 @@
                     <tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                <i class="fa fa-address-card" style="color:#0077b3;"></i> 
                                 Last Name                                                
                             </strong>
                         </td>
@@ -161,7 +160,7 @@
 					<tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                <i class="fa fa-calendar" style="color:#0077b3;"></i>
                                 Date of Entry                                                
                             </strong>
                         </td>
@@ -170,8 +169,8 @@
 					<tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
-                                Number of Topics                                                
+                                <i class="fa fa-hashtag" style="color:#0077b3;"></i>
+                                Topics                                                
                             </strong>
                         </td>
                         <td th:text="${user.topics.size()}" class="text-primary"></td>
@@ -179,8 +178,8 @@
                     <tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
-                                Number of Entries                                                
+                                <i class="fa fa-hashtag" style="color:#0077b3;"></i> 
+                                Entries                                                
                             </strong>
                         </td>
                         <td th:text="${user.entries.size()}" class="text-primary"></td>
@@ -188,7 +187,7 @@
                     <tr>        
                         <td>
                             <strong>
-                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                <i class="fa fa-eye" style="color:#0077b3;"></i> 
                                 Role                                                
                             </strong>
                         </td>
@@ -250,126 +249,29 @@
 						
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
-
-				
 				</table>
-
 			</div>
- 	
+			
+ 		</div>
+ 			<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
+				New Team Member
+			</a>
+ 		</div>
+ 		
  	</div>
- 		<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
-			New Team Member
-		</a>
- 	</div>
- 	
 </div>
-
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
- 	
- 	<div class="footer">
-		<div class="row">
-			<div class="col-md-12 foot">
-				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
-				<img class="icon" src="images/pikachu.png">
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<!--  		
-		
-		<div class="form-group">
-			<div th:if="${user.id.equals(id)}" class="col-md-10 col-md-offset-2">
-				<a href="editUser" class="btn btn-default">
-						Edit
-					</a>
-					<a href="profile" class="btn btn-default">
-						Cancel
-					</a>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" enctype="multipart/form-data" method="post" action="upload"> 
-					<fieldset>
-						<legend th:text="'Upload picture for ' + ${user.userName}"></legend>
-						
-						<input type="hidden" name="username" th:value="${user.userName}">
-
-						<div class="form-group">
-							<label for="inputFile" class="col-md-2 control-label">File:</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputFile" type="file" name="myFile">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<div class="col-md-10 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">Upload</button>
-								<a href="profile">
-									<button type="button" class="btn btn-default">Cancel</button>
-								</a>
-							</div>
-						</div>
-					<input type="hidden" th:name="${_csrf.parameterName}" 
-					th:value="${_csrf.token}"/>		
-					</fieldset>
-				</form>
-			</div>
-		</div>
-		
-		
-		<div class="row">
-
-			<div class="col-md-10 col-md-offset-1">
-
-				<table data-toggle="table" class="table table-striped">
-					<thead>
-						<tr>
-							<th>Username</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Date of Entry</th>
-							<!--<th>Picture</th>
-							<th>Number of Topics</th>
-							<th>Number of Entries</th> 
-						</tr>
-					</thead>
-					<tbody>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
-						<tr>
-							<td th:text="${user.userName}"></td>
-							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
-							<td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}"></td>
-							<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}"></td>
-							<td th:text="${user.topics.size()}"></td>
-							<td th:text="${user.entries.size()}"></td> 
-							<td><span th:if="${user.picture != null}"> 
-								<a th:href="@{download(pictureId=${user.picture.id})}"
-											target="_blank" th:text="${user.picture.filename}"></a>
-							</span> 
-							
-						</tr>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-		<form th:action="@{/logout}" method="post">
-			<input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="${_csrf.token}" /> <input class="btn btn-xs btn-danger"
-				type="submit" value="Logout" />
-		</form>
-		
-	</div>
 	
--->
-	<!--  End of container -->
-	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/pikachu.png">
+		</div>
+	</div>
+</footer>
+<!--  End of container -->
+<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 	
 </body>
 </html>
