@@ -114,7 +114,7 @@
 									Visit
 								</a>
 
-								<a sec:authorize="hasRole('USER')" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
+								<a th:if="${topic.owner.id.equals(user.id)} or ${isAdmin}" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									

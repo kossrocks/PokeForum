@@ -134,7 +134,7 @@
 				<div class="col-md-12 content swoopLeft">
           			<div class="contentBox text-left">
             			
-              				<p th:text="${entry.edited} ? ${entry.content}+' {entry was edited by owner or admin}' : ${entry.content}"></p>
+              				<p th:text="${entry.content}"></p>
 
 					</div>
 				</div>
@@ -145,12 +145,12 @@
     	<div class="col-md-9">
       		<div class="footer">
       			 <i th:text="${entry.edited} ? 'this entry has been edited by owner or admin'"></i>
-      			<a th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger editButton">
-				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger editButton">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 					Delete</a>
-       			<a sec:authorize="hasRole('USER')" th:href="@{/editEntry(id=${entry.id})}" class="btn btn-xs btn-success editButton">
-				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+       			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/editEntry(id=${entry.id})}" class="btn btn-xs btn-success editButton">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 					Edit</a>
 			</div>
     	</div>	
