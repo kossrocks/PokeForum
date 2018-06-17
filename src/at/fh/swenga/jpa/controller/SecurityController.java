@@ -423,31 +423,32 @@ public class SecurityController {
 		int spatk = pikachu.getBaseSpecialAttack();
 		int spdef = pikachu.getBaseSpecialDefense();
 		int spe = pikachu.getBaseSpeed();
-		
+		String pikaName = pikachu.getName();
 		
 		adminPet.setName("Pika");
 		
-		//adminPet.setSpecies(pikachu);
+		adminPet.setSpecies(pikaName);
 		
 		adminPet.addType(electric);
-		adminPet.setHealthPoints(hp);
-		adminPet.setAttack(atk);
-		adminPet.setDefense(def);
-		adminPet.setSpecialAttack(spatk);
-		adminPet.setSpecialDefense(spdef);
-		adminPet.setSpeed(spe);
-		/*adminPet.setLevel(50);*/
+		adminPet.setBaseHP(hp);
+		adminPet.setBaseATK(atk);
+		adminPet.setBaseDEF(def);
+		adminPet.setBaseSPATK(spatk);
+		adminPet.setBaseSPDEF(spdef);
+		adminPet.setBaseSPE(spe);
+		adminPet.setLevel(50);
 		adminPet.setGender("female");
 		adminPet.setShiny(true);
 		adminPet.setOwner(admin);
 		
-		/*
+		adminPet.recalculateStats();
+		
 		adminPet.addAttack(surf);
 		adminPet.addAttack(thunder);
 		adminPet.addAttack(tackle);
 		adminPet.addAttack(thunderShock);
 		adminPet.setOwner(admin);
-		*/
+		
 		pokemonDao.persist(adminPet);
 		
 		

@@ -186,14 +186,9 @@
 							<th>Attack2</th>
 							<th>Attack3</th>
 							<th>Attack4</th>
-							<th>HP</th>
-							<th>ATK</th>
-							<th>DEF</th>
-							<th>SP.ATK</th>
-							<th>SP.DEF</th>
-							<th>SPE</th>
 							<th>Gender</th>
 							<th>Shiny</th>
+							<th>Action</th>
 							
 
 
@@ -206,23 +201,26 @@
 						<!--  list all items ----------------------------------------------------------- -->
 							
 							<tr th:each="pokemon : ${pokemons}">	
-							<td class="text-primary" th:text="${pokemon.name}">NAME</td>
-							<td class="text-secondary" th:text="${pokemon.species.name}">SPECIES</td>
-							<td class="text-secondary" th:text="${pokemon.types.get(0).name}">TYPE1</td>
-							<td class="text-secondary" th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
-							<td class="text-secondary" th:text="${pokemon.level}">LEVEL</td>
-							<td class="text-secondary" th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
+							<td th:text="${pokemon.name}">NAME</td>
+							<td th:text="${pokemon.species}">SPECIES</td>
+							<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
+							<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
+							<td th:text="${pokemon.level}">LEVEL</td>
+							<td th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
 							<td th:text="${pokemon.attacks.size() > 1 ? pokemon.attacks.get(1).name : '------' }">ATTACK2</td>
 							<td th:text="${pokemon.attacks.size() > 2 ? pokemon.attacks.get(2).name : '------' }">ATTACK3</td>
 							<td th:text="${pokemon.attacks.size() > 3 ? pokemon.attacks.get(3).name : '------' }">ATTACK4</td>
-							<td th:text="${pokemon.healthPoints}">HP</td>
-							<td th:text="${pokemon.attack}">ATK</td>
-							<td th:text="${pokemon.defense}">DEF</td>
-							<td th:text="${pokemon.specialAttack}">SPATK</td>
-							<td th:text="${pokemon.specialDefense}">SPDEF</td>
-							<td th:text="${pokemon.speed}">SPE</td>
 							<td th:text="${pokemon.gender}">GENDER</td>
 							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
+							<td>
+							<a th:href="" class="btn btn-xs btn-danger editButton">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							Delete</a>
+       						<a th:href="" class="btn btn-xs btn-success editButton">
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+							Edit</a>
+							</td>
 						</tr>
 						
 						<!--  list all items ----------------------------------------------------------- -->
@@ -234,7 +232,9 @@
 			</div>
  	
  	</div>
- 	
+ 	<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
+		New Team Member
+	</a>
  	</div>
 
 </div>
