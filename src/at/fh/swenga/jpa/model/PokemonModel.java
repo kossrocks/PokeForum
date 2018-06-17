@@ -2,11 +2,11 @@ package at.fh.swenga.jpa.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "pokemons")
@@ -27,35 +30,37 @@ public class PokemonModel implements java.io.Serializable{
 	@Column(name = "name", length = 45)
 	private String name;
 	
-	@ManyToOne (cascade = CascadeType.PERSIST)
-	private SpeciesModel species;
+	@Column(name = "species", length = 45)
+	private String species;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private List<TypeModel> types;
 	
 	@Column(name = "level")
 	private int level;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private List<AttackModel> attacks;
 	
 	@Column(name = "HP")
-	private float healthPoints;
+	private float healthPoints = 0;
 	
 	@Column(name = "ATK")
-	private float attack;
+	private float attack = 0;
 	
 	@Column(name = "DEF")
-	private float defense;
+	private float defense = 0;
 	
 	@Column(name = "SPATK")
-	private float specialAttack;
+	private float specialAttack = 0;
 	
 	@Column(name = "SPDEF")
-	private float specialDefense;
+	private float specialDefense = 0;
 	
 	@Column(name = "SPE")
-	private float speed;
+	private float speed = 0;
 	
 	@Column(name = "gender")
 	private String gender;
@@ -65,31 +70,19 @@ public class PokemonModel implements java.io.Serializable{
 	@ManyToOne (cascade = CascadeType.PERSIST)
 	private User owner;
 	
+	private float baseHP;
+	private float baseATK;
+	private float baseDEF;
+	private float baseSPATK;
+	private float baseSPDEF;
+	private float baseSPE;
+	
+	
 	@Version
 	long version;
 	
 	public PokemonModel() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public PokemonModel(String name, SpeciesModel species, int level, String gender,
-			boolean shiny) {
-		super();
-		this.name = name;
-		this.species = species;
-		this.level = level;
-		this.gender = gender;
-		this.shiny = shiny;
-		
-		this.healthPoints = (((2 * species.getBaseHealthPoints()) * level) / 100) + level;
-		this.attack = (((2*species.getBaseAttack())*level)/100)+5;
-		this.defense = (((2*species.getBaseDefense())*level)/100)+5;
-		this.specialAttack = (((2*species.getBaseSpecialAttack())*level)/100)+5;
-		this.specialDefense = (((2*species.getBaseSpecialDefense())*level)/100)+5;
-		this.speed = (((2*species.getBaseSpeed())*level)/100)+5;
-		
-		this.types = species.getTypes();
-		
 	}
 
 	public String getName() {
@@ -100,21 +93,12 @@ public class PokemonModel implements java.io.Serializable{
 		this.name = name;
 	}
 
-	public SpeciesModel getSpecies() {
+	public String getSpecies() {
 		return species;
 	}
 
-	public void setSpecies(SpeciesModel species) {
-		this.species = species;
-		
-		this.healthPoints = (((2 * species.getBaseHealthPoints()) * level) / 100) + level;
-		this.attack = (((2*species.getBaseAttack())*level)/100)+5;
-		this.defense = (((2*species.getBaseDefense())*level)/100)+5;
-		this.specialAttack = (((2*species.getBaseSpecialAttack())*level)/100)+5;
-		this.specialDefense = (((2*species.getBaseSpecialDefense())*level)/100)+5;
-		this.speed = (((2*species.getBaseSpeed())*level)/100)+5;
-		
-		this.types = species.getTypes();
+	public void setSpecies(String species) {
+		this.species = species;	
 	}
 
 	public int getLevel() {
@@ -123,14 +107,6 @@ public class PokemonModel implements java.io.Serializable{
 
 	public void setLevel(int level) {
 		this.level = level;
-		
-		this.healthPoints = (((2 * this.species.getBaseHealthPoints()) * level) / 100) + level;
-		this.attack = (((2*this.species.getBaseAttack())*level)/100)+5;
-		this.defense = (((2*this.species.getBaseDefense())*level)/100)+5;
-		this.specialAttack = (((2*this.species.getBaseSpecialAttack())*level)/100)+5;
-		this.specialDefense = (((2*this.species.getBaseSpecialDefense())*level)/100)+5;
-		this.speed = (((2*this.species.getBaseSpeed())*level)/100)+5;
-		
 	}
 
 	public List<AttackModel> getAttacks() {
@@ -243,6 +219,61 @@ public class PokemonModel implements java.io.Serializable{
 		this.id = id;
 	}
 
-	
+	public float getBaseHP() {
+		return baseHP;
+	}
+
+	public void setBaseHP(float baseHP) {
+		this.baseHP = baseHP;
+	}
+
+	public float getBaseATK() {
+		return baseATK;
+	}
+
+	public void setBaseATK(float baseATK) {
+		this.baseATK = baseATK;
+	}
+
+	public float getBaseDEF() {
+		return baseDEF;
+	}
+
+	public void setBaseDEF(float baseDEF) {
+		this.baseDEF = baseDEF;
+	}
+
+	public float getBaseSPATK() {
+		return baseSPATK;
+	}
+
+	public void setBaseSPATK(float baseSPATK) {
+		this.baseSPATK = baseSPATK;
+	}
+
+	public float getBaseSPDEF() {
+		return baseSPDEF;
+	}
+
+	public void setBaseSPDEF(float baseSPDEF) {
+		this.baseSPDEF = baseSPDEF;
+	}
+
+	public float getBaseSPE() {
+		return baseSPE;
+	}
+
+	public void setBaseSPE(float baseSPE) {
+		this.baseSPE = baseSPE;
+	}
+
+	public void recalculateStats() {
+		this.healthPoints = (2f * baseHP * level / 100f) + level + 10;
+		this.attack = (2f * baseATK * level / 100f) + 5;
+		this.defense = (2f * baseDEF * level / 100f) + 5;
+		this.specialAttack = (2f * baseSPATK * level / 100f) + 5;
+		this.specialDefense = (2f * baseSPDEF * level / 100f) + 5;
+		this.speed = (2f * baseSPE * level / 100f) + 5;
+	}
 
 }
