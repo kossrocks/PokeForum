@@ -59,8 +59,12 @@ public class NavigationController {
 		List<TopicModel> topics = topicDao.getAllTopicsSortById();
 		model.addAttribute("topics", topics);
 		
-		List<TypeModel> types = typeDao.getAllTypes();
-		model.addAttribute("types", types);
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		
 		return "index";
