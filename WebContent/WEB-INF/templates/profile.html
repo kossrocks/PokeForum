@@ -11,14 +11,17 @@
 <style>
 
 .profilePicture {
-	padding-top: 20px;
-	border-style: solid;
-	padding-bottom: 20px;
 	
+	padding-top: 28px;
+	border-style: solid;
+	padding-bottom: 20px;	
 }
 
-.picture {
-	margin-left: 10px;
+.center {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+   
 }
 
 .user {
@@ -27,13 +30,17 @@
 }
 
 .button {
+	display:block;
+	text-align:center;
 	margin-top: 20px;
-	margin-bottom: 5x;
-	margin-left: 55px;;
 }
 
 .team {
 	border-style: solid;
+}
+
+.font {
+	font-size: 20px;
 }
 
 
@@ -76,17 +83,17 @@
 <!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
 
 		<div class="col-md-3 profilePicture">
-		<img src="images/images.jpeg" class="img-circle picture" height="183" width="183" alt="Avatar">
-		<a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success button">
+		<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+		<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
 			Edit Profile
-		</a>	
+		</a> </span>
 		
 		</div>
 		
 <!-- ----------------------------------- User --------------------------------------------------------- -->
 
 		<div class="col-md-9 user">
-			<strong> User Profile</strong><br>
+			<strong class="font"> User Profile</strong><br>
             <div class="table-responsive">
             <table class="table table-condensed table-responsive table-user-information">
                 <tbody>
