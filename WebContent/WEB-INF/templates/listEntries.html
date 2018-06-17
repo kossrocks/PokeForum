@@ -80,9 +80,9 @@
 </style>
 </head>
 <body>
-	<div class="container header" role="main">
+<div class="container" role="main">
 	<div class="row">
-		<div class="col-md-12 col-md-offset-2">
+		<div class="col-md-12 col-md-offset-2 header">
 
 				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
@@ -101,17 +101,15 @@
 		<div th:unless="${message} == null" th:utext="${message}"
 			class="alert alert-success" role="warning"></div>
 		<!--   message ----------------------------------------------------------- -->
-
-
 		</div>
 	</div>
 	
 
-		<div class="row">
-			<div class="col-md-12">
-				<nav th:replace="~{includes/sidebar}"></nav>
-			</div>		
-		</div>
+	<div class="row">
+		<div class="col-md-12">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>		
+	</div>
 </div>
 	
 	

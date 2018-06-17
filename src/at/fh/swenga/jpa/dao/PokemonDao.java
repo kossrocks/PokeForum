@@ -8,6 +8,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
 
@@ -29,6 +31,15 @@ public class PokemonDao {
 		return typedResultList;
 	}
 	
+
+	public List<PokemonModel> getAllPokemonsOfUser(String name) {
+		TypedQuery<PokemonModel> typedQuery = entityManager.createQuery("select e from PokemonModel e where e.owner.userName = :id order by e.id",
+				PokemonModel.class);
+		typedQuery.setParameter("id", name);
+		List<PokemonModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
+
 	
 	
 
