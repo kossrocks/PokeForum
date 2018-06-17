@@ -213,13 +213,9 @@
 							<td th:text="${pokemon.gender}">GENDER</td>
 							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
 							<td>
-							<a th:href="" class="btn btn-xs btn-danger editButton">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-							Delete</a>
-       						<a th:href="" class="btn btn-xs btn-success editButton">
-								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-							Edit</a>
+								<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+									Edit
+								</a> </span>
 							</td>
 						</tr>
 						
