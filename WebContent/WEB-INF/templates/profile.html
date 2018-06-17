@@ -171,7 +171,69 @@
 
  <div class="row">
  	<div class="col-md-12 team">
- 	 Team
+ 	 <div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<table data-toggle="table" class="table table-striped">
+					
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Species</th>
+							<th>Type1</th>
+							<th>Type2</th>
+							<th>Level</th>
+							<th>Attack1</th>
+							<th>Attack2</th>
+							<th>Attack3</th>
+							<th>Attack4</th>
+							<th>HP</th>
+							<th>ATK</th>
+							<th>DEF</th>
+							<th>SP.ATK</th>
+							<th>SP.DEF</th>
+							<th>SPE</th>
+							<th>Gender</th>
+							<th>Shiny</th>
+							
+
+
+
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<!--  list all items ----------------------------------------------------------- -->
+							
+							<tr th:each="pokemon : ${pokemons}">	
+							<td class="text-primary" th:text="${pokemon.name}">NAME</td>
+							<td class="text-secondary" th:text="${pokemon.species.name}">SPECIES</td>
+							<td class="text-secondary" th:text="${pokemon.types.get(0).name}">TYPE1</td>
+							<td class="text-secondary" th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
+							<td class="text-secondary" th:text="${pokemon.level}">LEVEL</td>
+							<td class="text-secondary" th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
+							<td th:text="${pokemon.attacks.size() > 1 ? pokemon.attacks.get(1).name : '------' }">ATTACK2</td>
+							<td th:text="${pokemon.attacks.size() > 2 ? pokemon.attacks.get(2).name : '------' }">ATTACK3</td>
+							<td th:text="${pokemon.attacks.size() > 3 ? pokemon.attacks.get(3).name : '------' }">ATTACK4</td>
+							<td th:text="${pokemon.healthPoints}">HP</td>
+							<td th:text="${pokemon.attack}">ATK</td>
+							<td th:text="${pokemon.defense}">DEF</td>
+							<td th:text="${pokemon.specialAttack}">SPATK</td>
+							<td th:text="${pokemon.specialDefense}">SPDEF</td>
+							<td th:text="${pokemon.speed}">SPE</td>
+							<td th:text="${pokemon.gender}">GENDER</td>
+							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
+						</tr>
+						
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+
+				
+				</table>
+
+			</div>
+ 	
+ 	</div>
  	
  	</div>
 
