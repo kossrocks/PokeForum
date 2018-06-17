@@ -21,6 +21,10 @@ public class PokemonDao {
 	public void persist(PokemonModel pokemon) {
 		entityManager.persist(pokemon);
 	}
+
+	public void merge(PokemonModel pokemon) {
+		entityManager.merge(pokemon);
+	}
 	
 	public List<PokemonModel> getAllPokemons() {
 		TypedQuery<PokemonModel> typedQuery = entityManager.createQuery("select e from PokemonModel e order by e.id",
@@ -35,6 +39,14 @@ public class PokemonDao {
 				PokemonModel.class);
 		typedQuery.setParameter("id", name);
 		List<PokemonModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
+	
+	public PokemonModel getPokemonById(int id) {
+		TypedQuery<PokemonModel> typedQuery = entityManager.createQuery("select e from PokemonModel e where e.id = :id",
+				PokemonModel.class);
+		typedQuery.setParameter("id", id);
+		PokemonModel typedResultList = typedQuery.getSingleResult();
 		return typedResultList;
 	}
 

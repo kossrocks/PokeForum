@@ -209,9 +209,12 @@
 							<td th:text="${pokemon.gender}">GENDER</td>
 							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
 							<td>
-								<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+								<a th:if="${user.id.equals(id)}" th:href="@{/editPokemon(id=${pokemon.id})}" class="btn btn-success">
 									Edit
-								</a> </span>
+								</a>
+								<a th:if="${user.id.equals(id)}" th:href="@{/deletePokemon(id=${pokemon.id})}" class="btn btn-danger">
+									Delete
+								</a>
 							</td>
 						</tr>
 						
@@ -224,8 +227,8 @@
 			</div>
  	
  	</div>
- 	<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
-		New Team Member
+ 	<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success">
+		New Pokemon
 	</a>
  	</div>
 

@@ -38,5 +38,14 @@ public class SpeciesDao {
 		List<SpeciesModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
+	
+	public SpeciesModel searchSpeciesByName(String name) {
+		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery( 
+				"select p from SpeciesModel p where p.name = :search",
+				SpeciesModel.class);
+		typedQuery.setParameter("search", name);
+		SpeciesModel typedResultList = typedQuery.getSingleResult();
+		return typedResultList;
+	}
 
 }
