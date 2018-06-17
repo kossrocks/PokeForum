@@ -31,7 +31,7 @@ public class SpeciesDao {
 	}
 	
 	public List<SpeciesModel> searchSpecies(String searchString) {
-		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery(
+		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery( 
 				"select p from SpeciesModel p where p.name like :search",
 				SpeciesModel.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");

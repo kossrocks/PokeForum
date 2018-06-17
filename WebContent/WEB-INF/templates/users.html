@@ -124,7 +124,8 @@ input:checked + .slider:before {
 							<th>Number of Topics</th>
 							<th>Number of Entries</th>
 							<th sec:authorize="hasRole('ADMIN')">Enabled</th>
-							<th sec:authorize="hasRole('ADMIN')">Enable/Disable User</th>				
+							<th sec:authorize="hasRole('ADMIN')">Enable/Disable User</th>
+							<th> Visit</th>				
 							
 						</tr>
 					</thead>
@@ -142,11 +143,14 @@ input:checked + .slider:before {
  							
 							<td sec:authorize="hasRole('ADMIN')"> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
 							 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>
-							
+							<td> <a th:href="@{/userProfile(id=${user.id})}" class="btn btn-xs btn-success">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+									Visit
+								</a> </td>
 						
 							
 							
-						<!--	<td> <label class="switch"> <input type="checkbox"> <span class="slider round"></span></label> </td> -->
+						
 
 							
 

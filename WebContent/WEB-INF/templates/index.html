@@ -14,10 +14,7 @@
 <link rel="stylesheet" href="includes/table.css">
 <style>
 
-body {
-background-color: red;
 
-}
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -32,51 +29,68 @@ background-color: red;
 #sidebar.active {
     margin-left: -250px;
 }
+
+.signOutButton {
+	float: right;
+	margin-top: 5px;
+	font-size: 20px;
+	height: 30px;
+	width: 80px;
+}
+
+.newTopicButton {
+	margin-top: 10px;
+}
+
+.header {
+	margin-top: 20px;
+	margin-bottom: -20px;
+}
+
 </style>
 </head>
 <body>
 	<div class="container" role="main">
-	<div class="col-md-10">
-
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
-		</div>
-
-		<!--  Error message ----------------------------------------------------------- -->
-		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-			class="alert alert-danger" role="alert"></div>
-		<!--  Error message ----------------------------------------------------------- -->
-
-		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
-			class="alert alert-warning" role="warning"></div>
-		<!--  Warning message ----------------------------------------------------------- -->
-
-		<!--   message ----------------------------------------------------------- -->
-		<div th:unless="${message} == null" th:utext="${message}"
-			class="alert alert-success" role="warning"></div>
-		<!--   message ----------------------------------------------------------- -->
-
-		<nav th:replace="~{includes/sidebar}"></nav>
-
-		<!--  1 simple button ----------------------------------------------------------- -->
-		<div class="row">
-		</div>
-		<!--  1 simple button ----------------------------------------------------------- -->
-
-	</div>
 	<div class="row">
-			<div class="col-md-10">
+		<div class="col-md-11 col-md-offset-2 header">
+
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
+
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
+	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-1">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>
+	</div>
+
+		<div class="col-md-11 col-md-offset-1" >
 
 				<!-- HTML form with search textbox and submit button-->
 		<form class="navbar-form navbar-right" action="searchTopics">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="submit">Go!</button>
-				</span>
-			</div>
-		</form>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Go!</button>
+					</span>
+				</div>
+			</form>
+		
 				<table data-toggle="table" class="table table-striped">
 					<thead class="thead-dark">
 						<tr>
@@ -100,7 +114,7 @@ background-color: red;
 									Visit
 								</a>
 
-								<a sec:authorize="hasRole('USER')" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
+								<a th:if="${topic.owner.id.equals(user.id)} or ${isAdmin}" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-xs btn-danger" >
 									
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									
@@ -113,11 +127,15 @@ background-color: red;
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-default">
+				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success newTopicButton">
 				New Topic
-				</a>				
+				</a>
+				<form class="signOutButton" th:action="@{/logout}" method="post" >
+	      			<input class="btn btn-xs btn-danger signOutButton" type="submit" value="Sign Out"/>
+	   			</form>				
 			</div>
 		</div>
+		
 		
 	</div>
 	<!--  End of container -->

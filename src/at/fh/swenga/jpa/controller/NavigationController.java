@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.EntryDao;
@@ -53,13 +54,17 @@ public class NavigationController {
 	UserRoleDao userRoleDao;
 	
 	@RequestMapping(value = { "/", "index" })
-	public String index(Model model) {
+	public String index(Model model,Principal principal) {
 
 		List<TopicModel> topics = topicDao.getAllTopicsSortById();
 		model.addAttribute("topics", topics);
 		
-		List<TypeModel> types = typeDao.getAllTypes();
-		model.addAttribute("types", types);
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		
 		return "index";
@@ -70,34 +75,32 @@ public class NavigationController {
 	public String signUp(Model model) {
 
 		return "signUp";
-	}
-	
-	
-	/*public String deleteData(Model model, @RequestParam int id) {
-		employeeDao.delete(id);
-
-		return "forward:list";
-	}*/
-	
-	
+	}	
 	
 	@RequestMapping("/profile")
 	public String profile(Model model,Principal principal) {
-
-		List<TopicModel> topics = topicDao.getAllTopics();
-		model.addAttribute("topics", topics);
 		
-		List<EntryModel> entries = entryDao.getAllEntries();
-		model.addAttribute("entries", entries);
+		
 		
 		int id = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(id);
 		model.addAttribute("user",user);
+		model.addAttribute("id",id);
 		
 		return "profile";
 		
 	}
 	
+	@RequestMapping("/userProfile")
+	public String userProfile(Model model,@RequestParam int id, Principal principal) {
+		
+		User user = userDao.getUserById(id);
+		model.addAttribute("user",user);
+		int idUser = userDao.getUser(principal.getName()).getId();
+		model.addAttribute("id",idUser);
+		
+		return "profile";
+	}
 	
 	@RequestMapping("/users")
 	public String users(Model model) {

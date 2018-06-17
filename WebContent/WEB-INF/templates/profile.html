@@ -7,13 +7,51 @@
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - User Profile</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+<style>
+
+.profilePicture {
+	
+	padding-top: 28px;
+	border-style: solid;
+	padding-bottom: 20px;	
+}
+
+.center {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+
+.user {
+	border-style: solid;
+	padding-top: 20px;
+}
+
+.button {
+	display:block;
+	text-align:center;
+	margin-top: 20px;
+}
+
+.team {
+	border-style: solid;
+}
+
+.font {
+	font-size: 20px;
+}
+
+
+</style>
 </head>
 <body>
 	<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-11 col-md-offset-2 header">
 
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
-		</div>
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
 		<!--  Error message ----------------------------------------------------------- -->
 		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
@@ -30,12 +68,122 @@
 		<div th:unless="${message} == null" th:utext="${message}"
 			class="alert alert-success" role="warning"></div>
 		<!--   message ----------------------------------------------------------- -->
+	</div>
+</div>
 
+<div class="row">
+	<div class="col-md-1">
 		<nav th:replace="~{includes/sidebar}"></nav>
+	</div>
+</div>
+
+<div class="container profile">
+	<div class="row">
+
+<!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
+
+		<div class="col-md-3 profilePicture">
+		<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+		<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+			Edit Profile
+		</a> </span>
 		
-		<!-- --------------  buttons ---------------- -->
+		</div>
+		
+<!-- ----------------------------------- User --------------------------------------------------------- -->
+
+		<div class="col-md-9 user">
+			<strong class="font"> User Profile</strong><br>
+            <div class="table-responsive">
+            <table class="table table-condensed table-responsive table-user-information">
+                <tbody>
+                    <tr>    
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                Username                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.userName}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                First Name                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}" class="text-primary"></td>
+                    </tr>
+
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                Last Name                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}" class="text-primary"></td>
+                    </tr>
+					<tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Date of Entry                                                
+                            </strong>
+                        </td>
+                        <td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}" class="text-primary"></td>
+                    </tr>
+					<tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Number of Topics                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.topics.size()}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Number of Entries                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.entries.size()}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                Role                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            MATHIAS schreib die Rolle eini --> beim td rein
+                        </td>
+                    </tr>                           
+                </tbody>
+            </table>
+            </div>
+		</div>
+	</div>
+
+ <div class="row">
+ 	<div class="col-md-12 team">
+ 	 Team
+ 	
+ 	</div>
+
+</div>
+</div>
+
+
+</div>
+<!--  		
+		
 		<div class="form-group">
-			<div class="col-md-10 col-md-offset-2">
+			<div th:if="${user.id.equals(id)}" class="col-md-10 col-md-offset-2">
 				<a href="editUser" class="btn btn-default">
 						Edit
 					</a>
@@ -87,13 +235,13 @@
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Date of Entry</th>
-							<!--<th>Picture</th>-->
+							<!--<th>Picture</th>
 							<th>Number of Topics</th>
 							<th>Number of Entries</th> 
 						</tr>
 					</thead>
 					<tbody>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- -->
+						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
 						<tr>
 							<td th:text="${user.userName}"></td>
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
@@ -107,7 +255,7 @@
 							</span> 
 							
 						</tr>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- -->
+						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
 					</tbody>
 				</table>
 			</div>
@@ -120,7 +268,10 @@
 		</form>
 		
 	</div>
+	
+-->
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+	
 </body>
 </html>

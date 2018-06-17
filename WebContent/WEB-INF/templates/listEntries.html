@@ -7,13 +7,85 @@
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - list Entries</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+<style>
+
+.newTopicButton {
+	margin-top: 10px;
+}
+
+.header {
+	margin-top: 20px;
+	margin-bottom: -20px;
+}
+
+.textTitle {
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	background-color: #336699;
+	margin-top: 50px;
+	
+	margin-right: -1px;
+}
+.test {
+	border-style: solid;
+	
+}
+
+.swoopLeft {
+	margin-left: -16px;
+	
+}
+
+.autor {
+	height: 256px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	
+	
+}
+
+.content {
+	height: 200px;
+	border-right-style: solid;
+	border-top-style: solid;
+	
+}
+
+.edit {
+	height: 256px;
+	
+}
+
+.editButton {
+	float: right;
+	margin-right: 10px;
+	
+}
+
+.footer {
+	height: 56px;
+	margin-right: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+
+	margin-left: -30px;
+	margin-top: -20px;
+}
+
+
+</style>
 </head>
 <body>
-	<div class="container" role="main">
+	<div class="container header" role="main">
+	<div class="row">
+		<div class="col-md-12 col-md-offset-2">
 
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
-		</div>
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
+
 
 		<!--  Error message ----------------------------------------------------------- -->
 		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
@@ -30,53 +102,63 @@
 			class="alert alert-success" role="warning"></div>
 		<!--   message ----------------------------------------------------------- -->
 
-		<nav th:replace="~{includes/sidebar}"></nav>
-		
-		<!--  1 simple button ----------------------------------------------------------- -->
-		<div th:text="${topic.title}"></div>
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
 
-				<table data-toggle="table" class="table table-striped">
-					<thead>
-						<tr>
-							<th>User</th>
-							<th>Created</th>
-							<th>Contend</th>
-							<th sec:authorize="hasRole('USER')">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="entry : ${entries}">
-							<td th:text="${entry.owner.userName}"></td>
-							<td th:text="${entry.dateOfCreation}"></td>
-							<td th:text="${entry.edited} ? ${entry.content}+' {entry was edited by owner or admin}' : ${entry.content}"></td>
-							<td sec:authorize="hasRole('USER')"><a th:href="@{/editEntry(id=${entry.id})}" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-									Edit
-								</a>
-								<a th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger">
-									
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-									Delete
-								</a>
-							</td>
-							
-						</tr>
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
-				</table>
-				<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-default">
-				New Entry
-				</a>				
+		</div>
+	</div>
+	
+
+		<div class="row">
+			<div class="col-md-12">
+				<nav th:replace="~{includes/sidebar}"></nav>
+			</div>		
+		</div>
+</div>
+	
+	
+<div class="container text-center">
+	<div th:text="${topic.title}" class="col-md-12  textTitle"></div>
+<div th:each="entry : ${entries}">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="autor">
+			<p></p>
+			<p th:text="${entry.owner.userName}"></p>
+			<p><a href="profile">My Profile</a></p>
+				<img src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
+			<p></p>	
+			<p th:text="${entry.dateOfCreation}"></p>
 			</div>
 		</div>
 		
+		<div class="col-md-9">
+			<div class="row">
+				<div class="col-md-12 content swoopLeft">
+          			<div class="contentBox text-left">
+              				<p th:text="${entry.content}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    	<div class="col-md-9">
+      		<div class="footer">
+      		<hr>
+      			 <i th:text="${entry.edited} ? 'this entry has been edited by owner or admin'"></i>
+      			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger editButton">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+					Delete</a>
+       			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/editEntry(id=${entry.id})}" class="btn btn-xs btn-success editButton">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					Edit</a>
+			</div>
+    	</div>	
 	</div>
+</div>		
+	<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
+		New Entry
+	</a>
+</div>
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
