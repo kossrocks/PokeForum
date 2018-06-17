@@ -79,6 +79,8 @@ public class SpeciesModel implements java.io.Serializable{
 	public List<TypeModel> getTypes() {
 		return typesSpecies;
 	}
+	
+
 
 	public void setTypes(List<TypeModel> types) {
 		this.typesSpecies = types;

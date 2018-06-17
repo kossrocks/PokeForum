@@ -92,17 +92,18 @@
 		</form>	
 		
 		<table data-toggle="table" class="table table-striped">
+		
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Type 1</th>
-					<th>Type 2</th>
-					<th>HP</th>
-					<th>Attack</th>
-					<th>Defense</th>
-					<th>SpecialAttack</th>
-					<th>SpecialDefense</th>
-					<th>Speed</th>	
+					<th data-sortable="true">Name</th>
+					<th data-sortable="true">Type 1</th>
+					<th data-sortable="true">Type 2</th>
+					<th data-sortable="true">HP</th>
+					<th data-sortable="true">Attack</th>
+					<th data-sortable="true">Defense</th>
+					<th data-sortable="true">SpecialAttack</th>
+					<th data-sortable="true">SpecialDefense</th>
+					<th data-sortable="true">Speed</th>	
 				</tr>
 			</thead>
 
@@ -120,8 +121,10 @@
 					<td th:text="${species.baseSpeed}">INIT</td>
 				</tr>
 				<!--  list all items ----------------------------------------------------------- -->
+			
 			</tbody>
 		</table>
+
 		<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
  	
  	<div class="footer">
