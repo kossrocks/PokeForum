@@ -29,5 +29,14 @@ public class SpeciesDao {
 	public void persist(SpeciesModel species) {
 		entityManager.persist(species);
 	}
+	
+	public List<SpeciesModel> searchSpecies(String searchString) {
+		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery(
+				"select p from SpeciesModel p where p.name like :search",
+				SpeciesModel.class);
+		typedQuery.setParameter("search", "%" + searchString + "%");
+		List<SpeciesModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 }
