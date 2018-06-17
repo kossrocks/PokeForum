@@ -83,6 +83,28 @@ input:checked + .slider:before {
 	margin-bottom: 20px;
 	margin-left: 455px;
 }
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 250px;
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
   
   
@@ -168,7 +190,16 @@ input:checked + .slider:before {
 		</table>					
 	</div>
 </div>
-		
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+ 	
+ 	<div class="footer">
+		<div class="row">
+			<div class="col-md-12 foot">
+				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+				<img class="icon" src="images/schiggy.png">
+			</div>
+		</div>
+	</div>	
 		
 		
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />

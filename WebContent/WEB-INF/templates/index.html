@@ -37,6 +37,26 @@
 	margin-left: 385px;
 }
 
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -30px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 60px;
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
 </head>
 <body>
@@ -125,6 +145,15 @@
 		<form class="signOutButton" th:action="@{/logout}" method="post" >
 	      	<input class="btn btn-xs btn-danger signOutButton" type="submit" value="Sign Out"/>
 	   	</form>				
+	</div>
+	
+	<div class="footer">
+		<div class="row">
+			<div class="col-md-12 foot">
+				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+				<img class="icon" src="images/pikachu.png">
+			</div>
+		</div>
 	</div>
 </div>
 <!--  End of container -->
