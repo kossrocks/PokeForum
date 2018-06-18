@@ -33,11 +33,6 @@ public class AttackController {
 		return "attacks";
 	}
 	
-	
-	
-	
 
-	
-	
 	
 }
