@@ -7,6 +7,7 @@
 <title>PokéForum - attacks</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
+
 <style>
 
 .header {
@@ -79,6 +80,7 @@
 			<form class="navbar-form navbar-right" action="searchAttacks">
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
+
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">Go!</button>
 				</span>
@@ -98,9 +100,12 @@
 				</tr>
 			</thead>
 
+
 			<tbody>
 
+
 			<!--  list all items ----------------------------------------------------------- -->
+
 				
 				<tr th:each="attack : ${attacks}">	
 					<td class="text-primary" th:text="${attack.name}"></td>
@@ -128,5 +133,6 @@
 </footer>	
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
+
 </body>
 </html>
