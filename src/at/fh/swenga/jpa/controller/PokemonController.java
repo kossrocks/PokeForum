@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.AttackModel;
+import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
+import at.fh.swenga.jpa.model.UserRole;
 
 @Controller
 public class PokemonController {
@@ -80,8 +83,9 @@ public class PokemonController {
 			AttackModel newAttack4 = attackDao.getAttackByName(attack4);
 
 			boolean newShiny = false;
-			if(shiny.equals("yes")) newShiny = true;
-			
+			if (shiny.equals("yes"))
+				newShiny = true;
+
 			int hp = newSpecies.getBaseHealthPoints();
 			int atk = newSpecies.getBaseAttack();
 			int def = newSpecies.getBaseDefense();
@@ -126,34 +130,83 @@ public class PokemonController {
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
+		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
 
 		return "profile";
 	}
 
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.GET)
-	public String showEditPokemonForm(Model model, @RequestParam int id) {
-		
-		PokemonModel pokemon = pokemonDao.getPokemonById(id);
-		model.addAttribute("pokemon", pokemon);		
-		
-		List<AttackModel> attacks = attackDao.getAllAttacks();
-		model.addAttribute("attacks", attacks);
+	public String showEditPokemonForm(Model model, @RequestParam int id, Principal principal) {
 
-		List<SpeciesModel> specieses = speciesDao.getAllSpecies();
-		model.addAttribute("specieses", specieses);
+		PokemonModel pokemon = pokemonDao.getPokemonById(id);
+		model.addAttribute("pokemon", pokemon);
 		
-		return "editTeamMember";
+		User user = userDao.getUser(principal.getName());
+		
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		} 
+
+		if (pokemon.getOwner().getId() == userDao.getUser(principal.getName()).getId() || isAdmin) {
+
+			List<AttackModel> attacks = attackDao.getAllAttacks();
+			model.addAttribute("attacks", attacks);
+
+			List<SpeciesModel> specieses = speciesDao.getAllSpecies();
+			model.addAttribute("specieses", specieses);
+
+			return "editTeamMember";
+		}else {
+			
+			model.addAttribute("user", user);
+			model.addAttribute("id", user.getId());
+
+			List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+			model.addAttribute("pokemons", pokemons);
+			model.addAttribute("errorMessage", "You cannot edit Pokemon that are not yours!");
+			
+			if (user.getPicture() != null) {
+
+				
+				DocumentModel pp = user.getPicture();
+				byte[] profilePicture = pp.getContent();
+
+				StringBuilder sb = new StringBuilder();
+				sb.append("data:image/jpeg;base64,");
+				sb.append(Base64.encodeBase64String(profilePicture));
+				String image = sb.toString();
+
+				model.addAttribute("image", image);
+			}
+
+			return "profile";
+		}
 	}
-	
+
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.POST)
-	public String editNewPokemon(Model model, Principal principal,@RequestParam int id, @RequestParam("name") String name,
-			@RequestParam("species") String species, @RequestParam("level") int level,
-			@RequestParam("attack1") String attack1, @RequestParam("attack2") String attack2,
-			@RequestParam("attack3") String attack3, @RequestParam("attack4") String attack4,
-			@RequestParam("gender") String gender, @RequestParam("shiny") String shiny) {
-		
+	public String editNewPokemon(Model model, Principal principal, @RequestParam int id,
+			@RequestParam("name") String name, @RequestParam("species") String species,
+			@RequestParam("level") int level, @RequestParam("attack1") String attack1,
+			@RequestParam("attack2") String attack2, @RequestParam("attack3") String attack3,
+			@RequestParam("attack4") String attack4, @RequestParam("gender") String gender,
+			@RequestParam("shiny") String shiny) {
+
 		if (attack1.equals(attack2) || attack1.equals(attack3) || attack1.equals(attack4) || attack2.equals(attack3)
 				|| attack2.equals(attack4) || attack3.equals(attack4)) {
 			model.addAttribute("errorMessage", "a Pokemon cannot learn the same attack more than once!");
@@ -170,7 +223,6 @@ public class PokemonController {
 				pokemon.addType(type2);
 			}
 
-			User currentUser = userDao.getUser(principal.getName());
 
 			AttackModel newAttack1 = attackDao.getAttackByName(attack1);
 			AttackModel newAttack2 = attackDao.getAttackByName(attack2);
@@ -178,8 +230,9 @@ public class PokemonController {
 			AttackModel newAttack4 = attackDao.getAttackByName(attack4);
 
 			boolean newShiny = false;
-			if(shiny.equals("yes")) newShiny = true;
-			
+			if (shiny.equals("yes"))
+				newShiny = true;
+
 			int hp = newSpecies.getBaseHealthPoints();
 			int atk = newSpecies.getBaseAttack();
 			int def = newSpecies.getBaseDefense();
@@ -203,22 +256,20 @@ public class PokemonController {
 			pokemon.setLevel(level);
 			pokemon.setGender(gender);
 			pokemon.setShiny(newShiny);
-			pokemon.setOwner(currentUser);
 
 			pokemon.recalculateStats();
 
 			pokemon.setAttacks(new ArrayList<AttackModel>());
-			
+
 			pokemon.addAttack(newAttack1);
 			pokemon.addAttack(newAttack2);
 			pokemon.addAttack(newAttack3);
 			pokemon.addAttack(newAttack4);
-			pokemon.setOwner(currentUser);
 
 			pokemonDao.merge(pokemon);
 			model.addAttribute("message", pokemon.getSpecies() + " successfully edited.");
-		}	
-		
+		}
+
 		int userId = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(userId);
 		model.addAttribute("user", user);
@@ -226,32 +277,68 @@ public class PokemonController {
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
+		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
 
 		return "profile";
 	}
-	
+
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deletePokemon")
-	public String deletePokemon(Model model,@RequestParam int id, Principal principal) {
-		
+	public String deletePokemon(Model model, @RequestParam int id, Principal principal) {
+
 		int userId = userDao.getUser(principal.getName()).getId();
 		User user = userDao.getUserById(userId);
+
+		PokemonModel pokemon = pokemonDao.getPokemonById(id);
 		
+		boolean isAdmin = false;
 		
-		
-		model.addAttribute("message", pokemonDao.getPokemonById(id).getSpecies() + " successfully deleted.");
-		pokemonDao.deleteById(id);
-		
-		
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+
+		if (pokemon.getOwner().getId() == userId || isAdmin) {
+
+			model.addAttribute("message", pokemonDao.getPokemonById(id).getSpecies() + " successfully deleted.");
+			pokemonDao.deleteById(id);
+		} else {
+			model.addAttribute("errorMessage", "You cannot delete Pokemon that are not yours!");
+		}
 		model.addAttribute("user", user);
 		model.addAttribute("id", userId);
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
+		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
 
 		return "profile";
+
 	}
-	
-	
-	
+
 }
