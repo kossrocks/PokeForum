@@ -3,6 +3,7 @@ package at.fh.swenga.jpa.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
+import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
@@ -93,6 +95,20 @@ public class NavigationController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
+		
 		return "profile";
 		
 	}
@@ -108,6 +124,20 @@ public class NavigationController {
 		
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(user.getUserName());
 		model.addAttribute("pokemons", pokemons);
+		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
 		
 		return "profile";
 	}
@@ -148,22 +178,6 @@ public class NavigationController {
 		return "pokemon";
 	}
 	
-	
-	/*@RequestMapping("/uploadPicture")
-	public String uploadPicture(Model model, @RequestParam int id ) {
-
-		//DocumentModel picture = documentDao.getDocumentById(id);
-		//model.addAttribute("picture", picture);
-		
-		return "uploadPicture";
-	}
-	
-	@ExceptionHandler(Exception.class)
-	public String handleAllException(Exception ex) {
-
-		return "error";
-
-	}*/
 	
 }
 

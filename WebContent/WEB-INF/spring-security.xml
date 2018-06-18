@@ -9,7 +9,7 @@
 
 
 	<http>
-		<csrf disabled="false"/> 
+		<csrf /> 
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/fillUsers" access="permitAll" />
 		<intercept-url pattern="/signUp" access="permitAll" />

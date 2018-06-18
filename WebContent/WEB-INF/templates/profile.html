@@ -137,7 +137,8 @@
 <!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
 
 		<div class="col-md-3 col-md-offset-1 profilePicture">
-			<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${image} == null" src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:unless="${image} == null" th:src="${image}" class="img-circle center" height="183" width="183" alt="Avatar">
 			<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
 				Edit Profile
 			</a> </span>

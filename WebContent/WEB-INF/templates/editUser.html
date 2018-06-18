@@ -148,11 +148,12 @@
 		</div>
 	
 		<div class="col-md-3">
-			<form class="form-horizontal" enctype="multipart/form-data" method="post" action="upload"> 
+			<form class="form-horizontal" enctype="multipart/form-data" method="post" th:action="@{/upload(${_csrf.parameterName}=${_csrf.token})}"> 
+				
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>	
+				
 				<fieldset>
 					<legend th:text="'Upload picture for ' + ${user.userName}"></legend>
-					
-					<input type="hidden" name="username" th:value="${user.userName}">
 
 					<div class="form-group picture">
 						<label for="inputFile" class="col-md-2 control-label">File:</label>
@@ -164,13 +165,9 @@
 					<div class="form-group">
 						<div class="col-md-10 col-md-offset-2">
 							<button type="submit" class="btn btn-success">Upload</button>
-							<a href="profile">
-								<button type="button" class="btn btn-default">Cancel</button>
-							</a>
 						</div>
 					</div>
-				<input type="hidden" th:name="${_csrf.parameterName}" 
-				th:value="${_csrf.token}"/>		
+					
 				</fieldset>
 			</form>
 		</div>
