@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokéForum - list Entries</title>
+<title>Pok&eacute;Forum - List Entries</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
 <style>
@@ -16,18 +16,22 @@
 }
 
 .header {
-	margin-top: 30px;
-	margin-bottom: -20px;
+	display:block;
+	text-align:center;
+	margin-bottom: 40px;
 }
 
 .textTitle {
-	font-size: 20px;
+	font-size: 24px;
 	color: white;
+	display: block;
 	text-align: center;
 	background-color: #336699;
-	margin-top: 50px;
-	
-	margin-right: -1px;
+	height: 40px;
+	border-radius: 0.5px;
+	padding-top: 4px;
+	margin-top: 40px;
+	margin-bottom: 20px;
 }
 .test {
 	border-style: solid;
@@ -98,43 +102,52 @@
 	margin-top: 10px;
 }
 
-
+.tableDesign {
+	background: rgba(255,255,255,0.3);
+	border: 0px solid #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-box-shadow:1px 2px 26px -5px rgba(0,0,0,0.75);
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	padding-bottom: 40px;
+}
 </style>
 </head>
 <body>
 <div class="container" role="main">
 	<div class="row">
-		<div class="col-md-12 col-md-offset-2 header">
+		<div class="col-md-1">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-11 header">
 
 				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
-
-		<!--  Error message ----------------------------------------------------------- -->
-		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-			class="alert alert-danger" role="alert"></div>
-		<!--  Error message ----------------------------------------------------------- -->
-
-		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
-			class="alert alert-warning" role="warning"></div>
-		<!--  Warning message ----------------------------------------------------------- -->
-
-		<!--   message ----------------------------------------------------------- -->
-		<div th:unless="${message} == null" th:utext="${message}"
-			class="alert alert-success" role="warning"></div>
-		<!--   message ----------------------------------------------------------- -->
-		</div>
-	</div>
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger col-md-offset-1" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
 	
-	<div class="row">
-		<div class="col-md-12">
-			<nav th:replace="~{includes/sidebar}"></nav>
-		</div>		
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning col-md-offset-1" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success col-md-offset-1" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
+		</div>
 	</div>
 </div>
 	
 	
-<div class="container text-center">
+<div class="container text-center tableDesign">
 	<div th:text="${topic.title}" class="col-md-12  textTitle"></div>
 	<div th:each="entry : ${entries}">
 		<div class="row">
@@ -184,7 +197,7 @@
 <div class="footer">
 	<div class="row">
 		<div class="col-md-12 foot">
-			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<b class="copyRightText"> Copyright &copy; 2018 Pok&eacute;Forum</b>
 			<img class="icon" src="images/pikachu.png">
 		</div>
 	</div>
