@@ -178,6 +178,25 @@ public class NavigationController {
 		return "pokemon";
 	}
 	
+	@Secured({ "ROLE_USER" })
+	@RequestMapping("/calculator")
+	public String calculator(Model model,Principal principal) {
+		
+		List<AttackModel> attacks = attackDao.getAllAttacks();
+		model.addAttribute("attacks", attacks);	
+		
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+		model.addAttribute("yourPokemons", pokemons);
+		
+		List<SpeciesModel> allPokemons = speciesDao.getAllSpecies();
+		model.addAttribute("pokemons", allPokemons);
+		
+		
+		
+		return "calculator";
+	}
+	
+	
 	
 }
 

@@ -1,5 +1,7 @@
 package at.fh.swenga.jpa.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -8,6 +10,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
 import at.fh.swenga.jpa.model.TypeModel;
 
@@ -41,6 +44,14 @@ public class CategoryDao {
 		} catch (NoResultException e) {
 			return null;
 		}
+	}
+	
+	
+	public List<CategoryModel> getAllCategories() {
+		TypedQuery<CategoryModel> typedQuery = entityManager.createQuery("select c from CategoryModel c order by c.name",
+				CategoryModel.class);
+		List<CategoryModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
 	}
 
 }
