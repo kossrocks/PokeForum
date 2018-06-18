@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	>
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" /></div>
 <title>PokéForum - Sign Up</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" /></div>
 <style>
-*{color: #fff;}		
+* {
+	color: #fff;
+}
 
 .signUp {
 	text-align: center;
 	margin-bottom: 2vh;
-	
 }
 
 .container {
-  background:url(http://kb4images.com/images/pokemon-wallpaper-hd/37515768-pokemon-wallpaper-hd.jpg);
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-attachment: fixed;
-  background-size:cover;
+	background:
+		url(http://kb4images.com/images/pokemon-wallpaper-hd/37515768-pokemon-wallpaper-hd.jpg);
+	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
 .form-container {
-	background: rgba(255,255,255,0.3);
+	background: rgba(255, 255, 255, 0.3);
 	border: 0px solid #fff;
 	border-radius: 10px;
 	padding: 30px 60px;
 	margin-top: 20vh;
-	-webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-	-moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-	-box-shadow:-1px 4px 26px 11px rgba(0,0,0,0.75);
+	-webkit-box-shadow: -1px 4px 26px 11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -1px 4px 26px 11px rgba(0, 0, 0, 0.75);
+	-box-shadow: -1px 4px 26px 11px rgba(0, 0, 0, 0.75);
 }
 
 .custom {
@@ -42,19 +43,18 @@
 	margin-top: 12px;
 	border: 0;
 	display: inline-block;
-	
 }
+
 .custom1 {
 	width: 48%;
 	background-color: #009933;
 	color: white;
-	
-	
-	
 }
+
 .custom1:hover {
-	color:white;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
 }
 
 .custom2 {
@@ -62,12 +62,12 @@
 	background-color: #cc0000;
 	color: white;
 	float: right;
-	
 }
 
 .custom2:hover {
-	color:white;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
 }
 
 .password {
@@ -76,41 +76,59 @@
 </style>
 </head>
 <body>
-	<div class="container" role="main">	
+	<div class="container" role="main">
 		<div class="row">
 			<div class="col-md-4 col-sm-4 col-xs-12"></div>
-				<div class="col-md-4 col-sm-4 col-xs-12">
-					<form class="form-container" method="post" th:action="@{/addUser}">
-						<h1 class="signUp"> Sign Up </h1>
-					
-						<!-- --------------  username ---------------- -->
-							<div class="form-group">
-								<label for="inputUserName">User Name</label>
-								<input class="form-control" id="inputUserName" type="text" required name="userName">
-							</div>
-							
-							<!-- --------------  password ---------------- -->
-							<div class="form-group">
-								<label for="inputPassword">Password</label>
-								<input class="form-control" id="inputPassword" type="password" required name="password">
-							</div>
-							
-							<!-- --------------  password1 ---------------- -->
-							<div class="form-group">
-								<label for="inputPassword1">Confirm Password</label>
-								<input class="form-control" id="inputPassword1" type="password" required name="password1">
-							</div>
-							
-							<!-- --------------  buttons ---------------- -->
-							
-							<button type="submit" class="btn custom custom1">Sign Up</button>
-							<a href="login" class="btn custom custom2">Cancel</a>
-					</form>
-				</div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<form class="form-container" method="post" th:action="@{/addUser}">
+					<h1 class="signUp">Sign Up</h1>
+					<!--  Error message ----------------------------------------------------------- -->
+					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+						class="alert alert-danger" role="alert"></div>
+					<!--  Error message ----------------------------------------------------------- -->
+
+					<!--  Warning message ----------------------------------------------------------- -->
+					<div th:unless="${warningMessage} == null"
+						th:utext="${warningMessage}" class="alert alert-warning"
+						role="warning"></div>
+					<!--  Warning message ----------------------------------------------------------- -->
+
+					<!--   message ----------------------------------------------------------- -->
+					<div th:unless="${message} == null" th:utext="${message}"
+						class="alert alert-success" role="warning"></div>
+					<!--   message ----------------------------------------------------------- -->
+
+					<!-- --------------  username ---------------- -->
+					<div class="form-group">
+						<label for="inputUserName">User Name</label> <input
+							class="form-control" id="inputUserName" type="text" required
+							name="userName">
+					</div>
+
+					<!-- --------------  password ---------------- -->
+					<div class="form-group">
+						<label for="inputPassword">Password</label> <input
+							class="form-control" id="inputPassword" type="password" required
+							name="password">
+					</div>
+
+					<!-- --------------  password1 ---------------- -->
+					<div class="form-group">
+						<label for="inputPassword1">Confirm Password</label> <input
+							class="form-control" id="inputPassword1" type="password" required
+							name="password1">
+					</div>
+
+					<!-- --------------  buttons ---------------- -->
+
+					<button type="submit" class="btn custom custom1">Sign Up</button>
+					<a href="login" class="btn custom custom2">Cancel</a>
+				</form>
+			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12"></div>
+		</div>
 	</div>
-</div>
 	<!--  End of container -->
-<div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
+	<div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
 </body>
 </html>

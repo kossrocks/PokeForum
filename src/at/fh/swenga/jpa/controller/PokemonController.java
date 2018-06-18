@@ -1,9 +1,11 @@
 package at.fh.swenga.jpa.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,7 @@ public class PokemonController {
 	@Autowired
 	UserDao userDao;
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.GET)
 	public String showAddPokemonForm(Model model) {
 
@@ -47,6 +50,7 @@ public class PokemonController {
 		return "editTeamMember";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.POST)
 	public String addNewPokemon(Model model, Principal principal, @RequestParam("name") String name,
 			@RequestParam("species") String species, @RequestParam("level") int level,
@@ -112,6 +116,7 @@ public class PokemonController {
 			newPokemon.setOwner(currentUser);
 
 			pokemonDao.merge(newPokemon);
+			model.addAttribute("message", "New Pokemon " + newPokemon.getSpecies() + " in Team.");
 		}
 
 		int id = userDao.getUser(principal.getName()).getId();
@@ -125,6 +130,7 @@ public class PokemonController {
 		return "profile";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.GET)
 	public String showEditPokemonForm(Model model, @RequestParam int id) {
 		
@@ -139,4 +145,113 @@ public class PokemonController {
 		
 		return "editTeamMember";
 	}
+	
+	@Secured({ "ROLE_USER" })
+	@RequestMapping(value = "/editPokemon", method = RequestMethod.POST)
+	public String editNewPokemon(Model model, Principal principal,@RequestParam int id, @RequestParam("name") String name,
+			@RequestParam("species") String species, @RequestParam("level") int level,
+			@RequestParam("attack1") String attack1, @RequestParam("attack2") String attack2,
+			@RequestParam("attack3") String attack3, @RequestParam("attack4") String attack4,
+			@RequestParam("gender") String gender, @RequestParam("shiny") String shiny) {
+		
+		if (attack1.equals(attack2) || attack1.equals(attack3) || attack1.equals(attack4) || attack2.equals(attack3)
+				|| attack2.equals(attack4) || attack3.equals(attack4)) {
+			model.addAttribute("errorMessage", "a Pokemon cannot learn the same attack more than once!");
+
+		} else {
+			PokemonModel pokemon = pokemonDao.getPokemonById(id);
+
+			SpeciesModel newSpecies = speciesDao.searchSpeciesByName(species);
+
+			pokemon.setTypes(new ArrayList<TypeModel>());
+			TypeModel type1 = newSpecies.getTypes().get(0);
+			if (newSpecies.getTypes().size() > 1) {
+				TypeModel type2 = newSpecies.getTypes().get(1);
+				pokemon.addType(type2);
+			}
+
+			User currentUser = userDao.getUser(principal.getName());
+
+			AttackModel newAttack1 = attackDao.getAttackByName(attack1);
+			AttackModel newAttack2 = attackDao.getAttackByName(attack2);
+			AttackModel newAttack3 = attackDao.getAttackByName(attack3);
+			AttackModel newAttack4 = attackDao.getAttackByName(attack4);
+
+			boolean newShiny = false;
+			if(shiny.equals("yes")) newShiny = true;
+			
+			int hp = newSpecies.getBaseHealthPoints();
+			int atk = newSpecies.getBaseAttack();
+			int def = newSpecies.getBaseDefense();
+			int spatk = newSpecies.getBaseSpecialAttack();
+			int spdef = newSpecies.getBaseSpecialDefense();
+			int spe = newSpecies.getBaseSpeed();
+			String speciesName = newSpecies.getName();
+
+			pokemon.setName(name);
+
+			pokemon.setSpecies(speciesName);
+
+			pokemon.addType(type1);
+
+			pokemon.setBaseHP(hp);
+			pokemon.setBaseATK(atk);
+			pokemon.setBaseDEF(def);
+			pokemon.setBaseSPATK(spatk);
+			pokemon.setBaseSPDEF(spdef);
+			pokemon.setBaseSPE(spe);
+			pokemon.setLevel(level);
+			pokemon.setGender(gender);
+			pokemon.setShiny(newShiny);
+			pokemon.setOwner(currentUser);
+
+			pokemon.recalculateStats();
+
+			pokemon.setAttacks(new ArrayList<AttackModel>());
+			
+			pokemon.addAttack(newAttack1);
+			pokemon.addAttack(newAttack2);
+			pokemon.addAttack(newAttack3);
+			pokemon.addAttack(newAttack4);
+			pokemon.setOwner(currentUser);
+
+			pokemonDao.merge(pokemon);
+			model.addAttribute("message", pokemon.getSpecies() + " successfully edited.");
+		}	
+		
+		int userId = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("id", userId);
+
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+		model.addAttribute("pokemons", pokemons);
+
+		return "profile";
+	}
+	
+	@Secured({ "ROLE_USER" })
+	@RequestMapping("/deletePokemon")
+	public String deletePokemon(Model model,@RequestParam int id, Principal principal) {
+		
+		int userId = userDao.getUser(principal.getName()).getId();
+		User user = userDao.getUserById(userId);
+		
+		
+		
+		model.addAttribute("message", pokemonDao.getPokemonById(id).getSpecies() + " successfully deleted.");
+		pokemonDao.deleteById(id);
+		
+		
+		model.addAttribute("user", user);
+		model.addAttribute("id", userId);
+
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+		model.addAttribute("pokemons", pokemons);
+
+		return "profile";
+	}
+	
+	
+	
 }

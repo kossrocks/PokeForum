@@ -3,6 +3,7 @@ package at.fh.swenga.jpa.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -11,47 +12,68 @@ import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
+import at.fh.swenga.jpa.model.TypeModel;
 
 @Repository
 @Transactional
 public class SpeciesDao {
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
+
 	public List<SpeciesModel> getAllSpecies() {
 		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery("select e from SpeciesModel e order by e.id",
 				SpeciesModel.class);
 		List<SpeciesModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public void persist(SpeciesModel species) {
 		entityManager.persist(species);
 	}
-	
+
+	public void merge(SpeciesModel species) {
+		entityManager.merge(species);
+	}
+
 	public List<SpeciesModel> searchSpecies(String searchString) {
-		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery( 
+		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery(
 				/*
-				"select p from SpeciesModel p where p.name like :search or p.types.get(0) | p.types.name like :search order by p.id",
-				SpeciesModel.class);
-				*/
-				
-				"select p from SpeciesModel p where p.types.name like :search order by p.id",
-				SpeciesModel.class);
-				
+				 * "select p from SpeciesModel p where p.name like :search or p.types.get(0) | p.types.name like :search order by p.id"
+				 * , SpeciesModel.class);
+				 */
+
+				"select p from SpeciesModel p where p.types.name like :search order by p.id", SpeciesModel.class);
+
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<SpeciesModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public SpeciesModel searchSpeciesByName(String name) {
-		TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery( 
-				"select p from SpeciesModel p where p.name = :search",
-				SpeciesModel.class);
-		typedQuery.setParameter("search", name);
-		SpeciesModel typedResultList = typedQuery.getSingleResult();
-		return typedResultList;
+		try {
+			TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery("select u from SpeciesModel u where u.name = :name",
+					SpeciesModel.class);
+			typedQuery.setParameter("name", name);
+			return typedQuery.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public SpeciesModel searchSpeciesById(int id) {
+		try {
+			TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery("select u from SpeciesModel u where u.id = :name",
+					SpeciesModel.class);
+			typedQuery.setParameter("name", id);
+			return typedQuery.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
+	public int deleteById(int id) {
+		int count = entityManager.createQuery("DELETE FROM SpeciesModel s WHERE s.id = :id").setParameter("id", id).executeUpdate();
+		return count;
+	}
 }

@@ -235,7 +235,7 @@
 						<!--  list all items ----------------------------------------------------------- -->
 							
 							<tr th:each="pokemon : ${pokemons}">	
-							<td th:text="${pokemon.name}">NAME</td>
+							<td th:text="${pokemon.name == '' ? pokemon.species : pokemon.name}">NAME</td>
 							<td th:text="${pokemon.species}">SPECIES</td>
 							<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
 							<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
@@ -259,15 +259,10 @@
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-			</div>
-			
- 		</div>
- 			<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
-				New Team Member
-			</a>
- 		</div>
- 		
- 
+
+			</div> 		
+ 	</div>
+
 
  	<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success">
 		New Pokemon

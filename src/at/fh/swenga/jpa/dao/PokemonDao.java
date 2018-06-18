@@ -52,6 +52,10 @@ public class PokemonDao {
 		return typedResultList;
 	}
 
+	public int deleteById(int id) {
+		int count = entityManager.createQuery("DELETE FROM PokemonModel WHERE id = :id").setParameter("id", id).executeUpdate();
+		return count;
+	}
 	
 	
 

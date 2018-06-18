@@ -32,7 +32,9 @@ public class AttackDao {
 
 	public List<AttackModel> searchAttack(String searchString) {
 		TypedQuery<AttackModel> typedQuery = entityManager.createQuery(
-				"select e from AttackModel e where e.name like :search order by e.name asc",
+
+				"select e from AttackModel e where e.name like :search or e.category.name like :search or e.battleEffect like :search or e.type.name like :search order by e.name",
+
 				AttackModel.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<AttackModel> typedResultList = typedQuery.getResultList();
