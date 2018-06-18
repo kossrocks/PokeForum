@@ -5,28 +5,30 @@
 
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokèForum - User Profile</title>
+<title>Pok&eacute;Forum - User Profile</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <style>
 
 .header {
-	margin-top: 30px;
-	margin-bottom: -20px;
+	display:block;
+	text-align:center;
+	margin-bottom: 40px;
 }
 
 .title {
 	font-size: 40px;
-	margin-bottom: 20px;
-	margin-left: 385px;
+	margin-bottom: 40px;
+	display:block;
+	text-align:center;
 }
 
 .profilePicture {
 	
 	padding-top: 30px;
-	border-style: solid;
 	padding-bottom: 20px;
-	height: 305px;	
+	height: 305px;
+		
 }
 
 .center {
@@ -37,9 +39,9 @@
 }
 
 .user {
-	border-style: solid;
 	padding-top: 20px;
 	height: 305px;
+	
 }
 
 .button {
@@ -50,7 +52,6 @@
 }
 
 .team {
-	border-style: solid;
 }
 
 .font {
@@ -62,6 +63,7 @@
 	float: right;
 	display: inline-block;
 	margin-top: -30px;
+	margin-right: 10px;
 	
 }
 
@@ -77,41 +79,58 @@
 	background-color: #47596C;
 	height: 40px;
 }
+
+.profileUser {
+	background: rgba(255,255,255,0.3);
+	border: 0px solid #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 2px 26px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 2px 26px 0px rgba(0,0,0,0.75);
+	-box-shadow:1px 2px 26px 0px rgba(0,0,0,0.75);
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.containerButtons {
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
 </style>
 </head>
 <body>
 <div class="container" role="main">
 	<div class="row">
-		<div class="col-md-11 col-md-offset-2 header">
-
-				<a href="index"><img src="images/PokeForumLogo.png"></a>
-
-		<!--  Error message ----------------------------------------------------------- -->
-		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-			class="alert alert-danger" role="alert"></div>
-		<!--  Error message ----------------------------------------------------------- -->
-
-		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null"
-			th:utext="${warningMessage}" class="alert alert-warning"
-			role="warning"></div>
-		<!--  Warning message ----------------------------------------------------------- -->
-
-		<!--   message ----------------------------------------------------------- -->
-		<div th:unless="${message} == null" th:utext="${message}"
-			class="alert alert-success" role="warning"></div>
-		<!--   message ----------------------------------------------------------- -->
-	</div>
-</div>
-
-	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+	
+	<div class="row">
+		<div class="col-md-11 header">
+
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
+
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger col-md-offset-1" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
+	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning col-md-offset-1" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success col-md-offset-1" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
+		</div>
+	</div>
 </div>
 
-<div class="container">
+<div class="container profileUser">
+
 	<div class="row">
 
 <!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
@@ -127,7 +146,7 @@
 <!-- ----------------------------------- User Information--------------------------------------------------------- -->
 
 		<div class="col-md-7 user">
-			<strong class="font"> User Information</strong><br>
+			<strong class="font">Your User Information</strong><br>
 			<p></p>
             <div class="table-responsive">
             <table class="table table-condensed table-responsive table-user-information">
@@ -206,8 +225,8 @@
 
  <div class="row">
  	<div class="col-md-10 col-md-offset-1 team">
+ 		<strong class="font">Your Team</strong><br>
 				<table data-toggle="table" class="table table-striped">
-					
 					<thead>
 						<tr>
 							<th>Name</th>
@@ -254,23 +273,26 @@
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-
-			</div> 		
- 	</div>
-
-
- 	<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success">
-		New Pokemon
-	</a>
- 
-
+		</div>
+		 
+		<div class="col-md-10 col-md-offset-1 containerButtons">
+		 		<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success navbar-btn ">
+					New Pok&eacute;mon
+				</a>
+				
+				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
+				      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
+				</form>
+	 		</div>	
+	</div>
+</div>
 
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
 	
 <footer class="footer">
 	<div class="row">
 		<div class="col-md-12 foot">
-			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<b class="copyRightText"> Copyright &copy; 2018 Pok&eacute;Forum</b>
 			<img class="icon" src="images/pikachu.png">
 		</div>
 	</div>
