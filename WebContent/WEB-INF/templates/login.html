@@ -101,7 +101,7 @@
 						<h1 class="login"> Login </h1>
 						
 						<div th:if="${param.error}" class="alert alert-danger">Invalid
-							username or password.</div>
+							username or password, or disabled due to inappropriate behaviour.</div>
 
 						<div th:if="${param.logout}" class="alert alert-success">You
 							have been logged out.</div>
@@ -119,9 +119,8 @@
  					 	<a th:href="@{/signUp}" class="btn custom custom1">Sign up</a>
  					 	<button onclick="fillGuest()" type="submit" class="btn custom custom2"> Guest</button>
 					</form>
-				
 				</div>
-				<div class="col-md-4 col-sm-4 col-xs-12"></div>
+			<div class="col-md-4 col-sm-4 col-xs-12"></div>
 		</div>
 	</div>
 	<script>

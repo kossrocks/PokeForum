@@ -20,6 +20,7 @@ import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
+import at.fh.swenga.jpa.model.User;
 
 @Controller
 public class TopicController {
@@ -41,8 +42,8 @@ public class TopicController {
 	public String deleteData(Model model, @RequestParam int id, Principal principal) {
 
 		TopicModel topic = topicDao.getTopic(id);
-		String username = topic.getOwner().getUserName();
-		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
+		String usernameOwner = topic.getOwner().getUserName();
+		if (usernameOwner.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
 			entryDao.deleteById(id);
 			topicDao.deleteById(id);
 			return "forward:index";
@@ -52,13 +53,21 @@ public class TopicController {
 	}
 
 	@RequestMapping("/listEntries")
-	public String listEntries(Model model, @RequestParam int id) {
+	public String listEntries(Model model, @RequestParam int id, Principal principal) {
 
+		
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
 		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
 		model.addAttribute("entries", entries);
 
 		TopicModel topic = topicDao.getTopic(id);
 		model.addAttribute("topic", topic);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "listEntries";
 	}
@@ -74,7 +83,7 @@ public class TopicController {
 			@RequestParam("firstEntry") String firstEntry, Principal principal) {
 
 		Date date = new Date();
-
+		
 		TopicModel topic = new TopicModel();
 		topicDao.persist(topic);
 		topic.setTitle(title);
@@ -124,6 +133,13 @@ public class TopicController {
 		model.addAttribute("entries", entries);
 
 		model.addAttribute("topic", topic);
+		
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "listEntries";
 
@@ -134,8 +150,8 @@ public class TopicController {
 
 		EntryModel entry = entryDao.getEntry(id);
 
-		String username = entry.getOwner().getUserName();
-		if (username.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
+		String usernameOwner = entry.getOwner().getUserName();
+		if (usernameOwner.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
 
 			model.addAttribute("entry", entry);
 
@@ -146,7 +162,7 @@ public class TopicController {
 	}
 
 	@RequestMapping(value = "/editEntry", method = RequestMethod.POST)
-	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text) {
+	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text, Principal principal) {
 		EntryModel entry = entryDao.getEntry(id);
 		entry.setContent(text);
 		entry.setEdited(true);
@@ -157,6 +173,13 @@ public class TopicController {
 		model.addAttribute("entries", entries);
 
 		model.addAttribute("topic", topic);
+		
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "listEntries";
 	}
@@ -175,6 +198,13 @@ public class TopicController {
 			TopicModel topic = topicDao.getTopic(topicId);
 
 			model.addAttribute("topic", topic);
+			
+			User user = userDao.getUser(principal.getName());
+			model.addAttribute("user", user);
+			
+			boolean isAdmin = false;
+			if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+			model.addAttribute("isAdmin", isAdmin);
 
 			return "listEntries";
 		} else {
@@ -184,11 +214,18 @@ public class TopicController {
 	}
 
 	@RequestMapping("/searchTopics")
-	public String searchIt(Model model, @RequestParam String searchString) {
+	public String searchIt(Model model, @RequestParam String searchString, Principal principal) {
 			
 		List<TopicModel> topics = topicDao.searchTopic(searchString);
 		
 		model.addAttribute("topics", topics);
+		
+		User user = userDao.getUser(principal.getName());
+		model.addAttribute("user", user);
+		
+		boolean isAdmin = false;
+		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "index";
 	}

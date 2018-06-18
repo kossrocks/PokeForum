@@ -7,119 +7,134 @@
 <title>PokeForum - attacks</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
+
 <style>
 
-.light {background-color: green;}
+.header {
+	margin-top: 20px;
+	margin-bottom: -20px;
+}
 
+.title {
+	font-size: 40px;
+	margin-bottom: 20px;
+	margin-left: 436px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 250px;
+	background-color: #47596C;
+	height: 40px;
+}
 </style>
 
 </head>
-
 <body>
+<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-11 col-md-offset-2 header">
 
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
 	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
 	
-
-	<div class="container" role="main">
-
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
 		</div>
+	</div>	
 
-		<!--  Error message ----------------------------------------------------------- -->
-		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-			class="alert alert-danger" role="alert"></div>
-		<!--  Error message ----------------------------------------------------------- -->
+	<div class="row">
+		<div class="col-md-12">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>		
+	</div>
+</div>	
+<div class="container table">
+	<div class="title">List of all Attacks</div>
+		<div class="col-md-10 col-md-offset-1" >
+			<form class="navbar-form navbar-right" action="searchAttacks">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." name="searchString">
 
-		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null"
-			th:utext="${warningMessage}" class="alert alert-warning"
-			role="warning"></div>
-		<!--  Warning message ----------------------------------------------------------- -->
-
-		<!--   message ----------------------------------------------------------- -->
-		<div th:unless="${message} == null" th:utext="${message}"
-			class="alert alert-success" role="warning"></div>
-		<!--   message ----------------------------------------------------------- -->
-
-		<nav th:replace="~{includes/sidebar}"></nav>
-
-		<!--  1 simple button ----------------------------------------------------------- -->
-		
-				
-  		<div class="jumbotron jumbotron-fluid">
-  		<div class="container">
-		<h1 class="display-3">List of all attacks</h1>
-		</div>
-		</div>
-		
-	
-		<form class="navbar-form navbar-right" action="searchAttacks">
-			<div class="input-group mb-3">
-				<input type="text" class="form-control" placeholder="Search for attacks ..." name="searchString">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">Go!</button>
 				</span>
 			</div>
 		</form>
 		
-		
-		
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-			
-			
-			
-				<table data-toggle="table" class="table table-striped">
-					
-					<thead>
-						<tr>
-							<th data-sortable="true">Attack</th>
-							<th data-sortable="true">Type</th>
-							<th data-sortable="true">Category</th>
-							<th data-sortable="true">PowerPoints</th>
-							<th data-sortable="true">BasePower</th>
-							<th data-sortable="true">Accuracy</th>
-							<th>BattleEffect</th>
-							
+		<table data-toggle="table" class="table table-striped">	
+			<thead>
+				<tr>
+					<th>Attack</th>
+					<th>Type</th>
+					<th>Category</th>
+					<th>PowerPoints</th>
+					<th>BasePower</th>
+					<th>Accuracy</th>
+					<th>BattleEffect</th>
+				</tr>
+			</thead>
 
 
+			<tbody>
 
-						</tr>
-					</thead>
 
-					<tbody>
-
-						<!--  list all items ----------------------------------------------------------- -->
-							
-							<tr th:each="attack : ${attacks}">	
-							<td class="text-primary" th:text="${attack.name}"></td>
-							<td class="text-secondary" th:text="${attack.type.name}"></td>
-							<td class="text-secondary" th:text="${attack.category.name}"></td>
-							<td class="text-secondary" th:text="${attack.powerPoints}"></td>
-							<td class="text-secondary" th:text="${attack.basePower}"></td>
-							<td class="text-secondary" th:text="${attack.accuracy}"></td>
-							<td th:text="${attack.battleEffect}"></td>
-						</tr>
-						
-						
-						
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
+			<!--  list all items ----------------------------------------------------------- -->
 
 				
-				</table>
+				<tr th:each="attack : ${attacks}">	
+					<td class="text-primary" th:text="${attack.name}"></td>
+					<td class="text-secondary" th:text="${attack.type.name}"></td>
+					<td class="text-secondary" th:text="${attack.category.name}"></td>
+					<td class="text-secondary" th:text="${attack.powerPoints}"></td>
+					<td class="text-secondary" th:text="${attack.basePower}"></td>
+					<td class="text-secondary" th:text="${attack.accuracy}"></td>
+					<td th:text="${attack.battleEffect}"></td>
+				</tr>
+			<!--  list all items ----------------------------------------------------------- -->
+			</tbody>
+		</table>
+	</div>
+</div>	
 
-	
-
-
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+ 	
+ 	<div class="footer">
+		<div class="row">
+			<div class="col-md-12 foot">
+				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+				<img class="icon" src="images/schiggy.png">
 			</div>
-			
-			
-			
-			<!--  End of container -->
-			<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
-					
+		</div>
+	</div>	
+<!--  End of container -->
+<div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
+
 </body>
 </html>

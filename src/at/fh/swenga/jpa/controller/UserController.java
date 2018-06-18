@@ -4,34 +4,24 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.access.AccessDeniedException;
-
 import org.springframework.security.access.annotation.Secured;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import at.fh.swenga.jpa.dao.DocumentRepository;
+import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
-import at.fh.swenga.jpa.model.EntryModel;
-import at.fh.swenga.jpa.model.TopicModel;
+import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
 
 @Controller
@@ -48,7 +38,10 @@ public class UserController {
 
 	@Autowired
 	UserRoleDao userRoleDao;
-
+	
+	@Autowired
+	PokemonDao pokemonDao;
+	
 	@RequestMapping("/searchUsers")
 	public String searchUser(Model model, @RequestParam String searchString) {
 
@@ -77,6 +70,7 @@ public class UserController {
 
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
 	public String enableUser(Model model, @RequestParam int id) {
 
@@ -89,7 +83,7 @@ public class UserController {
 
 		return "users";
 	}
-
+/*
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String showUploadForm(Model model) {
 
@@ -144,7 +138,7 @@ public class UserController {
 
 		return "forward:profile";
 	}
-
+*/
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
 	public String showEditUser(Model model, Principal principal) {
 
@@ -158,7 +152,7 @@ public class UserController {
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
 			@RequestParam("password") String password, @RequestParam("password1") String password1,
-			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,Principal principal) {
 		User user = userDao.getUser(username);
 		if (password != null) {
 			if (password.equals(password1)) {
@@ -179,8 +173,15 @@ public class UserController {
 		userDao.merge(user);
 
 		model.addAttribute("user", user);
+		int id = userDao.getUser(principal.getName()).getId();
+		model.addAttribute("id", id);
+		
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
+		model.addAttribute("pokemons", pokemons);
 
 		return "profile";
 	}
 
+	
+	
 }

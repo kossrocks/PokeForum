@@ -7,13 +7,83 @@
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>PokeForum - User Profile</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+<style>
+
+.header {
+	margin-top: 20px;
+	margin-bottom: -20px;
+}
+
+.title {
+	font-size: 40px;
+	margin-bottom: 20px;
+	margin-left: 385px;
+}
+
+.profilePicture {
+	
+	padding-top: 28px;
+	border-style: solid;
+	padding-bottom: 20px;	
+}
+
+.center {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+
+.user {
+	border-style: solid;
+	padding-top: 20px;
+}
+
+.button {
+	display:block;
+	text-align:center;
+	margin-top: 24px;
+}
+
+.team {
+	border-style: solid;
+}
+
+.font {
+	font-size: 20px;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -30px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 60px;
+	background-color: #47596C;
+	height: 40px;
+}
+
+
+</style>
 </head>
 <body>
-	<div class="container" role="main">
+<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-11 col-md-offset-2 header">
 
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.jpg"></a>
-		</div>
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
 		<!--  Error message ----------------------------------------------------------- -->
 		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
@@ -30,12 +100,188 @@
 		<div th:unless="${message} == null" th:utext="${message}"
 			class="alert alert-success" role="warning"></div>
 		<!--   message ----------------------------------------------------------- -->
+	</div>
+</div>
 
-		<nav th:replace="~{includes/sidebar}"></nav>
+	<div class="row">
+		<div class="col-md-1">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>
+	</div>
+</div>
+
+<div class="container profile">
+	<div class="row">
+
+<!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
+
+		<div class="col-md-3 col-md-offset-1 profilePicture">
+		<img src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+		<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+			Edit Profile
+		</a> </span>
 		
-		<!-- --------------  buttons ---------------- -->
+		</div>
+		
+<!-- ----------------------------------- User Information--------------------------------------------------------- -->
+
+		<div class="col-md-7 user">
+			<strong class="font"> User Profile</strong><br>
+            <div class="table-responsive">
+            <table class="table table-condensed table-responsive table-user-information">
+                <tbody>
+                    <tr>    
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                Username                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.userName}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                First Name                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}" class="text-primary"></td>
+                    </tr>
+
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                Last Name                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}" class="text-primary"></td>
+                    </tr>
+					<tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Date of Entry                                                
+                            </strong>
+                        </td>
+                        <td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}" class="text-primary"></td>
+                    </tr>
+					<tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Number of Topics                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.topics.size()}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                Number of Entries                                                
+                            </strong>
+                        </td>
+                        <td th:text="${user.entries.size()}" class="text-primary"></td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                Role                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            MATHIAS schreib die Rolle eini --> beim td rein
+                        </td>
+                    </tr>                           
+                </tbody>
+            </table>
+            </div>
+		</div>
+	</div>
+
+ <div class="row">
+ 	<div class="col-md-10 col-md-offset-1 team">
+ 	 <div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<table data-toggle="table" class="table table-striped">
+					
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Species</th>
+							<th>Type1</th>
+							<th>Type2</th>
+							<th>Level</th>
+							<th>Attack1</th>
+							<th>Attack2</th>
+							<th>Attack3</th>
+							<th>Attack4</th>
+							<th>Gender</th>
+							<th>Shiny</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<!--  list all items ----------------------------------------------------------- -->
+							
+							<tr th:each="pokemon : ${pokemons}">	
+							<td th:text="${pokemon.name}">NAME</td>
+							<td th:text="${pokemon.species}">SPECIES</td>
+							<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
+							<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
+							<td th:text="${pokemon.level}">LEVEL</td>
+							<td th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
+							<td th:text="${pokemon.attacks.size() > 1 ? pokemon.attacks.get(1).name : '------' }">ATTACK2</td>
+							<td th:text="${pokemon.attacks.size() > 2 ? pokemon.attacks.get(2).name : '------' }">ATTACK3</td>
+							<td th:text="${pokemon.attacks.size() > 3 ? pokemon.attacks.get(3).name : '------' }">ATTACK4</td>
+							<td th:text="${pokemon.gender}">GENDER</td>
+							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
+							<td>
+								<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
+									Edit
+								</a> </span>
+							</td>
+						</tr>
+						
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+
+				
+				</table>
+
+			</div>
+ 	
+ 	</div>
+ 		<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
+			New Team Member
+		</a>
+ 	</div>
+ 	
+</div>
+
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+ 	
+ 	<div class="footer">
+		<div class="row">
+			<div class="col-md-12 foot">
+				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+				<img class="icon" src="images/pikachu.png">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--  		
+		
 		<div class="form-group">
-			<div class="col-md-10 col-md-offset-2">
+			<div th:if="${user.id.equals(id)}" class="col-md-10 col-md-offset-2">
 				<a href="editUser" class="btn btn-default">
 						Edit
 					</a>
@@ -87,13 +333,13 @@
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Date of Entry</th>
-							<!--<th>Picture</th>-->
+							<!--<th>Picture</th>
 							<th>Number of Topics</th>
 							<th>Number of Entries</th> 
 						</tr>
 					</thead>
 					<tbody>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- -->
+						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
 						<tr>
 							<td th:text="${user.userName}"></td>
 							<td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}"></td>
@@ -107,7 +353,7 @@
 							</span> 
 							
 						</tr>
-						<!--  list all items for the user profile of the current user ----------------------------------------------------------- -->
+						<!--  list all items for the user profile of the current user ----------------------------------------------------------- 
 					</tbody>
 				</table>
 			</div>
@@ -120,7 +366,10 @@
 		</form>
 		
 	</div>
+	
+-->
 	<!--  End of container -->
 	<div th:replace="~{includes/bootstrap :: bootstrapJS}" />
+	
 </body>
 </html>

@@ -28,7 +28,7 @@ public class SpeciesModel implements java.io.Serializable{
 	private String name;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	private List<TypeModel> types;
+	private List<TypeModel> typesSpecies;
 	
 	@Column(name = "baseHP")
 	private int baseHealthPoints;
@@ -47,9 +47,6 @@ public class SpeciesModel implements java.io.Serializable{
 	
 	@Column(name = "baseSPE")
 	private int baseSpeed;	
-	
-	@OneToMany(mappedBy = "species",fetch=FetchType.LAZY)
-	private Set<PokemonModel> pokemons;
 
 	@Version
 	long version;
@@ -80,11 +77,13 @@ public class SpeciesModel implements java.io.Serializable{
 	}
 
 	public List<TypeModel> getTypes() {
-		return types;
+		return typesSpecies;
 	}
+	
+
 
 	public void setTypes(List<TypeModel> types) {
-		this.types = types;
+		this.typesSpecies = types;
 	}
 	
 
@@ -139,27 +138,11 @@ public class SpeciesModel implements java.io.Serializable{
 	public int getId() {
 		return id;
 	}
-
-	public Set<PokemonModel> getPokemons() {
-		return pokemons;
-	}
-
-	public void setPokemons(Set<PokemonModel> pokemons) {
-		this.pokemons = pokemons;
-	}
 	
 	public void addType(TypeModel type) {
-		if (types== null) {
-			types= new ArrayList<TypeModel>();
+		if (typesSpecies== null) {
+			typesSpecies= new ArrayList<TypeModel>();
 		}
-		types.add(type);
-	}
-	
-	public String getType1(TypeModel type) {
-		if (types == null) {
-			return "";
-		}
-		TypeModel type1 = this.getTypes().iterator().next();
-		return type1.getName();
+		typesSpecies.add(type);
 	}
 }
