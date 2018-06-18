@@ -25,7 +25,8 @@
 	
 	padding-top: 30px;
 	border-style: solid;
-	padding-bottom: 20px;	
+	padding-bottom: 20px;
+	height: 305px;	
 }
 
 .center {
@@ -38,6 +39,7 @@
 .user {
 	border-style: solid;
 	padding-top: 20px;
+	height: 305px;
 }
 
 .button {
@@ -203,8 +205,6 @@
 
  <div class="row">
  	<div class="col-md-10 col-md-offset-1 team">
- 	 <div class="row">
-			<div class="col-md-10 col-md-offset-1">
 				<table data-toggle="table" class="table table-striped">
 					
 					<thead>
@@ -261,12 +261,12 @@
 			</a>
  		</div>
  		
- 	</div>
+ 
 
  	<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success">
 		New Pokemon
 	</a>
- 	</div>
+ 
 
 
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
