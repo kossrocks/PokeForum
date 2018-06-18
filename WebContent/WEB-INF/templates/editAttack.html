@@ -10,8 +10,9 @@
 
 <style>
 .header {
-	margin-top: 30px;
-	margin-bottom: -20px;
+	display:block;
+	text-align:center;
+	margin-bottom: 40px;
 }
 
 .icon {
@@ -31,39 +32,57 @@
 }
 
 .foot {
-	margin-top: 290px;
 	background-color: #47596C;
 	height: 40px;
+}
+
+.tableDesign {
+	background: rgba(255,255,255,0.3);
+	border: 0px solid #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-box-shadow:1px 2px 26px -5px rgba(0,0,0,0.75);
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	padding-top: 40px;
 }
 
 </style>
 </head>
 <body>
-	<div class="container" role="main">
-
-		<div class="page-header">
-			<a href="index"><img src="images/PokeForumLogo.png"></a>
+<body>
+<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-1">
+			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-11 header">
 
-		<!--  Error message ----------------------------------------------------------- -->
-		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-			class="alert alert-danger" role="alert"></div>
-		<!--  Error message ----------------------------------------------------------- -->
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
 
-		<!--  Warning message ----------------------------------------------------------- -->
-		<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
-			class="alert alert-warning" role="warning"></div>
-		<!--  Warning message ----------------------------------------------------------- -->
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger col-md-offset-1" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
+	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning col-md-offset-1" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success col-md-offset-1" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
+		</div>
+	</div>
+</div>		
 
-		<!--   message ----------------------------------------------------------- -->
-		<div th:unless="${message} == null" th:utext="${message}"
-			class="alert alert-success" role="warning"></div>
-		<!--   message ----------------------------------------------------------- -->
-
-		<nav th:replace="~{includes/searchNav :: search}"></nav>
-
-		<!--  1 simple button ----------------------------------------------------------- -->
-		<div class="col-md-8 col-md-offset-2 swoopDown">
+<div class="col-md-8 col-md-offset-2 swoopDown tableDesign">
 		<form class="form-horizontal" method="post"
 				th:action="${attack} ? @{/editAttack(id=${attack.id})} : @{/addAttack}">
 					
@@ -144,7 +163,7 @@
 			<!-- --------------  buttons ---------------- -->
 			<div class="form-group">
 				<div class="col-md-10 col-md-offset-2">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-success">Submit</button>
 						<a href="attacks" class="btn btn-default"> Cancel </a>
 				</div>
 			</div>

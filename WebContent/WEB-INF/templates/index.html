@@ -8,8 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <!-- Bootstrap CSS CDN -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- Our Custom CSS -->
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="includes/table.css">
@@ -54,7 +53,7 @@
 }
 
 .foot {
-	margin-top: 66px;
+	margin-top: 36px;
 	background-color: #47596C;
 	height: 40px;
 }
@@ -117,6 +116,9 @@
 	<div class="title">Welcome to Pok&eacute;Forum!</div>
 		<div class="col-md-10 col-md-offset-1" >
 			<div class="container-fluid navbar navbar-default">
+			
+				<a sec:authorize="hasRole('GUEST')" th:href="@{/signUp}" class="btn btn-success navbar-btn">Sign up</a>
+				
 				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success navbar-btn newTopicButton">
 					New Topic
 				</a>
@@ -139,10 +141,10 @@
 		<table data-toggle="table" class="table table-striped">
 			<thead>
 				<tr>
-					<th>Topic name</th>
-					<th><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User</th>
-					<th><i class="fa fa-pencil swoopRight" style="color:#0077b3;"></i>Last edited</th>
-					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>				
+					<th data-sortable="true">Topic name</th>
+					<th data-sortable="true"><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User</th>
+					<th data-sortable="true"><i class="fa fa-pencil swoopRight" style="color:#0077b3;"></i>Last edited</th>
+					<th data-sortable="true"><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>				
 					<th>Action</th>
 				</tr>
 			</thead>
