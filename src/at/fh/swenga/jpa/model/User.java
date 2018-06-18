@@ -44,7 +44,7 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;	
 	
-	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)//if user has roles that are not in database, they will be created(PERSIST)
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)//if user has roles that are not in database, they will be created(PERSIST)
 	private Set<UserRole> userRoles;
 	
 	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)

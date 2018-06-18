@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.User;
+import at.fh.swenga.jpa.model.UserRole;
 
 @Controller
 public class TopicController {
@@ -37,6 +39,7 @@ public class TopicController {
 	@Autowired
 	EntryRepository entryRepository;
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deleteTopic")
 	@Transactional
 	public String deleteData(Model model, @RequestParam int id, Principal principal) {
@@ -45,7 +48,9 @@ public class TopicController {
 		String usernameOwner = topic.getOwner().getUserName();
 		if (usernameOwner.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
 			entryDao.deleteById(id);
+			model.addAttribute("message", "Topic '" + topicDao.getTopic(id).getTitle() + "' deleted.");
 			topicDao.deleteById(id);
+			
 			return "forward:index";
 		} else {
 			throw new AccessDeniedException("You are not allowed to delete this!");
@@ -66,18 +71,22 @@ public class TopicController {
 		model.addAttribute("topic", topic);
 		
 		boolean isAdmin = false;
-		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
 		model.addAttribute("isAdmin", isAdmin);
 
 		return "listEntries";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addTopic", method = RequestMethod.GET)
 	public String showAddTopicForm(Model model) {
 
 		return "addTopic";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
 	public String addTopic(Model model, @RequestParam("title") String title,
 			@RequestParam("firstEntry") String firstEntry, Principal principal) {
@@ -100,11 +109,13 @@ public class TopicController {
 		entry.setTopic(topic);
 
 		entryDao.merge(entry);
+		model.addAttribute("message", "New Topic " + topic.getTitle() + " added.");
 
 		return "forward:/index";
 
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addEntry", method = RequestMethod.GET)
 	public String showAddEntryForm(Model model, @RequestParam int topicId) {
 		model.addAttribute("topicId", topicId);
@@ -112,6 +123,7 @@ public class TopicController {
 		return "addEntry";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
 	public String addEntry(Model model, @RequestParam("entryText") String entry, @RequestParam("topicId") int topicId,
 			Principal principal) {
@@ -140,11 +152,14 @@ public class TopicController {
 		boolean isAdmin = false;
 		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
 		model.addAttribute("isAdmin", isAdmin);
+		
+		model.addAttribute("message", "New Entry added.");
 
 		return "listEntries";
 
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
 	public String showEditEntry(Model model, @RequestParam int id, Principal principal) {
 
@@ -157,10 +172,11 @@ public class TopicController {
 
 			return "addEntry";
 		} else {
-			throw new AccessDeniedException("You are not allowed to edit this, Bitch!");
+			throw new AccessDeniedException("You are not allowed to edit this.");
 		}
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editEntry", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text, Principal principal) {
 		EntryModel entry = entryDao.getEntry(id);
@@ -181,9 +197,12 @@ public class TopicController {
 		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
 		model.addAttribute("isAdmin", isAdmin);
 
+		model.addAttribute("message", "Entry successfully edited.");
+		
 		return "listEntries";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deleteEntry")
 	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId, Principal principal) {
 
@@ -205,6 +224,8 @@ public class TopicController {
 			boolean isAdmin = false;
 			if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
 			model.addAttribute("isAdmin", isAdmin);
+			
+			model.addAttribute("message", "Entry successfully deleted.");
 
 			return "listEntries";
 		} else {
@@ -226,7 +247,11 @@ public class TopicController {
 		boolean isAdmin = false;
 		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
 		model.addAttribute("isAdmin", isAdmin);
-
+		if(topics.size() == 1) {
+			model.addAttribute("message", "You found " + topics.size() + " topic.");
+		}else {
+		model.addAttribute("message", "You found " + topics.size() + " topics.");
+		}
 		return "index";
 	}
 

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
 import at.fh.swenga.jpa.model.User;
+import at.fh.swenga.jpa.model.UserRole;
 
 @Controller
 public class NavigationController {
@@ -61,7 +63,9 @@ public class NavigationController {
 		model.addAttribute("user", user);
 		
 		boolean isAdmin = false;
-		if(user.getUserName().equalsIgnoreCase("admin")) isAdmin = true;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
 		model.addAttribute("isAdmin", isAdmin);
 
 		
@@ -75,6 +79,7 @@ public class NavigationController {
 		return "signUp";
 	}	
 	
+	@Secured({ "ROLE_USER" })
 	@RequestMapping("/profile")
 	public String profile(Model model,Principal principal) {
 		
@@ -92,6 +97,7 @@ public class NavigationController {
 		
 	}
 	
+	@Secured({ "ROLE_USER" })
 	@RequestMapping("/userProfile")
 	public String userProfile(Model model,@RequestParam int id, Principal principal) {
 		
@@ -100,9 +106,13 @@ public class NavigationController {
 		int idUser = userDao.getUser(principal.getName()).getId();
 		model.addAttribute("id",idUser);
 		
+		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(user.getUserName());
+		model.addAttribute("pokemons", pokemons);
+		
 		return "profile";
 	}
 	
+	@Secured({ "ROLE_USER" })
 	@RequestMapping("/users")
 	public String users(Model model) {
 
@@ -112,6 +122,7 @@ public class NavigationController {
 		
 		return "users";
 	}
+	
 	
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
@@ -136,35 +147,6 @@ public class NavigationController {
 		
 		return "pokemon";
 	}
-	
-	@RequestMapping("/editTeamMember")
-	public String editTeamMember(Model model) {
-
-
-
-		
-		return "editTeamMember";
-	}
-	
-	@RequestMapping("/addEntry")
-	public String addEntry(Model model) {
-
-
-
-		
-		return "addEntry";
-	}
-	
-	
-	@RequestMapping("/editSpecies")
-	public String editSpecies(Model model) {
-
-
-
-		
-		return "editSpecies";
-	}
-	
 	
 	
 	/*@RequestMapping("/uploadPicture")

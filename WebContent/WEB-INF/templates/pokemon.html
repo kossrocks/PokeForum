@@ -104,6 +104,7 @@
 					<th data-sortable="true">SpecialDefense</th>
 					<th data-sortable="true">Speed</th>
 					<th>More Infos</th>	
+					<th sec:authorize="hasRole('ADMIN')">Action</th>
 				</tr>
 			</thead>
 
@@ -122,6 +123,10 @@
 					<td> <a th:href="'http://pokemon.wikia.com/wiki/'+${species.name}" target="_blank" class="btn btn-xs btn-success">
 						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
 					</td>
+					<td sec:authorize="hasRole('ADMIN')">
+						<a th:href="@{/editSpecies(id=${species.id})}" class="btn btn-xs btn-success">Edit</a>
+						<a th:href="@{/deleteSpecies(id=${species.id})}" class="btn btn-xs btn-danger">Delete</a>
+					</td>
 				</tr>
 				<!--  list all items ----------------------------------------------------------- -->
 			
@@ -129,6 +134,9 @@
 		</table>
 	</div>
 </div>
+<a sec:authorize="hasRole('ADMIN')" href="addSpecies" class="btn btn-success">
+		New Species
+	</a>
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
 	
 <footer class="footer">

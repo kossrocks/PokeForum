@@ -161,9 +161,9 @@
 					<div class="col-md-10">
 						
 					<select name="gender" id="gender" class="form-control">
-								  <option th:selected="${pokemon.gender.equals('none')}" value="none">None</option>
-								  <option th:selected="${pokemon.gender.equals('male')}" value="male">Male</option>
-								  <option th:selected="${pokemon.gender.equals('female')}" value="female">Female</option>
+								  <option th:selected="${pokemon != null && pokemon.gender.equals('none')}" value="none">None</option>
+								  <option th:selected="${pokemon != null && pokemon.gender.equals('male')}" value="male">Male</option>
+								  <option th:selected="${pokemon != null && pokemon.gender.equals('female')}" value="female">Female</option>
 								</select>
 					</div>
 			</div>

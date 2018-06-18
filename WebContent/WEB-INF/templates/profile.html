@@ -25,7 +25,8 @@
 	
 	padding-top: 30px;
 	border-style: solid;
-	padding-bottom: 20px;	
+	padding-bottom: 20px;
+	height: 305px;	
 }
 
 .center {
@@ -38,6 +39,7 @@
 .user {
 	border-style: solid;
 	padding-top: 20px;
+	height: 305px;
 }
 
 .button {
@@ -203,8 +205,6 @@
 
  <div class="row">
  	<div class="col-md-10 col-md-offset-1 team">
- 	 <div class="row">
-			<div class="col-md-10 col-md-offset-1">
 				<table data-toggle="table" class="table table-striped">
 					
 					<thead>
@@ -229,7 +229,7 @@
 						<!--  list all items ----------------------------------------------------------- -->
 							
 							<tr th:each="pokemon : ${pokemons}">	
-							<td th:text="${pokemon.name}">NAME</td>
+							<td th:text="${pokemon.name == '' ? pokemon.species : pokemon.name}">NAME</td>
 							<td th:text="${pokemon.species}">SPECIES</td>
 							<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
 							<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
@@ -253,20 +253,15 @@
 						<!--  list all items ----------------------------------------------------------- -->
 					</tbody>
 				</table>
-			</div>
-			
- 		</div>
- 			<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
-				New Team Member
-			</a>
- 		</div>
- 		
+
+			</div> 		
  	</div>
+
 
  	<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success">
 		New Pokemon
 	</a>
- 	</div>
+ 
 
 
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
