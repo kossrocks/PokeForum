@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
+<title>Pok&eacute;Forum - Attacks</title>
+<div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+
+
+<style>
+
+.header {
+	display:block;
+	text-align:center;
+	margin-bottom: 40px;
+}
+
+.title {
+	font-size: 40px;
+	margin-bottom: 40px;
+	display:block;
+	text-align:center;
+}
+
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	background-color: #47596C;
+	height: 40px;
+}
+
+.tableDesign {
+	background: rgba(255,255,255,0.3);
+	border: 0px solid #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-box-shadow:1px 2px 26px -5px rgba(0,0,0,0.75);
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	padding-top: 40px;
+}
+
+</style>
+
+</head>
+<body>
+<div class="container" role="main">
+	<div class="row">
+		<div class="col-md-1">
+			<nav th:replace="~{includes/sidebar}"></nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-11 header">
+
+				<a href="index"><img src="images/PokeForumLogo.png"></a>
+
+			<!--  Error message ----------------------------------------------------------- -->
+			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+				class="alert alert-danger col-md-offset-1" role="alert"></div>
+			<!--  Error message ----------------------------------------------------------- -->
+	
+			<!--  Warning message ----------------------------------------------------------- -->
+			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+				class="alert alert-warning col-md-offset-1" role="warning"></div>
+			<!--  Warning message ----------------------------------------------------------- -->
+	
+			<!--   message ----------------------------------------------------------- -->
+			<div th:unless="${message} == null" th:utext="${message}"
+				class="alert alert-success col-md-offset-1" role="warning"></div>
+			<!--   message ----------------------------------------------------------- -->
+		</div>
+	</div>
+</div>	
+<div class="container tableDesign">
+	<div class="title">Attack Calculator</div>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="container-fluid navbar navbar-default">
+			
+				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
+		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
+		   		</form>
+		   		
+				
+			</div>
+		
+		<form class="form-horizontal" method="post" th:action="@{/calculate}">
+				<fieldset>
+				
+					<!-- --------------  Your Pokemon ---------------- -->
+					<div class="form-group">
+						<label for="inputYourPokemon" class="col-md-2 control-label">Your Pokemon</label>
+						<div class="col-md-10">
+							<select name="yourPokemon" id="yourPokemon" class="form-control">
+								  <option th:each="yourPokemon : ${yourPokemons}" th:value="${yourPokemon.id}" th:text="${yourPokemon.name != '' ? yourPokemon.name : yourPokemon.species}" th:selected="${lastChosen != null && lastChosen.id == yourPokemon.id}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<!-- --------------  Your Level ---------------- -->
+					<div class="form-group">
+						<label for="inputYourLevel" class="col-md-2 control-label">Your Level</label>
+							<div class="col-md-10">
+						
+							<input class="form-control" id="inputYourLevel" type="number" 
+									name="yourLevel" th:value="${lastChosen} ? ${lastChosen.level}" min="1" max="100" required>
+							</div>
+					</div>
+					
+					<!-- --------------  Your Attack ---------------- -->
+					<div class="form-group">
+						<label for="inputYourAttack" class="col-md-2 control-label">Your Attack</label>
+						<div class="col-md-10">
+							<select name="yourAttack" id="yourAttack" class="form-control">
+								  <option th:each="yourAttack : ${attacks}" th:value="${yourAttack.id}" th:text="${yourAttack.name}" th:selected="${lastAttack != null && lastAttack.id == yourAttack.id}"></option>
+							</select>
+						</div>
+					</div>
+
+					<!-- --------------  Enemy Pokemon ---------------- -->
+					<div class="form-group">
+						<label for="inputEnemyPokemon" class="col-md-2 control-label">Enemy Pokemon</label>
+						<div class="col-md-10">
+							<select name="enemyPokemon" id="enemyPokemon" class="form-control">
+								  <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}" th:selected="${lastEnemy != null && lastEnemy.id == pokemon.id}"></option>
+							</select>
+						</div>
+					</div>
+					
+					<!-- --------------  Enemy Level ---------------- -->
+					<div class="form-group">
+						<label for="inputEnemyLevel" class="col-md-2 control-label">Enemy Level</label>
+							<div class="col-md-10">
+						
+							<input class="form-control" id="inputEnemyLevel" type="number" 
+									name="enemyLevel" th:value="${lastEnemyLevel} ? ${lastEnemyLevel}" min="1" max="100" required>
+							</div>
+					</div>
+										
+					<!-- --------------  buttons ---------------- -->
+					<div class="form-group">
+						<div class="col-md-10 col-md-offset-2">
+							<button type="submit" class="btn btn-success">Submit</button>
+							
+						</div>
+					</div>
+				</fieldset>
+			</form>
+	</div>
+</div>	
+
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 Pok&eacute;Forum</b>
+			<img class="icon" src="images/schiggy.png">
+		</div>
+	</div>
+</footer>	
+<!--  End of container -->
+<div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
+
+</body>
+</html>
