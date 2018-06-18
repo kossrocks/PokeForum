@@ -37,7 +37,7 @@
 }
 
 .foot {
-	margin-top: 290px;
+	margin-top: 82px;
 	background-color: #47596C;
 	height: 40px;
 }
@@ -54,6 +54,10 @@
 	padding-bottom: 20px;
 	padding-top: 40px;
 }
+
+.buttons {
+	margin-top: 10px;
+} 
 
 </style>
 </head>
@@ -90,7 +94,7 @@
 <div class="row">	
 	<div class="col-md-10 col-md-offset-1 tableDesign swoopDown">
 		<form class="form-horizontal" method="post"
-				th:action="${entry} ? @{/editEntry(id=${entry.id})} : @{/addEntry}">
+				th:action="${entry} ? @{/editEntry(id=${entry.id})} : @{/addEntry}" th:object=${entry}>
 					
 		<fieldset>
 			<legend th:text="${entry}? 'Change Entry' : 'New Entry'">New Entry</legend>
@@ -98,22 +102,22 @@
 			<input type="hidden" th:name="topicId" th:value="${topicId}"/>
 			
 			<!-- --------------  Entry ---------------- -->
-			<div class="form-group">
+		
 				<label for="inputEntry" class="col-md-2 control-label">Entry Content</label>
 					<div class="col-md-10">
 						
-					<input class="form-control" id="inputEntry" type="text" 
-							name="entryText" th:value="${entry} ? ${entry.content}" maxlength="1000" required>
+					<textarea class="form-control input-sm" rows="10" cols="40" id="inputEntry" 
+							name="entryText" th:text="${entry} != null ? ${entry.content}" maxlength="1000" required></textarea>
 					</div>
-			</div>
+			
 
 			<!-- --------------  buttons ---------------- -->
-			<div class="form-group">
-				<div class="col-md-10 col-md-offset-2">
-					<button type="submit" class="btn btn-primary">Submit</button>
+			
+				<div class="col-md-10 col-md-offset-2 buttons">
+					<button type="submit" class="btn btn-success">Submit</button>
 						<a th:href="${entry} ? @{/listEntries(id=${entry.topic.id})} : @{/index}" class="btn btn-default"> Cancel </a>
 				</div>
-			</div>
+		
 		</fieldset>
 		</form>
 	</div>
