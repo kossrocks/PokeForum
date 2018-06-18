@@ -53,7 +53,7 @@
 }
 
 .foot {
-	margin-top: 150px;
+	margin-top: 36px;
 	background-color: #47596C;
 	height: 40px;
 }
@@ -116,6 +116,9 @@
 	<div class="title">Welcome to Pok&eacute;Forum!</div>
 		<div class="col-md-10 col-md-offset-1" >
 			<div class="container-fluid navbar navbar-default">
+			
+				<a sec:authorize="hasRole('GUEST')" th:href="@{/signUp}" class="btn btn-success navbar-btn">Sign up</a>
+				
 				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success navbar-btn newTopicButton">
 					New Topic
 				</a>

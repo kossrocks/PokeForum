@@ -57,6 +57,10 @@
 	padding-top: 40px;
 }
 
+.maxWidth {
+	max-width: 300px;
+}
+
 </style>
 
 </head>
@@ -91,8 +95,12 @@
 </div>	
 <div class="container tableDesign">
 	<div class="title">List of all Attacks</div>
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-12">
 			<div class="container-fluid navbar navbar-default">
+			
+				<a sec:authorize="hasRole('ADMIN')" href="addAttack" class="btn btn-success navbar-btn">
+					New Attack
+				</a>
 			
 				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
@@ -137,7 +145,7 @@
 					<td class="text-secondary" th:text="${attack.powerPoints}"></td>
 					<td class="text-secondary" th:text="${attack.basePower}"></td>
 					<td class="text-secondary" th:text="${attack.accuracy}"></td>
-					<td th:text="${attack.battleEffect}"></td>
+					<td class="maxWidth" th:text="${attack.battleEffect}"></td>
 					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{/editAttack(id=${attack.id})}" class="btn btn-xs btn-success">Edit</a>
 						<a th:href="@{/deleteAttack(id=${attack.id})}" class="btn btn-xs btn-danger">Delete</a>
@@ -148,9 +156,7 @@
 		</table>
 	</div>
 </div>	
-<a sec:authorize="hasRole('ADMIN')" href="addAttack" class="btn btn-success">
-		New Attack
-	</a>
+
 
 
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
