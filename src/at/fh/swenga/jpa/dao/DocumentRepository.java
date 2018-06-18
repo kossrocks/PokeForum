@@ -9,5 +9,5 @@ import at.fh.swenga.jpa.model.DocumentModel;
 @Repository
 @Transactional
 public interface DocumentRepository extends JpaRepository<DocumentModel, Integer>{
-
+	
 }

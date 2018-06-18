@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import at.fh.swenga.jpa.dao.DocumentRepository;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserDocumentDao;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
@@ -29,12 +29,6 @@ public class UserController {
 
 	@Autowired
 	UserDao userDao;
-
-	@Autowired
-	DocumentRepository documentDao;
-
-	@Autowired
-	UserDocumentDao userDocumentDao;
 
 	@Autowired
 	UserRoleDao userRoleDao;
@@ -89,62 +83,7 @@ public class UserController {
 
 		return "users";
 	}
-/*
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String showUploadForm(Model model) {
 
-		// get current User
-		Object curUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (curUser instanceof UserDetails) {
-			String userName = ((UserDetails) curUser).getUsername();
-			User user = userDao.getUser(userName);
-
-			if (user != null) {
-				model.addAttribute("user", user);
-				return "profile";
-			} else {
-				model.addAttribute("errorMessage", "Couldn't find user " + userName);
-				return "forward:list";
-			}
-		} else {
-			return "forward:list";
-		}
-	}
-
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadPicture(Model model, @RequestParam("myFile") MultipartFile file) {
-		// get current User
-		Object curUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (curUser instanceof UserDetails) {
-			String userName = ((UserDetails) curUser).getUsername();
-
-			try {
-
-				User user = userDao.getUser(userName);
-
-				// Already a picture available -> delete it
-				if (user.getPicture() != null) {
-					documentDao.delete(user.getPicture());
-					user.setPicture(null);
-				}
-
-				// Create a new picture and set all available infos
-				DocumentModel pic = new DocumentModel();
-				pic.setContent(file.getBytes());
-				pic.setContentType(file.getContentType());
-				pic.setCreated(new Date());
-				pic.setFilename(file.getOriginalFilename());
-				pic.setName(file.getName());
-				user.setPicture(pic);
-				userDocumentDao.save(user);
-			} catch (Exception e) {
-				model.addAttribute("errorMessage", "Error:" + e.getMessage());
-			}
-		}
-
-		return "forward:profile";
-	}
-*/
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
 	public String showEditUser(Model model, Principal principal) {
@@ -188,6 +127,20 @@ public class UserController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		model.addAttribute("message", "You successfully edited your data.");
+		
+		if (user.getPicture() != null) {
+
+			
+			DocumentModel pp = user.getPicture();
+			byte[] profilePicture = pp.getContent();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/jpeg;base64,");
+			sb.append(Base64.encodeBase64String(profilePicture));
+			String image = sb.toString();
+
+			model.addAttribute("image", image);
+		}
 
 		return "profile";
 	}
