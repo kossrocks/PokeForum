@@ -101,7 +101,7 @@
 				
 			</div>
 		
-		<form class="form-horizontal" method="post" th:action="@{/calculate}">
+		<form class="form-horizontal" method="post" th:action="@{/calculate}" th:if="${yourPokemons.size() > 0}">
 				<fieldset>
 				
 					<!-- --------------  Your Pokemon ---------------- -->
@@ -113,7 +113,7 @@
 							</select>
 						</div>
 					</div>
-					
+				
 					<!-- --------------  Your Level ---------------- -->
 					<div class="form-group">
 						<label for="inputYourLevel" class="col-md-2 control-label">Your Level</label>
@@ -161,6 +161,7 @@
 							
 						</div>
 					</div>
+				
 				</fieldset>
 			</form>
 	</div>
