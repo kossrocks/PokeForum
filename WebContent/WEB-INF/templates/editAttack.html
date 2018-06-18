@@ -65,10 +65,10 @@
 		<!--  1 simple button ----------------------------------------------------------- -->
 		<div class="col-md-8 col-md-offset-2 swoopDown">
 		<form class="form-horizontal" method="post"
-				th:action="${species} ? @{/editSpecies(id=${species.id})} : @{/addSpecies}">
+				th:action="${attack} ? @{/editAttack(id=${attack.id})} : @{/addAttack}">
 					
 		<fieldset>
-			<legend th:text="${species}? 'Change Species' : 'New Species'">New Species</legend>
+			<legend th:text="${attack}? 'Change Attack' : 'New Attack'">New Attack</legend>
 			
 			<!-- --------------  Name ---------------- -->
 			<div class="form-group">
@@ -76,89 +76,76 @@
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputName" type="text" 
-							name="name" th:value="${species} ? ${species.name}" maxlength="15" required>
+							name="name" th:value="${attack} ? ${attack.name}" maxlength="15" required>
 					</div>
 			</div>
-			<!-- --------------  Type1 ---------------- -->
+			<!-- --------------  Type ---------------- -->
 			<div class="form-group">
-				<label for="inputType1" class="col-md-2 control-label">Type1</label>
+				<label for="inputType" class="col-md-2 control-label">Type</label>
 					<div class="col-md-10">
 						
-						<select name="type1" id="type1" class="form-control">
-								  <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}" th:selected="${species != null && type.name.equals(species.types.get(0).name)}"></option>
+						<select name="type" id="type" class="form-control">
+								  <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}" th:selected="${attack != null && type.name.equals(attack.type.name)}"></option>
 						</select>
 					</div>
+					
 			</div>
-			<!-- --------------  Type2 ---------------- -->
+			
+			<!-- --------------  Category ---------------- -->
 			<div class="form-group">
-				<label for="inputType2" class="col-md-2 control-label">Type2</label>
+				<label for="inputCategory" class="col-md-2 control-label">Category</label>
 					<div class="col-md-10">
 						
-						<select name="type2" id="type2" class="form-control">
-								  <option th:value="${0}" th:text="------">
-								  <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}" th:selected="${species != null && species.types.size() > 1 && type.name.equals(species.types.get(1).name)}"></option>
+						<select name="category" id="type" class="form-control">
+								  <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" th:selected="${attack != null && category.name.equals(attack.category.name)}"></option>
 						</select>
+						
+					
 					</div>
 			</div>
-			<!-- --------------  baseHealthPoints ---------------- -->
+			<!-- --------------  powerPoints ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseHealthPoints" class="col-md-2 control-label">BaseHealthPoints</label>
+				<label for="inputBaseHealthPoints" class="col-md-2 control-label">PowerPoints</label>
 					<div class="col-md-10">
 						
-					<input class="form-control" id="inputBaseHealthPoints" type="number" 
-							name="baseHealthPoints" th:value="${species} ? ${species.baseHealthPoints}" min="1" required>
+					<input class="form-control" id="inputPowerPoints" type="number" 
+							name="powerPoints" th:value="${attack} ? ${attack.powerPoints}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  baseAttack ---------------- -->
+			<!-- --------------  basePower ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseAttack" class="col-md-2 control-label">BaseAttack</label>
+				<label for="inputBasePower" class="col-md-2 control-label">BasePower</label>
 					<div class="col-md-10">
 						
-					<input class="form-control" id="inputBaseAttack" type="number" 
-							name="baseAttack" th:value="${species} ? ${species.baseAttack}" min="1" required>
+					<input class="form-control" id="inputBasePower" type="number" 
+							name="basePower" th:value="${attack} ? ${attack.basePower}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  baseDefense ---------------- -->
+			<!-- --------------  accuracy ---------------- -->
 			<div class="form-group">
-				<label for="inputDefense" class="col-md-2 control-label">BaseDefense</label>
+				<label for="inputAccuracy" class="col-md-2 control-label">Accuracy</label>
 					<div class="col-md-10">
 						
-					<input class="form-control" id="inputBaseDefense" type="number" 
-							name="baseDefense" th:value="${species} ? ${species.baseDefense}" min="1" required>
+					<input class="form-control" id="accuracy" type="number" 
+							name="accuracy" th:value="${attack} ? ${attack.accuracy}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  baseSpecialAttack ---------------- -->
+			<!-- --------------  battleEffect ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseSpecialAttack" class="col-md-2 control-label">BaseSpecialAttack</label>
+				<label for="inputBattleEffect" class="col-md-2 control-label">BattleEffect</label>
 					<div class="col-md-10">
 						
-					<input class="form-control" id="inputBaseSpecialAttack" type="number" 
-							name="baseSpecialAttack" th:value="${species} ? ${species.baseSpecialAttack}" min="1" required>
+					<input class="form-control" id="battleEffect" type="text" 
+							name="battleEffect" th:value="${attack} ? ${attack.battleEffect}" maxlength="40" required>
 					</div>
 			</div>
-			<!-- --------------  baseSpecialDefense ---------------- -->
-			<div class="form-group">
-				<label for="inputBaseSpecialDefense" class="col-md-2 control-label">BaseSpecialDefense</label>
-					<div class="col-md-10">
-						
-					<input class="form-control" id="inputBaseSpecialDefense" type="number" 
-							name="baseSpecialDefense" th:value="${species} ? ${species.baseSpecialDefense}" min="1" required>
-					</div>
-			</div>
-			<!-- --------------  baseSpeed ---------------- -->
-			<div class="form-group">
-				<label for="inputBaseSpeed" class="col-md-2 control-label">BaseSpeed</label>
-					<div class="col-md-10">
-						
-					<input class="form-control" id="inputBaseSpeed" type="number" 
-							name="baseSpeed" th:value="${species} ? ${species.baseSpeed}" min="1" required>
-					</div>
-			</div>
+			
+			
 			<!-- --------------  buttons ---------------- -->
 			<div class="form-group">
 				<div class="col-md-10 col-md-offset-2">
 					<button type="submit" class="btn btn-primary">Submit</button>
-						<a href="pokemon" class="btn btn-default"> Cancel </a>
+						<a href="attacks" class="btn btn-default"> Cancel </a>
 				</div>
 			</div>
 		</fieldset>

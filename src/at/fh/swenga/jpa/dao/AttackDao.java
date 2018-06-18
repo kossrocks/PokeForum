@@ -60,6 +60,18 @@ public class AttackDao {
 	}
 	
 	
+	public AttackModel searchAttackByName(String name) {
+		try {
+			TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select u from AttackModel u where u.name = :name",
+					AttackModel.class);
+			typedQuery.setParameter("name", name);
+			return typedQuery.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	
 	
 	
 	

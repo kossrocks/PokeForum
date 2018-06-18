@@ -75,7 +75,14 @@ public class AttackController {
 		List<AttackModel> attacks = attackDao.getAllAttacks();
 		model.addAttribute("attacks",attacks);
 		
-		return "editAttacks";
+		
+		List<TypeModel> types = typeDao.getAllTypes();
+		model.addAttribute("types", types);		
+		
+		List<CategoryModel> categories = categoryDao.getAllCategories();
+		model.addAttribute("categories",categories);
+		
+		return "editAttack";
 	}
 	
 	
@@ -86,7 +93,7 @@ public class AttackController {
 	@RequestMapping(value = "/addAttack", method = RequestMethod.POST)
 	public String addAttackForm(Model model, @RequestParam("name") String name, @RequestParam("type") int type, @RequestParam("category") int category, @RequestParam("basePower") int basePower, @RequestParam("accuracy") int accuracy, @RequestParam("powerPoints") int powerPoints, @RequestParam("battleEffect") String battleEffect) {
 		
-		if(attackDao.searchAttack(name.toLowerCase()) == null) {
+		if(attackDao.searchAttackByName(name.toLowerCase()) == null)  {
 			
 			AttackModel newAttack = new AttackModel();
 			
@@ -117,7 +124,10 @@ public class AttackController {
 		model.addAttribute("attacks", attacks);
 		
 		List<TypeModel> types = typeDao.getAllTypes();
-		model.addAttribute("types", types);			
+		model.addAttribute("types", types);		
+		
+		List<CategoryModel> categories = categoryDao.getAllCategories();
+		model.addAttribute("categories",categories);
 		
 		return "attacks";
 	}
@@ -140,7 +150,10 @@ public class AttackController {
 		model.addAttribute("attacks", attacks);
 		
 		List<TypeModel> types = typeDao.getAllTypes();
-		model.addAttribute("types", types);			
+		model.addAttribute("types", types);		
+		
+		List<CategoryModel> categories = categoryDao.getAllCategories();
+		model.addAttribute("categories",categories);
 		
 		return "attacks";
 	}
@@ -157,6 +170,8 @@ public class AttackController {
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types",types);
 		
+		List<CategoryModel> categories = categoryDao.getAllCategories();
+		model.addAttribute("categories",categories);
 		return "editAttack";
 	}
 	
@@ -196,7 +211,10 @@ public class AttackController {
 		model.addAttribute("attacks", attacks);
 		
 		List<TypeModel> types = typeDao.getAllTypes();
-		model.addAttribute("types", types);			
+		model.addAttribute("types", types);
+		
+		List<CategoryModel> categories = categoryDao.getAllCategories();
+		model.addAttribute("categories",categories);
 		
 		return "attacks";
 	}
