@@ -189,13 +189,13 @@ input:checked + .slider:before {
 		<table data-toggle="table" class="table table-striped">
 			<thead>
 				<tr>
-					<th><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User Name</th>
-					<th><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>First Name</th>
-					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>Last Name</th>
-					<th><i class="fa fa-calendar swoopRight" style="color:#0077b3;"></i>Date of Entry</th>
-					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Topics</th>
-					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>
-					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-question swoopRight" style="color:#0077b3;"></i>Enabled</th>
+					<th data-sortable="true"><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User Name</th>
+					<th data-sortable="true"><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>First Name</th>
+					<th sec:authorize="hasRole('ADMIN')" data-sortable="true"><i class="fa fa-address-card swoopRight" style="color:#0077b3;"></i>Last Name</th>
+					<th data-sortable="true"><i class="fa fa-calendar swoopRight" style="color:#0077b3;"></i>Date of Entry</th>
+					<th data-sortable="true"><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Topics</th>
+					<th data-sortable="true"><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>
+					<th sec:authorize="hasRole('ADMIN')" data-sortable="true"><i class="fa fa-question swoopRight" style="color:#0077b3;"></i>Enabled</th>
 					<th sec:authorize="hasRole('ADMIN')"><i class="fa fa-toggle-on swoopRight" style="color:#0077b3;"></i>Enable/Disable User</th>
 					<th><i class="fa fa-external-link swoopRight" style="color:#0077b3;"></i> Visit</th>				
 				</tr>
