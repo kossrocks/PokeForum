@@ -20,9 +20,14 @@ public class AttackController {
 	@RequestMapping("/searchAttacks")
 	public String searchIt(Model model, @RequestParam String searchString) {
 			
-		List<AttackModel> attacks = attackDao.searchAttack(searchString);
+		List<AttackModel> attacks = attackDao.searchAttack(searchString.toLowerCase());
 		
 		model.addAttribute("attacks", attacks);
+		if(attacks.size() == 1) {
+			model.addAttribute("message", "You found " + attacks.size() + " attack.");
+		}else {
+		model.addAttribute("message", "You found " + attacks.size() + " attacks.");
+		}
 
 		return "attacks";
 	}

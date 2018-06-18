@@ -48,7 +48,12 @@ public class UserController {
 		List<User> users = userDao.searchUser(searchString);
 
 		model.addAttribute("users", users);
-
+		
+		if(users.size() == 1) {
+			model.addAttribute("message", "You found " + users.size() + " user.");
+		}else {
+		model.addAttribute("message", "You found " + users.size() + " users.");
+		}
 		return "users";
 	}
 
@@ -58,10 +63,11 @@ public class UserController {
 
 		User user = userDao.getUserById(id);
 		if (user.getUserName().equalsIgnoreCase("admin")) {
-			model.addAttribute("errorMessage", "You cannot disable yourself, moron!");
+			model.addAttribute("errorMessage", "You cannot disable yourself.");
 		} else {
 			user.setEnabled(false);
 			userDao.merge(user);
+			model.addAttribute("message", "Successfully disabled user " + user.getUserName() +".");
 		}
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
@@ -77,7 +83,7 @@ public class UserController {
 		User user = userDao.getUserById(id);
 		user.setEnabled(true);
 		userDao.merge(user);
-
+		model.addAttribute("message", "Successfully enabled user " + user.getUserName() +".");
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
 
@@ -139,6 +145,7 @@ public class UserController {
 		return "forward:profile";
 	}
 */
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
 	public String showEditUser(Model model, Principal principal) {
 
@@ -149,6 +156,7 @@ public class UserController {
 		return "editUser";
 	}
 
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
 			@RequestParam("password") String password, @RequestParam("password1") String password1,
@@ -160,6 +168,7 @@ public class UserController {
 				user.encryptPassword();
 			} else {
 				model.addAttribute("errorMessage", "Confirmation password is not the same as password");
+				return "forward:editUser";
 			}
 		}
 
@@ -178,6 +187,7 @@ public class UserController {
 		
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
+		model.addAttribute("message", "You successfully edited your data.");
 
 		return "profile";
 	}

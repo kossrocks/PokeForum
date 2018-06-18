@@ -472,13 +472,16 @@ public class SecurityController {
 
 				user.addUserRole(userRole);
 				userDao.merge(user);
+				model.addAttribute("message", "Welcome " + user.getUserName() + ", we hope you'll have fun.");
 
 			} else {
-				model.addAttribute("errorMessage", "Error: Passwords doesn't match!");
+				model.addAttribute("errorMessage", "Error: Passwords do not match!");
+				return "signUp";
 			}
 
 		} else {
 			model.addAttribute("errorMessage", "Error: User already exists!");
+			return "signUp";
 		}
 
 		return "login";
