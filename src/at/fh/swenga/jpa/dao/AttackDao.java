@@ -25,7 +25,7 @@ public class AttackDao {
 		entityManager.persist(attack);
 	}
 	public List<AttackModel> getAllAttacks() {
-		TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select e from AttackModel e order by e.id",
+		TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select e from AttackModel e order by e.name",
 				AttackModel.class);
 		List<AttackModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
@@ -37,6 +37,15 @@ public class AttackDao {
 				AttackModel.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<AttackModel> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
+	
+	public AttackModel getAttackByName(String name) {
+		TypedQuery<AttackModel> typedQuery = entityManager.createQuery(
+				"select e from AttackModel e where e.name = :search",
+				AttackModel.class);
+		typedQuery.setParameter("search", name);
+		AttackModel typedResultList = typedQuery.getSingleResult();
 		return typedResultList;
 	}
 

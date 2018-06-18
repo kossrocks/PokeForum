@@ -5,7 +5,7 @@
 	>
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Pokemon</title>
+<title>PokèForum - Pokemon</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet"
@@ -15,7 +15,7 @@
 <style>
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -42,7 +42,6 @@
 }
 
 .foot {
-	margin-top: 20px;
 	background-color: #47596C;
 	height: 40px;
 }
@@ -128,21 +127,18 @@
 			
 			</tbody>
 		</table>
-
-		<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
- 	
- 	<div class="footer">
-		<div class="row">
-			<div class="col-md-12 foot">
-				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
-				<img class="icon" src="images/schiggy.png">
-			</div>
+	</div>
+</div>
+<!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->
+	
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/schiggy.png">
 		</div>
 	</div>
-	</div>
-	
-</div>
-
+</footer>
 
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" />	

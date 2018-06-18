@@ -4,7 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head>
 <div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
-<title>PokeForum - Homepage</title>
+<title>PokéForum - Homepage</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet"
@@ -27,7 +28,7 @@
 }
 
 .header {
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-bottom: -20px;
 }
 
@@ -41,6 +42,7 @@
 	float: right;
 	display: inline-block;
 	margin-top: -30px;
+	margin-right: 10px;
 	
 }
 
@@ -53,9 +55,14 @@
 }
 
 .foot {
-	margin-top: 60px;
+	margin-top: 66px;
 	background-color: #47596C;
 	height: 40px;
+}
+
+.swoopRight {
+	margin-right: 5px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -106,9 +113,9 @@
 			<thead>
 				<tr>
 					<th>Topic name</th>
-					<th><span class="glyphicon glyphicon-user"></span>User</th>
-					<th><span class="glyphicon glyphicon-pencil"></span>Last edited</th>
-					<th><span class="glyphicon glyphicon-th-list"></span>Entries</th>				
+					<th><i class="fa fa-user swoopRight" style="color:#0077b3;"></i>User</th>
+					<th><i class="fa fa-pencil swoopRight" style="color:#0077b3;"></i>Last edited</th>
+					<th><i class="fa fa-hashtag swoopRight" style="color:#0077b3;"></i>Entries</th>				
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -146,16 +153,15 @@
 	      	<input class="btn btn-xs btn-danger signOutButton" type="submit" value="Sign Out"/>
 	   	</form>				
 	</div>
-	
-	<div class="footer">
-		<div class="row">
-			<div class="col-md-12 foot">
-				<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
-				<img class="icon" src="images/pikachu.png">
-			</div>
+</div>
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 PokéForum</b>
+			<img class="icon" src="images/pikachu.png">
 		</div>
 	</div>
-</div>
+</footer>
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" />
 </body>
