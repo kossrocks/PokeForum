@@ -32,7 +32,7 @@ public class CalculatorController {
 	
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/calculate")
-	public String calculate(Model model, Principal principal, @RequestParam("yourPokemon") int yourPokemonId, @RequestParam("yourLevel") int yourLevel, @RequestParam("yourAttack") int attackId, @RequestParam("enemyPokemon") int enemyId, @RequestParam("enemyLevel") int enemyLevel ) {
+	public String calculate(Model model, Principal principal, @RequestParam("yourPokemon") int yourPokemonId, @RequestParam("yourLevel") float yourLevel, @RequestParam("yourAttack") int attackId, @RequestParam("enemyPokemon") int enemyId, @RequestParam("enemyLevel") float enemyLevel ) {
 
 		PokemonModel yourPokemon = pokemonDao.getPokemonById(yourPokemonId);
 		SpeciesModel enemyPokemon = speciesDao.searchSpeciesById(enemyId);
@@ -47,10 +47,10 @@ public class CalculatorController {
 		
 		if(yourAttack.getCategory().getName().equalsIgnoreCase("special")) {
 			yourAtkpoints = yourPokemon.getSpecialAttack();
-			enemyDefpoints = (2f * enemyPokemon.getBaseSpecialDefense() * enemyLevel / 100f) + 5;
+			enemyDefpoints = (2f * enemyPokemon.getBaseSpecialDefense() * enemyLevel / 100f) + 5f;
 		}else if(yourAttack.getCategory().getName().equalsIgnoreCase("physical")) {
 			yourAtkpoints = yourPokemon.getAttack();
-			enemyDefpoints = (2f * enemyPokemon.getBaseDefense() * enemyLevel / 100f) + 5;
+			enemyDefpoints = (2f * enemyPokemon.getBaseDefense() * enemyLevel / 100f) + 5f;
 		}
 		
 		float stab = 1;
@@ -64,15 +64,32 @@ public class CalculatorController {
 		
 		for(TypeModel type : enemyPokemon.getTypes()) {
 			if(yourAttack.getType().getGoodAgainst().contains(type.getName().toLowerCase())) {
-				adv *= 1.5f;
+				adv *= 2f;
+			}
+			if(yourAttack.getType().getWeakAgainst().contains(type.getName().toLowerCase())) {
+				adv *= 0.5f;
+			}
+			if(yourAttack.getType().getNoDamageAgainst().contains(type.getName().toLowerCase())) {
+				adv *= 0f;
 			}
 		}
 		
-		damage = ((yourLevel * (2/5) + 2) * yourAttack.getBasePower() * (yourAtkpoints / enemyDefpoints) + 2) * stab * adv;
+		damage = ((yourLevel * (2f/5f) + 2f) * yourAttack.getBasePower() * (yourAtkpoints / (50f *enemyDefpoints)) + 2f) * stab * adv;
+		
+		float enemyHp = (2f * enemyPokemon.getBaseHealthPoints() * enemyLevel / 100f) + 10f + enemyLevel - damage;
+		
+		if(enemyHp < 0) enemyHp = 0;
+		
+		model.addAttribute("message", "Your attack made " + Math.round(damage) + " damage and your enemy has " + Math.round(enemyHp) + " HP left.");
 		
 		
-		//write damage and add Attributes!!!!!!
+		model.addAttribute("lastChosen", yourPokemon);
 		
+		model.addAttribute("lastAttack", yourAttack);
+		
+		model.addAttribute("lastEnemy",enemyPokemon);
+		
+		model.addAttribute("lastEnemyLevel", enemyLevel);
 		
 		List<AttackModel> attacks = attackDao.getAllAttacks();
 		model.addAttribute("attacks", attacks);	

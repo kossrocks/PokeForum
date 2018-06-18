@@ -38,7 +38,7 @@ public class PokemonModel implements java.io.Serializable{
 	private List<TypeModel> types;
 	
 	@Column(name = "level")
-	private int level;
+	private float level;
 	
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
@@ -101,11 +101,11 @@ public class PokemonModel implements java.io.Serializable{
 		this.species = species;	
 	}
 
-	public int getLevel() {
+	public float getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(float level) {
 		this.level = level;
 	}
 

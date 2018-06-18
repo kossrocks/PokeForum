@@ -86,12 +86,12 @@ public class PokemonController {
 			if (shiny.equals("yes"))
 				newShiny = true;
 
-			int hp = newSpecies.getBaseHealthPoints();
-			int atk = newSpecies.getBaseAttack();
-			int def = newSpecies.getBaseDefense();
-			int spatk = newSpecies.getBaseSpecialAttack();
-			int spdef = newSpecies.getBaseSpecialDefense();
-			int spe = newSpecies.getBaseSpeed();
+			float hp = newSpecies.getBaseHealthPoints();
+			float atk = newSpecies.getBaseAttack();
+			float def = newSpecies.getBaseDefense();
+			float spatk = newSpecies.getBaseSpecialAttack();
+			float spdef = newSpecies.getBaseSpecialDefense();
+			float spe = newSpecies.getBaseSpeed();
 			String speciesName = newSpecies.getName();
 
 			newPokemon.setName(name);
@@ -233,12 +233,12 @@ public class PokemonController {
 			if (shiny.equals("yes"))
 				newShiny = true;
 
-			int hp = newSpecies.getBaseHealthPoints();
-			int atk = newSpecies.getBaseAttack();
-			int def = newSpecies.getBaseDefense();
-			int spatk = newSpecies.getBaseSpecialAttack();
-			int spdef = newSpecies.getBaseSpecialDefense();
-			int spe = newSpecies.getBaseSpeed();
+			float hp = newSpecies.getBaseHealthPoints();
+			float atk = newSpecies.getBaseAttack();
+			float def = newSpecies.getBaseDefense();
+			float spatk = newSpecies.getBaseSpecialAttack();
+			float spdef = newSpecies.getBaseSpecialDefense();
+			float spe = newSpecies.getBaseSpeed();
 			String speciesName = newSpecies.getName();
 
 			pokemon.setName(name);

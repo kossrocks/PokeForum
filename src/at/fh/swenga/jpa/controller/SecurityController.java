@@ -180,6 +180,7 @@ public class SecurityController {
 		TypeModel steel = new TypeModel("Steel");
 		TypeModel fairy = new TypeModel("Fairy");
 
+		normal.addGoodAgainst("");
 		normal.addWeakAgainst("rock");
 		normal.addWeakAgainst("steel");
 		normal.addNoDamageAgainst("ghost");
@@ -202,6 +203,7 @@ public class SecurityController {
 		flying.addWeakAgainst("rock");
 		flying.addWeakAgainst("steel");
 		flying.addWeakAgainst("electric");
+		flying.addNoDamageAgainst("");
 
 		poison.addGoodAgainst("grass");
 		poison.addGoodAgainst("fairy");
@@ -227,6 +229,7 @@ public class SecurityController {
 		rock.addWeakAgainst("fighting");
 		rock.addWeakAgainst("ground");
 		rock.addWeakAgainst("steel");
+		rock.addNoDamageAgainst("");
 
 		bug.addGoodAgainst("psychic");
 		bug.addGoodAgainst("dark");
@@ -238,6 +241,7 @@ public class SecurityController {
 		bug.addWeakAgainst("steel");
 		bug.addWeakAgainst("fire");
 		bug.addWeakAgainst("fairy");
+		bug.addNoDamageAgainst("");
 
 		ghost.addGoodAgainst("ghost");
 		ghost.addGoodAgainst("psychic");
@@ -251,7 +255,8 @@ public class SecurityController {
 		steel.addWeakAgainst("fire");
 		steel.addWeakAgainst("water");
 		steel.addWeakAgainst("electric");
-
+		steel.addNoDamageAgainst("");
+		
 		fire.addGoodAgainst("grass");
 		fire.addGoodAgainst("steel");
 		fire.addGoodAgainst("ice");
@@ -260,6 +265,7 @@ public class SecurityController {
 		fire.addWeakAgainst("water");
 		fire.addWeakAgainst("rock");
 		fire.addWeakAgainst("fire");
+		fire.addNoDamageAgainst("");
 
 		water.addGoodAgainst("fire");
 		water.addGoodAgainst("rock");
@@ -267,6 +273,7 @@ public class SecurityController {
 		water.addWeakAgainst("water");
 		water.addWeakAgainst("grass");
 		water.addWeakAgainst("dragon");
+		water.addNoDamageAgainst("");
 
 		electric.addGoodAgainst("flying");
 		electric.addGoodAgainst("water");
@@ -289,7 +296,8 @@ public class SecurityController {
 		ice.addWeakAgainst("fire");
 		ice.addWeakAgainst("water");
 		ice.addWeakAgainst("ice");
-
+		ice.addNoDamageAgainst("");
+		
 		dragon.addGoodAgainst("dragon");
 		dragon.addWeakAgainst("steel");
 		dragon.addNoDamageAgainst("fairy");
@@ -299,6 +307,7 @@ public class SecurityController {
 		dark.addWeakAgainst("fighting");
 		dark.addWeakAgainst("dark");
 		dark.addWeakAgainst("fairy");
+		dark.addNoDamageAgainst("");
 
 		fairy.addGoodAgainst("dragon");
 		fairy.addGoodAgainst("fighting");
@@ -306,6 +315,7 @@ public class SecurityController {
 		fairy.addWeakAgainst("poison");
 		fairy.addWeakAgainst("steel");
 		fairy.addWeakAgainst("fire");
+		fairy.addNoDamageAgainst("");
 
 		typeDao.persist(normal);
 		typeDao.persist(water);
@@ -417,12 +427,12 @@ public class SecurityController {
 		PokemonModel adminPet = new PokemonModel();
 		
 		
-		int hp = pikachu.getBaseHealthPoints();
-		int atk = pikachu.getBaseAttack();
-		int def = pikachu.getBaseDefense();
-		int spatk = pikachu.getBaseSpecialAttack();
-		int spdef = pikachu.getBaseSpecialDefense();
-		int spe = pikachu.getBaseSpeed();
+		float hp = pikachu.getBaseHealthPoints();
+		float atk = pikachu.getBaseAttack();
+		float def = pikachu.getBaseDefense();
+		float spatk = pikachu.getBaseSpecialAttack();
+		float spdef = pikachu.getBaseSpecialDefense();
+		float spe = pikachu.getBaseSpeed();
 		String pikaName = pikachu.getName();
 		
 		adminPet.setName("Pika");

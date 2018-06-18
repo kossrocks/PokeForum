@@ -180,7 +180,7 @@
 						
 					<select name="shiny" id="shiny" class="form-control">
 								  <option value="no">No</option>
-								  <option th:selected="${pokemon.shiny}" value="yes">Yes</option>
+								  <option th:selected="${pokemon != null && pokemon.shiny}" value="yes">Yes</option>
 								</select>		
 					</div>
 			</div>

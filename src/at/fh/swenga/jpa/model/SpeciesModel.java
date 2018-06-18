@@ -31,22 +31,22 @@ public class SpeciesModel implements java.io.Serializable{
 	private List<TypeModel> typesSpecies;
 	
 	@Column(name = "baseHP")
-	private int baseHealthPoints;
+	private float baseHealthPoints;
 	
 	@Column(name = "baseATK")
-	private int baseAttack;
+	private float baseAttack;
 	
 	@Column(name = "baseDEF")
-	private int baseDefense;
+	private float baseDefense;
 	
 	@Column(name = "baseSPATK")
-	private int baseSpecialAttack;
+	private float baseSpecialAttack;
 	
 	@Column(name = "baseSPDEF")
-	private int baseSpecialDefense;
+	private float baseSpecialDefense;
 	
 	@Column(name = "baseSPE")
-	private int baseSpeed;	
+	private float baseSpeed;	
 
 	@Version
 	long version;
@@ -87,51 +87,51 @@ public class SpeciesModel implements java.io.Serializable{
 	}
 	
 
-	public int getBaseHealthPoints() {
+	public float getBaseHealthPoints() {
 		return baseHealthPoints;
 	}
 
-	public void setBaseHealthPoints(int baseHealthPoints) {
+	public void setBaseHealthPoints(float baseHealthPoints) {
 		this.baseHealthPoints = baseHealthPoints;
 	}
 
-	public int getBaseAttack() {
+	public float getBaseAttack() {
 		return baseAttack;
 	}
 
-	public void setBaseAttack(int baseAttack) {
+	public void setBaseAttack(float baseAttack) {
 		this.baseAttack = baseAttack;
 	}
 
-	public int getBaseDefense() {
+	public float getBaseDefense() {
 		return baseDefense;
 	}
 
-	public void setBaseDefense(int baseDefense) {
+	public void setBaseDefense(float baseDefense) {
 		this.baseDefense = baseDefense;
 	}
 
-	public int getBaseSpecialAttack() {
+	public float getBaseSpecialAttack() {
 		return baseSpecialAttack;
 	}
 
-	public void setBaseSpecialAttack(int baseSpecialAttack) {
+	public void setBaseSpecialAttack(float baseSpecialAttack) {
 		this.baseSpecialAttack = baseSpecialAttack;
 	}
 
-	public int getBaseSpecialDefense() {
+	public float getBaseSpecialDefense() {
 		return baseSpecialDefense;
 	}
 
-	public void setBaseSpecialDefense(int baseSpecialDefense) {
+	public void setBaseSpecialDefense(float baseSpecialDefense) {
 		this.baseSpecialDefense = baseSpecialDefense;
 	}
 
-	public int getBaseSpeed() {
+	public float getBaseSpeed() {
 		return baseSpeed;
 	}
 
-	public void setBaseSpeed(int baseSpeed) {
+	public void setBaseSpeed(float baseSpeed) {
 		this.baseSpeed = baseSpeed;
 	}
 

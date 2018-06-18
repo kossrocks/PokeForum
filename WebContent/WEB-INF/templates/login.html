@@ -100,6 +100,21 @@
 					<form class="form-container" th:action="@{/login}" method="post">
 						<h1 class="login"> Login to Pok&eacute;Forum </h1>
 						
+						<!--  Error message ----------------------------------------------------------- -->
+						<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+							class="alert alert-danger col-md-offset-1" role="alert"></div>
+						<!--  Error message ----------------------------------------------------------- -->
+	
+						<!--  Warning message ----------------------------------------------------------- -->
+						<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
+							class="alert alert-warning col-md-offset-1" role="warning"></div>
+						<!--  Warning message ----------------------------------------------------------- -->
+	
+						<!--   message ----------------------------------------------------------- -->
+						<div th:unless="${message} == null" th:utext="${message}"
+							class="alert alert-success" role="warning"></div>
+						<!--   message ----------------------------------------------------------- -->
+						
 						<div th:if="${param.error}" class="alert alert-danger">Invalid
 							username or password, or disabled due to inappropriate behaviour.</div>
 

@@ -32,13 +32,13 @@ public class AttackModel implements java.io.Serializable {
 	private CategoryModel category;
 	
 	@Column(name = "PP")
-	private int powerPoints;
+	private float powerPoints;
 	
 	@Column(name = "BP")
-	private int basePower;
+	private float basePower;
 	
 	@Column(nullable=true, name="acc")
-	private int accuracy;
+	private float accuracy;
 	
 	@Column(name = "effect")
 	private String battleEffect;
@@ -86,27 +86,27 @@ public class AttackModel implements java.io.Serializable {
 		this.category = category;
 	}
 
-	public int getPowerPoints() {
+	public float getPowerPoints() {
 		return powerPoints;
 	}
 
-	public void setPowerPoints(int powerPoints) {
+	public void setPowerPoints(float powerPoints) {
 		this.powerPoints = powerPoints;
 	}
 
-	public int getBasePower() {
+	public float getBasePower() {
 		return basePower;
 	}
 
-	public void setBasePower(int basePower) {
+	public void setBasePower(float basePower) {
 		this.basePower = basePower;
 	}
 	
-	public void setAccuracy(int accuracy) {
+	public void setAccuracy(float accuracy) {
 	        this.accuracy = 1;
 	}
 	
-	public int getAccuracy() {
+	public float getAccuracy() {
 		return accuracy;
 	}
 	
