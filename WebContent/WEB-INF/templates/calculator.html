@@ -7,6 +7,11 @@
 <title>Pok&eacute;Forum - Attacks</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link href="css/global.css" type="text/css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 <style>
 
@@ -62,6 +67,13 @@
 
 }
 
+.modalButton {
+	display: block;
+	text-align: center;
+	margin-top: 80px;
+	margin-left: -30px; 
+}
+
 </style>
 
 </head>
@@ -99,7 +111,7 @@
 	<div class="row">
 		<div th:unless="${yourPokemons.size() > 0}"> Add Pokemon to your Team to use the calculator (Profile -> addPokemon) </div>
 		<div class="col-md-12">
-			<form class="form-horizontal" method="post" th:action="@{/calculate}" th:if="${yourPokemons.size() > 0}">
+			<form class="form-horizontal" method="post" th:action="@{/calculate}" th:if="${yourPokemons.size() > 0}" >
 					<fieldset>
 					<div class="col-md-5 swoopRight">
 					
@@ -154,10 +166,15 @@
 										name="enemyLevel" th:value="${lastEnemyLevel} ? ${lastEnemyLevel}" min="1" max="100" required>
 								</div>
 						</div>
-										
+				</div>
 					<!-- --------------  buttons ---------------- -->
-					<div class="form-group">
-						<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Calculate</button>
+					
+					<div class="col-md-10 col-md-offset-2" >
+							<button type="submit" class="btn btn-success">Submit</button>
+							
+						</div>
+					<div class="form-group" >
+						
 
 						<!-- Modal -->
 						<div id="myModal" class="modal fade" role="dialog">
@@ -170,7 +187,7 @@
 						        <h4 class="modal-title">Modal Header</h4>
 						      </div>
 						      <div class="modal-body">
-						        <p>Some text in the modal.</p>
+						        <p th:text="${calcText}"></p>
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -180,13 +197,6 @@
 						  </div>
 						</div>
 					</div>
-				</div>
-					<div class="col-md-10 col-md-offset-2">
-							<button type="submit" class="btn btn-success">Submit</button>
-							
-						</div>
-					
-				
 				</fieldset>
 			</form>
 		</div>
@@ -204,6 +214,12 @@
 </footer>	
 <!--  End of container -->
 <div th:replace="~{includes/bootstrap :: bootstrapJS}" /></div>
+<script>
+$('#myForm').on('submit', function(e){
+	  $('#myModal').modal('show');
+	  e.preventDefault();
+	});
 
+</script>
 </body>
 </html>

@@ -25,9 +25,10 @@
 
 .profilePicture {
 	
-	padding-top: 30px;
+	padding-top: 40px;
 	padding-bottom: 20px;
 	height: 305px;
+	margin-left: 50px;
 		
 }
 
@@ -39,8 +40,9 @@
 }
 
 .user {
-	padding-top: 20px;
+	padding-top: 40px;
 	height: 305px;
+	margin-left: 50px;
 	
 }
 
@@ -52,6 +54,7 @@
 }
 
 .team {
+	margin-top: 20px;
 }
 
 .font {
@@ -135,7 +138,8 @@
 
 <!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
 
-		<div class="col-md-3 col-md-offset-1 profilePicture">
+
+		<div class="col-md-3 profilePicture">
 			<img th:if="${user.picture} == null" src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
 			<img th:unless="${user.picture} == null" th:src="${user.pictureConversion()}" class="img-circle center" height="183" width="183" alt="Avatar">
 			<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
@@ -265,9 +269,9 @@
 								<a th:if="${user.id.equals(id)}" th:href="@{/editPokemon(id=${pokemon.id})}" class="btn btn-success">
 									Edit
 								</a>
-								<a th:if="${user.id.equals(id)}" th:href="@{/deletePokemon(id=${pokemon.id})}" class="btn btn-danger">
-									Delete
-								</a>
+								<a th:if="${user.id.equals(id)}" th:href="@{/deletePokemon(id=${pokemon.id})}" class="btn btn-danger"> 
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</a> 
 							</td>
 						</tr>
 						
@@ -276,7 +280,7 @@
 				</table>
 		</div>
 		 
-		<div class="col-md-10 col-md-offset-1 containerButtons">
+		<div class="col-md-12 containerButtons">
 		 		<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success navbar-btn ">
 					New Pok&eacute;mon
 				</a>
