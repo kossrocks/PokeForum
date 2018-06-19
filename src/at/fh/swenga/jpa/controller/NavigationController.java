@@ -112,6 +112,9 @@ public class NavigationController {
 			model.addAttribute("image", image);
 		}
 		
+		model.addAttribute("teamHeader", "Your Team");
+		model.addAttribute("profileHeader", "Your Profile");
+		
 		return "profile";
 		
 	}
@@ -141,6 +144,9 @@ public class NavigationController {
 
 			model.addAttribute("image", image);
 		}
+		
+		model.addAttribute("teamHeader", "Team of " + user.getUserName());
+		model.addAttribute("profileHeader", "Profile of "+ user.getUserName());
 		
 		return "profile";
 	}
