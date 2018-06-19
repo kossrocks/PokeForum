@@ -147,8 +147,9 @@
 					<td class="text-secondary" th:text="${attack.accuracy}"></td>
 					<td class="maxWidth" th:text="${attack.battleEffect}"></td>
 					<td sec:authorize="hasRole('ADMIN')">
-						<a th:href="@{/editAttack(id=${attack.id})}" class="btn btn-xs btn-success">Edit</a>
-						<a th:href="@{/deleteAttack(id=${attack.id})}" class="btn btn-xs btn-danger">Delete</a>
+						<a th:href="@{/editAttack(id=${attack.id})}" class="btn btn-success">Edit</a>
+						<a th:href="@{/deleteAttack(id=${attack.id})}" class="btn btn-danger">
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 					</td>
 				</tr>
 			<!--  list all items ----------------------------------------------------------- -->

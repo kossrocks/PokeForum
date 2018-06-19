@@ -37,11 +37,24 @@
 	margin-top: 10px;
 }
 
+.tableDesign {
+	background: rgba(255,255,255,0.3);
+	border: 0px solid #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 2px 26px -5px rgba(0,0,0,0.75);
+	-box-shadow:1px 2px 26px -5px rgba(0,0,0,0.75);
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	padding-top: 40px;
+}
+
 </style>
 </head>
 <body>
 <div class="col-md-12 col-md-offset-1">
-	<div class=row>	<h1>Error</h1>
+	<div class="row tableDesign">	<h1>Error</h1>
 		Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span><br/>
 		Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span><br/>
 		Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span><br/>

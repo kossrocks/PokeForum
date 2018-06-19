@@ -111,9 +111,6 @@ input:checked + .slider:before {
 	font-size: 20px;
 }
 
-.visit2 {
-	margin-top: 4px;
-}
 
 .header {
 	display:block;
@@ -215,7 +212,7 @@ input:checked + .slider:before {
 						
 					<td sec:authorize="hasRole('ADMIN')"> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
 					 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>
-					<td> <a th:href="@{/userProfile(id=${user.id})}" class="btn btn-xs btn-success visit2">
+					<td> <a th:href="@{/userProfile(id=${user.id})}" class="btn btn-success">
 						<span class="glyphicon glyphicon-edit visit" aria-hidden="true"></span></a>
 					</td>
 				</tr>

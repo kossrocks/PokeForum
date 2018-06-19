@@ -80,6 +80,7 @@ public class CalculatorController {
 		
 		if(enemyHp < 0) enemyHp = 0;
 		
+		model.addAttribute("calcText", "Your attack made " + Math.round(damage) + " damage and your enemy has " + Math.round(enemyHp) + " HP left.");
 		model.addAttribute("message", "Your attack made " + Math.round(damage) + " damage and your enemy has " + Math.round(enemyHp) + " HP left.");
 		
 		
