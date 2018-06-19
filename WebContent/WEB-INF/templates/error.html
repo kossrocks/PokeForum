@@ -3,14 +3,60 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<div th:replace="~{includes/bootstrap :: bootstrapMeta}" />
 <title>Error Page</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+.icon {
+	float: right;
+	display: inline-block;
+	margin-top: -26px;
+	margin-right: 10px;
+	
+}
+
+.copyRightText {
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-left: 38%;
+	margin-top: 9px;
+}
+
+.foot {
+	margin-top: 514px;
+	background-color: #47596C;
+	height: 40px;
+}
+
+.button {
+	margin-top: 10px;
+}
+
+</style>
 </head>
 <body>
-	<h1>Error</h1>
-	Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span><br/>
-	Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span><br/>
-	Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span><br/>
-	Servlet Name: <span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span><br/>
-	<a href="./">back</a>
+<div class="col-md-12 col-md-offset-1">
+	<div class=row>	<h1>Error</h1>
+		Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span><br/>
+		Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span><br/>
+		Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span><br/>
+		Servlet Name: <span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span><br/>
+		<a href="./" class="btn btn-success button">back</a>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="row">
+		<div class="col-md-12 foot">
+			<b class="copyRightText"> Copyright &copy; 2018 Pok&eacute;Forum</b>
+			<img class="icon" src="images/pikachu.png">
+		</div>
+	</div>
+</footer>
 </body>
 </html>

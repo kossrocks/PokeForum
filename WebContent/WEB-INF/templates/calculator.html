@@ -57,6 +57,11 @@
 	padding-top: 40px;
 }
 
+.swoopRight {
+	margin-left: 40px;
+
+}
+
 </style>
 
 </head>
@@ -91,79 +96,68 @@
 </div>	
 <div class="container tableDesign">
 	<div class="title">Attack Calculator</div>
-		<div class="col-md-10 col-md-offset-1">
-			<div class="container-fluid navbar navbar-default">
-			
-				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
-		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
-		   		</form>
-		   		
-				
-			</div>
-			<div th:unless="${yourPokemons.size() > 0}"> Add Pokemon to your Team to use the calculator (Profile -> addPokemon) </div>
-		
-		<form class="form-horizontal" method="post" th:action="@{/calculate}" th:if="${yourPokemons.size() > 0}">
-				<fieldset>
-				
-					<!-- --------------  Your Pokemon ---------------- -->
-					<div class="form-group">
-						<label for="inputYourPokemon" class="col-md-2 control-label">Your Pokemon</label>
-						<div class="col-md-10">
-							<select name="yourPokemon" id="yourPokemon" class="form-control">
-								  <option th:each="yourPokemon : ${yourPokemons}" th:value="${yourPokemon.id}" th:text="${yourPokemon.name != '' ? yourPokemon.name : yourPokemon.species}" th:selected="${lastChosen != null && lastChosen.id == yourPokemon.id}"></option>
-							</select>
-						</div>
-					</div>
-				
-					<!-- --------------  Your Level ---------------- -->
-					<div class="form-group">
-						<label for="inputYourLevel" class="col-md-2 control-label">Your Level</label>
-							<div class="col-md-10">
-						
-							<input class="form-control" id="inputYourLevel" type="number" 
-									name="yourLevel" th:value="${lastChosen} ? ${lastChosen.level}" min="1" max="100" required>
-							</div>
-					</div>
+	<div class="row">
+		<div th:unless="${yourPokemons.size() > 0}"> Add Pokemon to your Team to use the calculator (Profile -> addPokemon) </div>
+		<div class="col-md-12">
+			<form class="form-horizontal" method="post" th:action="@{/calculate}" th:if="${yourPokemons.size() > 0}">
+					<fieldset>
+					<div class="col-md-5 swoopRight">
 					
-					<!-- --------------  Your Attack ---------------- -->
-					<div class="form-group">
-						<label for="inputYourAttack" class="col-md-2 control-label">Your Attack</label>
-						<div class="col-md-10">
-							<select name="yourAttack" id="yourAttack" class="form-control">
-								  <option th:each="yourAttack : ${attacks}" th:value="${yourAttack.id}" th:text="${yourAttack.name}" th:selected="${lastAttack != null && lastAttack.id == yourAttack.id}"></option>
-							</select>
+						<!-- --------------  Your Pokemon ---------------- -->
+						<div class="form-group">
+							<label for="inputYourPokemon" class="col-md-2 control-label">Your Pokemon</label>
+							<div class="col-md-10">
+								<select name="yourPokemon" id="yourPokemon" class="form-control">
+									  <option th:each="yourPokemon : ${yourPokemons}" th:value="${yourPokemon.id}" th:text="${yourPokemon.name != '' ? yourPokemon.name : yourPokemon.species}" th:selected="${lastChosen != null && lastChosen.id == yourPokemon.id}"></option>
+								</select>
+							</div>
 						</div>
-					</div>
-
-					<!-- --------------  Enemy Pokemon ---------------- -->
-					<div class="form-group">
-						<label for="inputEnemyPokemon" class="col-md-2 control-label">Enemy Pokemon</label>
-						<div class="col-md-10">
-							<select name="enemyPokemon" id="enemyPokemon" class="form-control">
-								  <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}" th:selected="${lastEnemy != null && lastEnemy.id == pokemon.id}"></option>
-							</select>
+					
+						<!-- --------------  Your Level ---------------- -->
+						<div class="form-group">
+							<label for="inputYourLevel" class="col-md-2 control-label">Your Level</label>
+								<div class="col-md-10">
+							
+								<input class="form-control" id="inputYourLevel" type="number" 
+										name="yourLevel" th:value="${lastChosen} ? ${lastChosen.level}" min="1" max="100" required>
+								</div>
+						</div>
+						
+						<!-- --------------  Your Attack ---------------- -->
+						<div class="form-group">
+							<label for="inputYourAttack" class="col-md-2 control-label">Your Attack</label>
+							<div class="col-md-10">
+								<select name="yourAttack" id="yourAttack" class="form-control">
+									  <option th:each="yourAttack : ${attacks}" th:value="${yourAttack.id}" th:text="${yourAttack.name}" th:selected="${lastAttack != null && lastAttack.id == yourAttack.id}"></option>
+								</select>
+							</div>
 						</div>
 					</div>
 					
-					<!-- --------------  Enemy Level ---------------- -->
-					<div class="form-group">
-						<label for="inputEnemyLevel" class="col-md-2 control-label">Enemy Level</label>
+					<div class="col-md-5 col-md-offset-1">
+						<!-- --------------  Enemy Pokemon ---------------- -->
+						<div class="form-group">
+							<label for="inputEnemyPokemon" class="col-md-2 control-label">Enemy Pokemon</label>
 							<div class="col-md-10">
-						
-							<input class="form-control" id="inputEnemyLevel" type="number" 
-									name="enemyLevel" th:value="${lastEnemyLevel} ? ${lastEnemyLevel}" min="1" max="100" required>
+								<select name="enemyPokemon" id="enemyPokemon" class="form-control">
+									  <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}" th:selected="${lastEnemy != null && lastEnemy.id == pokemon.id}"></option>
+								</select>
 							</div>
-					</div>
+						</div>
+						
+						<!-- --------------  Enemy Level ---------------- -->
+						<div class="form-group">
+							<label for="inputEnemyLevel" class="col-md-2 control-label">Enemy Level</label>
+								<div class="col-md-10">
+							
+								<input class="form-control" id="inputEnemyLevel" type="number" 
+										name="enemyLevel" th:value="${lastEnemyLevel} ? ${lastEnemyLevel}" min="1" max="100" required>
+								</div>
+						</div>
 										
 					<!-- --------------  buttons ---------------- -->
 					<div class="form-group">
-						<div class="col-md-10 col-md-offset-2">
-							<button type="submit" class="btn btn-success">Submit</button>
-							
-						</div>
-					</div>
-					
-					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+						<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Calculate</button>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal fade" role="dialog">
@@ -185,9 +179,17 @@
 						
 						  </div>
 						</div>
+					</div>
+				</div>
+					<div class="col-md-10 col-md-offset-2">
+							<button type="submit" class="btn btn-success">Submit</button>
+							
+						</div>
+					
 				
 				</fieldset>
 			</form>
+		</div>
 	</div>
 </div>	
 
