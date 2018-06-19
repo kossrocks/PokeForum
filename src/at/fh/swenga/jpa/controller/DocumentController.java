@@ -27,52 +27,61 @@ public class DocumentController {
 
 	@Autowired
 	DocumentRepository documentRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	DocumentDao documentDao;
-	
-	@Autowired 
+
+	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	PokemonDao pokemonDao;
-	
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadDocument(Model model, Principal principal,
-			@RequestParam("myFile") MultipartFile file) {
- 
+	public String uploadDocument(Model model, Principal principal, @RequestParam("myFile") MultipartFile file) {
+
 		try {
- 
+
 			User user = userDao.getUser(principal.getName());
- 
-			
- // !!!!! MIME TYPE images -> if(!contentType.startsWith("image/"))
+
+			// !!!!! MIME TYPE images -> if(!contentType.startsWith("image/"))
 			// Create a new document and set all available infos
- 
-			if(file.getContentType().startsWith("image/")) {
-			DocumentModel document = new DocumentModel();
-			document.setContent(file.getBytes());
-			document.setContentType(file.getContentType());
-			document.setCreated(new Date());
-			document.setFilename(file.getOriginalFilename());
-			document.setName(file.getName());
-			user.setPicture(document);
-			userDao.merge(user);}else {
+
+			if (file.getContentType().startsWith("image/")) {
+
+				int pictureId = 0;
+				if (user.getPicture() != null) {
+					pictureId = user.getPicture().getId();
+				}
+				DocumentModel document = new DocumentModel();
+				document.setContent(file.getBytes());
+				document.setContentType(file.getContentType());
+				document.setCreated(new Date());
+				document.setFilename(file.getOriginalFilename());
+				document.setName(file.getName());
+				user.setPicture(document);
+				userDao.merge(user);
+
+				model.addAttribute("user", user);
+
+				if (pictureId > 0) {
+					documentDao.deleteById(pictureId);
+				}
+
+			} else {
 				model.addAttribute("errorMessage", "Only image files are allowed to upload");
 			}
-			
-			
+
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Error:" + e.getMessage());
 		}
-		
+
 		User user = userDao.getUser(principal.getName());
 		if (user.getPicture() != null) {
 
-			
 			DocumentModel pp = user.getPicture();
 			byte[] profilePicture = pp.getContent();
 
@@ -83,17 +92,15 @@ public class DocumentController {
 
 			model.addAttribute("image", image);
 		}
-		
+
 		int id = userDao.getUser(principal.getName()).getId();
-		
-		model.addAttribute("user",user);
-		model.addAttribute("id",id);
-		
+
+		model.addAttribute("user", user);
+		model.addAttribute("id", id);
+
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
-		
-		
-		
+
 		return "profile";
 	}
 }

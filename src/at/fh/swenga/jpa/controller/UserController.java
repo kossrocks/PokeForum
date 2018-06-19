@@ -128,19 +128,8 @@ public class UserController {
 		model.addAttribute("pokemons", pokemons);
 		model.addAttribute("message", "You successfully edited your data.");
 		
-		if (user.getPicture() != null) {
-
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
+		model.addAttribute("user", user);
+		
 
 		return "profile";
 	}

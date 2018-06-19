@@ -98,22 +98,25 @@ public class NavigationController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
-		if (user.getPicture() != null) {
+		
 
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
+			model.addAttribute("user", user);
+		
 		
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
+		
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");
+		}
 		
 		return "profile";
 		
@@ -131,22 +134,30 @@ public class NavigationController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(user.getUserName());
 		model.addAttribute("pokemons", pokemons);
 		
-		if (user.getPicture() != null) {
+		
 
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
+			model.addAttribute("user", user);
+		
+		
+		if(idUser == user.getId()) {
+			model.addAttribute("teamHeader", "Your Team");
+			model.addAttribute("profileHeader", "Your Profile");
+		}else {
+			model.addAttribute("teamHeader", "Team of " + user.getUserName());
+			model.addAttribute("profileHeader", "Profile of "+ user.getUserName());	
 		}
 		
-		model.addAttribute("teamHeader", "Team of " + user.getUserName());
-		model.addAttribute("profileHeader", "Profile of "+ user.getUserName());
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");
+		}
 		
 		return "profile";
 	}

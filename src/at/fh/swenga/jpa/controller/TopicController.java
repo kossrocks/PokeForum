@@ -76,6 +76,10 @@ public class TopicController {
 		}
 		model.addAttribute("isAdmin", isAdmin);
 
+		
+		
+		
+		
 		return "listEntries";
 	}
 

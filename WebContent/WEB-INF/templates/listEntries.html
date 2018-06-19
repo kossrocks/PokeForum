@@ -156,7 +156,8 @@
 					<p></p>
 					<p th:text="${entry.owner.userName}"></p>
 					<p><a th:href="@{/userProfile(id=${entry.owner.id})}">My Profile</a></p>
-						<img src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture} == null" src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
+						<img th:unless="${entry.owner.picture} == null" th:src="${entry.owner.pictureConversion()}" class="img-circle" height="65" width="65" alt="Avatar">
 					<p></p>	
 					<p th:text="${entry.dateOfCreation}"></p>
 				</div>

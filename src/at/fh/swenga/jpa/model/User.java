@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -68,8 +69,6 @@ public class User implements java.io.Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private DocumentModel picture;
-	
-	
  
 	public User() {
 	}
@@ -212,6 +211,14 @@ public class User implements java.io.Serializable {
 		topics.add(topic);
 	}
 	
-	
+	public String pictureConversion() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("data:image/jpeg;base64,");
+		sb.append(Base64.encodeBase64String(picture.getContent()));
+		String image = sb.toString();
+		
+		return image;
+	}
 
 }

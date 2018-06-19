@@ -131,19 +131,10 @@ public class PokemonController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
-		if (user.getPicture() != null) {
+		
 
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
+			model.addAttribute("user", user);
+		
 
 		return "profile";
 	}
@@ -180,19 +171,10 @@ public class PokemonController {
 			model.addAttribute("pokemons", pokemons);
 			model.addAttribute("errorMessage", "You cannot edit Pokemon that are not yours!");
 			
-			if (user.getPicture() != null) {
+		
 
-				
-				DocumentModel pp = user.getPicture();
-				byte[] profilePicture = pp.getContent();
-
-				StringBuilder sb = new StringBuilder();
-				sb.append("data:image/jpeg;base64,");
-				sb.append(Base64.encodeBase64String(profilePicture));
-				String image = sb.toString();
-
-				model.addAttribute("image", image);
-			}
+				model.addAttribute("user", user);
+			
 
 			return "profile";
 		}
@@ -278,19 +260,10 @@ public class PokemonController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
-		if (user.getPicture() != null) {
+		
 
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
+			model.addAttribute("user", user);
+		
 
 		return "profile";
 	}
@@ -323,19 +296,10 @@ public class PokemonController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
-		if (user.getPicture() != null) {
+		
 
-			
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
+			model.addAttribute("user", user);
+		
 
 		return "profile";
 
