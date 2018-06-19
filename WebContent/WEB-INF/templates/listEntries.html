@@ -155,7 +155,7 @@
 				<div class="autor">
 					<p></p>
 					<p th:text="${entry.owner.userName}"></p>
-					<p><a href="profile">My Profile</a></p>
+					<p><a th:href="@{/userProfile(id=${entry.owner.id})}">My Profile</a></p>
 						<img src="images/images.jpeg" class="img-circle" height="65" width="65" alt="Avatar">
 					<p></p>	
 					<p th:text="${entry.dateOfCreation}"></p>
