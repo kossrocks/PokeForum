@@ -21,6 +21,7 @@ import at.fh.swenga.jpa.dao.UserRepository;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
+import at.fh.swenga.jpa.model.UserRole;
 
 @Controller
 public class DocumentController {
@@ -101,6 +102,20 @@ public class DocumentController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 
+		model.addAttribute("teamHeader", "Your Team");
+		model.addAttribute("profileHeader", "Your Profile");
+		
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");}
+		
 		return "profile";
 	}
 }

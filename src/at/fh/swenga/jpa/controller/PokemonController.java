@@ -56,7 +56,7 @@ public class PokemonController {
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.POST)
 	public String addNewPokemon(Model model, Principal principal, @RequestParam("name") String name,
-			@RequestParam("species") String species, @RequestParam("level") int level,
+			@RequestParam("species") String species, @RequestParam("level") float level,
 			@RequestParam("attack1") String attack1, @RequestParam("attack2") String attack2,
 			@RequestParam("attack3") String attack3, @RequestParam("attack4") String attack4,
 			@RequestParam("gender") String gender, @RequestParam("shiny") String shiny) {
@@ -131,15 +131,27 @@ public class PokemonController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
+		model.addAttribute("teamHeader", "Your Team");
+		model.addAttribute("profileHeader", "Your Profile");
 		
-
-			model.addAttribute("user", user);
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");
+		}
+		model.addAttribute("user", user);
 		
 
 		return "profile";
 	}
 
-	@Secured({ "ROLE_USER" })
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.GET)
 	public String showEditPokemonForm(Model model, @RequestParam int id, Principal principal) {
 
@@ -171,9 +183,17 @@ public class PokemonController {
 			model.addAttribute("pokemons", pokemons);
 			model.addAttribute("errorMessage", "You cannot edit Pokemon that are not yours!");
 			
-		
+			model.addAttribute("teamHeader", "Your Team");
+			model.addAttribute("profileHeader", "Your Profile");
+			
+			
+			if(isAdmin) {
+				model.addAttribute("userRole", "Admin");
+			}else {
+				model.addAttribute("userRole", "User");}
 
-				model.addAttribute("user", user);
+			
+			model.addAttribute("user", user);
 			
 
 			return "profile";
@@ -184,7 +204,7 @@ public class PokemonController {
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.POST)
 	public String editNewPokemon(Model model, Principal principal, @RequestParam int id,
 			@RequestParam("name") String name, @RequestParam("species") String species,
-			@RequestParam("level") int level, @RequestParam("attack1") String attack1,
+			@RequestParam("level") float level, @RequestParam("attack1") String attack1,
 			@RequestParam("attack2") String attack2, @RequestParam("attack3") String attack3,
 			@RequestParam("attack4") String attack4, @RequestParam("gender") String gender,
 			@RequestParam("shiny") String shiny) {
@@ -260,7 +280,19 @@ public class PokemonController {
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		
+		model.addAttribute("teamHeader", "Your Team");
+		model.addAttribute("profileHeader", "Your Profile");
 		
+		boolean isAdmin = false;
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");}
 
 			model.addAttribute("user", user);
 		
@@ -298,7 +330,16 @@ public class PokemonController {
 		
 		
 
-			model.addAttribute("user", user);
+		model.addAttribute("user", user);
+		
+		model.addAttribute("teamHeader", "Your Team");
+		model.addAttribute("profileHeader", "Your Profile");
+		
+		
+		if(isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		}else {
+			model.addAttribute("userRole", "User");}
 		
 
 		return "profile";

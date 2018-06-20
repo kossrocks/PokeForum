@@ -37,13 +37,15 @@ public class AttackController {
 	@Autowired
 	CategoryDao categoryDao;
 	
-	
+	// searching for attack names, types, categories, battle effects
 	@RequestMapping("/searchAttacks")
 	public String searchIt(Model model, @RequestParam String searchString) {
 			
+		//getting list of attacks that contain searchstring in name, type category and/or battle effect
 		List<AttackModel> attacks = attackDao.searchAttack(searchString.toLowerCase());
 		
 		model.addAttribute("attacks", attacks);
+		
 		if(attacks.size() == 1) {
 			model.addAttribute("message", "You found " + attacks.size() + " attack.");
 		}else {
@@ -52,29 +54,14 @@ public class AttackController {
 
 		return "attacks";
 	}
-	
-
-	
-	
-	/* 
-	 * 
-	 * 
-	 * Versuch EDIT and ADD Attack hinzuzufügen
-	 * 
-	 * */
-	
-	
-	
-	
-	
-	
+		
+	// forwarding the admin to the editAttack.html
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/addAttack", method = RequestMethod.GET)
 	public String showAddSpeciesForm(Model model) {
 		
 		List<AttackModel> attacks = attackDao.getAllAttacks();
-		model.addAttribute("attacks",attacks);
-		
+		model.addAttribute("attacks",attacks);		
 		
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);		
@@ -88,10 +75,11 @@ public class AttackController {
 	
 	
 	
-	
+	// creating new attack with the help of various RequestParameters
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/addAttack", method = RequestMethod.POST)
-	public String addAttackForm(Model model, @RequestParam("name") String name, @RequestParam("type") int type, @RequestParam("category") int category, @RequestParam("basePower") int basePower, @RequestParam("accuracy") int accuracy, @RequestParam("powerPoints") int powerPoints, @RequestParam("battleEffect") String battleEffect) {
+	public String addAttackForm(Model model, @RequestParam("name") String name, @RequestParam("type") int type, @RequestParam("category") int category, @RequestParam("basePower") float basePower, @RequestParam("accuracy") float accuracy, @RequestParam("powerPoints") float powerPoints, @RequestParam("battleEffect") String battleEffect) {
+		
 		
 		if(attackDao.searchAttackByName(name.toLowerCase()) == null)  {
 			
@@ -132,8 +120,7 @@ public class AttackController {
 		return "attacks";
 	}
 	
-	
-	
+	// admin can delete every attack
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping("/deleteAttack")
 	public String deleteAttack(Model model, @RequestParam int id) {
@@ -159,7 +146,7 @@ public class AttackController {
 	}
 	
 	
-	
+	//forwarding admin to editAttack page
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/editAttack", method = RequestMethod.GET)
 	public String showEditAttackForm(Model model, @RequestParam int id) {
@@ -176,10 +163,10 @@ public class AttackController {
 	}
 	
 	
-	
+	//allowing admin to edit attack
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/editAttack", method = RequestMethod.POST)
-	public String editAttackForm(Model model, @RequestParam("id") int id,@RequestParam("name") String name, @RequestParam("type") int type, @RequestParam("category") int category, @RequestParam("basePower") int basePower, @RequestParam("accuracy") int accuracy, @RequestParam("powerPoints") int powerPoints, @RequestParam("battleEffect") String battleEffect) {
+	public String editAttackForm(Model model, @RequestParam("id") int id,@RequestParam("name") String name, @RequestParam("type") int type, @RequestParam("category") int category, @RequestParam("basePower") float basePower, @RequestParam("accuracy") float accuracy, @RequestParam("powerPoints") float powerPoints, @RequestParam("battleEffect") String battleEffect) {
 		
 		if(attackDao.searchAttackById(id) != null) {
 			

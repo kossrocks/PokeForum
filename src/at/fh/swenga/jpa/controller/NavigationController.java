@@ -164,10 +164,24 @@ public class NavigationController {
 	
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/users")
-	public String users(Model model) {
+	public String users(Model model, Principal principal) {
 
+		boolean isAdmin = false;
+		User user = userDao.getUser(principal.getName());
+		for(UserRole role : user.getUserRoles()) {
+			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		}
+		
+		
 		List<User> users = userDao.getAllUsers();
+		if(!isAdmin) users = userDao.getAllEnabledUsers();
+		
+				
 		model.addAttribute("users",users);
+		
+		
+		
+		model.addAttribute("isAdmin", isAdmin);
 
 		
 		return "users";

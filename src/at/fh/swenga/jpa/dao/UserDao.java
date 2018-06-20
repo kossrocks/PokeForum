@@ -76,9 +76,12 @@ public class UserDao {
 		return count;
 	}
 	
-	
-	
-	
+	public List<User> getAllEnabledUsers() {
+		TypedQuery<User> typedQuery = entityManager.createQuery("select u from User u where not u.userName = 'guest' and not u.enabled = 0 order by u.id",
+				User.class);
+		List<User> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}	
 	
 	/*   TRY USER SEARCH */
 	public List<User> searchUser(String searchString) {

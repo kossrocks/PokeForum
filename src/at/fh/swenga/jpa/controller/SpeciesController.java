@@ -59,7 +59,7 @@ public class SpeciesController {
 	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/addSpecies", method = RequestMethod.POST)
-	public String addSpeciesForm(Model model, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") int baseHealthPoints, @RequestParam("baseAttack") int baseAttack, @RequestParam("baseDefense") int baseDefense, @RequestParam("baseSpecialAttack") int baseSpecialAttack, @RequestParam("baseSpecialDefense") int baseSpecialDefense,@RequestParam("baseSpeed") int baseSpeed) {
+	public String addSpeciesForm(Model model, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") float baseHealthPoints, @RequestParam("baseAttack") float baseAttack, @RequestParam("baseDefense") float baseDefense, @RequestParam("baseSpecialAttack") float baseSpecialAttack, @RequestParam("baseSpecialDefense") float baseSpecialDefense,@RequestParam("baseSpeed") float baseSpeed) {
 		
 		if(speciesDao.searchSpeciesByName(name.toLowerCase()) == null) {
 			
@@ -133,7 +133,7 @@ public class SpeciesController {
 	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/editSpecies", method = RequestMethod.POST)
-	public String editSpeciesForm(Model model,@RequestParam int id, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") int baseHealthPoints, @RequestParam("baseAttack") int baseAttack, @RequestParam("baseDefense") int baseDefense, @RequestParam("baseSpecialAttack") int baseSpecialAttack, @RequestParam("baseSpecialDefense") int baseSpecialDefense,@RequestParam("baseSpeed") int baseSpeed) {
+	public String editSpeciesForm(Model model,@RequestParam int id, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") float baseHealthPoints, @RequestParam("baseAttack") float baseAttack, @RequestParam("baseDefense") float baseDefense, @RequestParam("baseSpecialAttack") float baseSpecialAttack, @RequestParam("baseSpecialDefense") float baseSpecialDefense,@RequestParam("baseSpeed") float baseSpeed) {
 		
 		if(speciesDao.searchSpeciesById(id) != null) {
 			

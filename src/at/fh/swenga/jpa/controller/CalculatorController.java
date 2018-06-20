@@ -30,6 +30,7 @@ public class CalculatorController {
 	@Autowired
 	SpeciesDao speciesDao;
 	
+	// calculate the damage a pokemon makes with certain attack
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/calculate")
 	public String calculate(Model model, Principal principal, @RequestParam("yourPokemon") int yourPokemonId, @RequestParam("yourLevel") float yourLevel, @RequestParam("yourAttack") int attackId, @RequestParam("enemyPokemon") int enemyId, @RequestParam("enemyLevel") float enemyLevel ) {
@@ -42,6 +43,7 @@ public class CalculatorController {
 		float enemyDefpoints = 0;
 		float damage = 0;
 		
+		//set the level of pokemon in team. It will not 
 		yourPokemon.setLevel(yourLevel);
 		yourPokemon.recalculateStats();
 		
