@@ -26,13 +26,14 @@ public class SpeciesController {
 	@Autowired
 	TypeDao typeDao;
 	
-	
+	//show those species where searchstring is in name or type of species
 	@RequestMapping("/searchSpecies")
 	public String searchSpecies(Model model, @RequestParam String searchString) {
 
 		List<SpeciesModel> specieses = speciesDao.getAllSpecies();
 		List<SpeciesModel> filteredSpecieses = new ArrayList<SpeciesModel>();
 		
+		//needed to do it with java instead of sql, because a species can have one or two types and we could not figure out the correct sql query 
 		for(SpeciesModel species : specieses) {
 			
 			if(species.getName().toLowerCase().contains(searchString.toLowerCase()) || species.getTypes().get(0).getName().toLowerCase().contains(searchString.toLowerCase()) || (species.getTypes().size() > 1 && species.getTypes().get(1).getName().toLowerCase().contains(searchString.toLowerCase()))){
@@ -47,6 +48,7 @@ public class SpeciesController {
 		return "pokemon";
 	}
 	
+	//shows admin addSpecies form
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/addSpecies", method = RequestMethod.GET)
 	public String showAddSpeciesForm(Model model) {
@@ -57,6 +59,7 @@ public class SpeciesController {
 		return "editSpecies";
 	}
 	
+	//admin adds a new pokemon species
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/addSpecies", method = RequestMethod.POST)
 	public String addSpeciesForm(Model model, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") float baseHealthPoints, @RequestParam("baseAttack") float baseAttack, @RequestParam("baseDefense") float baseDefense, @RequestParam("baseSpecialAttack") float baseSpecialAttack, @RequestParam("baseSpecialDefense") float baseSpecialDefense,@RequestParam("baseSpeed") float baseSpeed) {
@@ -97,6 +100,7 @@ public class SpeciesController {
 		return "pokemon";
 	}
 	
+	// admins can delete every species they want 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping("/deleteSpecies")
 	public String deleteSpecies(Model model, @RequestParam int id) {
@@ -118,6 +122,7 @@ public class SpeciesController {
 		return "pokemon";
 	}
 	
+	// showing admin edit  species form
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/editSpecies", method = RequestMethod.GET)
 	public String showEditSpeciesForm(Model model, @RequestParam int id) {
@@ -131,6 +136,7 @@ public class SpeciesController {
 		return "editSpecies";
 	}
 	
+	// admins can edit every species they want
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/editSpecies", method = RequestMethod.POST)
 	public String editSpeciesForm(Model model,@RequestParam int id, @RequestParam("name") String name, @RequestParam("type1") int type1, @RequestParam("type2") int type2, @RequestParam("baseHealthPoints") float baseHealthPoints, @RequestParam("baseAttack") float baseAttack, @RequestParam("baseDefense") float baseDefense, @RequestParam("baseSpecialAttack") float baseSpecialAttack, @RequestParam("baseSpecialDefense") float baseSpecialDefense,@RequestParam("baseSpeed") float baseSpeed) {

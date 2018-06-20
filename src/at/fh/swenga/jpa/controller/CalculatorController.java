@@ -43,10 +43,12 @@ public class CalculatorController {
 		float enemyDefpoints = 0;
 		float damage = 0;
 		
-		//set the level of pokemon in team. It will not 
+		//set the level of pokemon in team. It will not be changed in the database. This change only is for calculating purpose
 		yourPokemon.setLevel(yourLevel);
+		//due to the changed level, its stats need to be recalculated
 		yourPokemon.recalculateStats();
 		
+		//depending on the attack category slightly different function variables are used to calculate the attack damage
 		if(yourAttack.getCategory().getName().equalsIgnoreCase("special")) {
 			yourAtkpoints = yourPokemon.getSpecialAttack();
 			enemyDefpoints = (2f * enemyPokemon.getBaseSpecialDefense() * enemyLevel / 100f) + 5f;
@@ -58,12 +60,14 @@ public class CalculatorController {
 		float stab = 1;
 		float adv = 1;
 		
+		//if a pokemon has the same type as the attack it is using, it gets an attack bonus
 		for(TypeModel type : yourPokemon.getTypes()) {
 			if(type.getName().equals(yourAttack.getName())) {
 				stab += 0.5f;
 			}			
 		}
 		
+		//certain types are good, weak, ineffective against others
 		for(TypeModel type : enemyPokemon.getTypes()) {
 			if(yourAttack.getType().getGoodAgainst().contains(type.getName().toLowerCase())) {
 				adv *= 2f;
@@ -76,13 +80,15 @@ public class CalculatorController {
 			}
 		}
 		
+		//damage is calculated
 		damage = ((yourLevel * (2f/5f) + 2f) * yourAttack.getBasePower() * (yourAtkpoints / (50f *enemyDefpoints)) + 2f) * stab * adv;
 		
+		//reamaining enemy healthpoints
 		float enemyHp = (2f * enemyPokemon.getBaseHealthPoints() * enemyLevel / 100f) + 10f + enemyLevel - damage;
 		
+		//for more user friendly display of remaining hp of enemy. User associates enemy defeat with 0 hp.
 		if(enemyHp < 0) enemyHp = 0;
 		
-		model.addAttribute("calcText", "Your attack made " + Math.round(damage) + " damage and your enemy has " + Math.round(enemyHp) + " HP left.");
 		model.addAttribute("message", "Your attack made " + Math.round(damage) + " damage and your enemy has " + Math.round(enemyHp) + " HP left.");
 		
 		

@@ -37,6 +37,7 @@ public class UserController {
 	@Autowired
 	PokemonDao pokemonDao;
 	
+	//searching specific users. Each user is shown that has the searchstring in their username, firstname, or lastname
 	@RequestMapping("/searchUsers")
 	public String searchUser(Model model, @RequestParam String searchString) {
 
@@ -52,6 +53,7 @@ public class UserController {
 		return "users";
 	}
 
+	// admins can disable Users. Disabled Users cannot login to the webpage.
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/disableUser", method = RequestMethod.GET)
 	public String disableUser(Model model, @RequestParam int id) {
@@ -71,6 +73,7 @@ public class UserController {
 
 	}
 
+	// admins can enable disabled users. They can login to the webpage again
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/enableUser", method = RequestMethod.GET)
 	public String enableUser(Model model, @RequestParam int id) {
@@ -85,6 +88,7 @@ public class UserController {
 		return "users";
 	}
 
+	// showing edit user form
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
 	public String showEditUser(Model model, Principal principal) {
@@ -96,6 +100,7 @@ public class UserController {
 		return "editUser";
 	}
 
+	// users can change their personal data like firstname, lastname or their password
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
@@ -103,6 +108,7 @@ public class UserController {
 			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,Principal principal) {
 		User user = userDao.getUser(username);
 		if (password != null) {
+			//password can only be changed if they are not empty and equals to the confirmation password
 			if (password.equals(password1)) {
 				user.setPassword(password);
 				user.encryptPassword();
@@ -112,6 +118,7 @@ public class UserController {
 			}
 		}
 
+		// firstname and lastname are only changed if the textboxes are not empty
 		if (firstName != null) {
 			user.setFirstName(firstName);
 		}

@@ -58,6 +58,7 @@ public class NavigationController {
 	@Autowired
 	UserRoleDao userRoleDao;
 	
+	//getting to the index page where all existing topics are listed
 	@RequestMapping(value = { "/", "index" })
 	public String index(Model model,Principal principal) {
 
@@ -67,6 +68,7 @@ public class NavigationController {
 		User user = userDao.getUser(principal.getName());
 		model.addAttribute("user", user);
 		
+		// if logged in user has role admin. Important for security reasons.
 		boolean isAdmin = false;
 		for(UserRole role : user.getUserRoles()) {
 			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
@@ -84,6 +86,7 @@ public class NavigationController {
 		return "signUp";
 	}	
 	
+	// shows profile of logged in user 
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/profile")
 	public String profile(Model model,Principal principal) {
@@ -100,7 +103,7 @@ public class NavigationController {
 		
 		
 
-			model.addAttribute("user", user);
+		model.addAttribute("user", user);
 		
 		
 		model.addAttribute("teamHeader", "Your Team");
@@ -122,6 +125,7 @@ public class NavigationController {
 		
 	}
 	
+	// shows profile of user with given id
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/userProfile")
 	public String userProfile(Model model,@RequestParam int id, Principal principal) {
@@ -136,9 +140,9 @@ public class NavigationController {
 		
 		
 
-			model.addAttribute("user", user);
+		model.addAttribute("user", user);
 		
-		
+		//checks if current user has this id, if yes it is his profile
 		if(idUser == user.getId()) {
 			model.addAttribute("teamHeader", "Your Team");
 			model.addAttribute("profileHeader", "Your Profile");
@@ -162,6 +166,7 @@ public class NavigationController {
 		return "profile";
 	}
 	
+	//shows a list of all existing users
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/users")
 	public String users(Model model, Principal principal) {
@@ -172,22 +177,19 @@ public class NavigationController {
 			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
 		}
 		
-		
+		// List with all users that are not disabled, except guest user, because guest user is no real user
 		List<User> users = userDao.getAllUsers();
+		// List with every user except guest user, because if admin accidently disables guest user, log in as guest won't work
 		if(!isAdmin) users = userDao.getAllEnabledUsers();
 		
-				
+	
 		model.addAttribute("users",users);
-		
-		
-		
 		model.addAttribute("isAdmin", isAdmin);
-
 		
 		return "users";
 	}
 	
-	
+	// show List of all attacks that are in the database
 	@RequestMapping("/attacks")
 	public String attacks(Model model) {
 		
@@ -197,6 +199,7 @@ public class NavigationController {
 		return "attacks";
 	}
 	
+	//shows list of all pokemon species that are in the database
 	@RequestMapping("/pokemon")
 	public String pokemon(Model model) {
 		
@@ -206,12 +209,10 @@ public class NavigationController {
 		List<TypeModel> types = typeDao.getAllTypes();
 		model.addAttribute("types", types);	
 		
-		
-		
-		
 		return "pokemon";
 	}
 	
+	// shows attack damage calculator
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/calculator")
 	public String calculator(Model model,Principal principal) {
@@ -224,8 +225,6 @@ public class NavigationController {
 		
 		List<SpeciesModel> allPokemons = speciesDao.getAllSpecies();
 		model.addAttribute("pokemons", allPokemons);
-		
-		
 		
 		return "calculator";
 	}

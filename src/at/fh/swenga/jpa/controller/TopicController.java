@@ -39,6 +39,7 @@ public class TopicController {
 	@Autowired
 	EntryRepository entryRepository;
 
+	// deleting specific topic and all its entries
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deleteTopic")
 	@Transactional
@@ -46,6 +47,7 @@ public class TopicController {
 
 		TopicModel topic = topicDao.getTopic(id);
 		String usernameOwner = topic.getOwner().getUserName();
+		//only admins and topic owners can delete topics
 		if (usernameOwner.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
 			entryDao.deleteById(id);
 			model.addAttribute("message", "Topic '" + topicDao.getTopic(id).getTitle() + "' deleted.");
@@ -57,6 +59,7 @@ public class TopicController {
 		}
 	}
 
+	// shows all entries of specific Topic
 	@RequestMapping("/listEntries")
 	public String listEntries(Model model, @RequestParam int id, Principal principal) {
 
@@ -64,6 +67,7 @@ public class TopicController {
 		User user = userDao.getUser(principal.getName());
 		model.addAttribute("user", user);
 		
+		//List with all entries of specific topic
 		List<EntryModel> entries = entryDao.getAllEntriesInTopic(id);
 		model.addAttribute("entries", entries);
 
@@ -76,13 +80,10 @@ public class TopicController {
 		}
 		model.addAttribute("isAdmin", isAdmin);
 
-		
-		
-		
-		
 		return "listEntries";
 	}
 
+	//shows add topic form
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addTopic", method = RequestMethod.GET)
 	public String showAddTopicForm(Model model) {
@@ -90,6 +91,7 @@ public class TopicController {
 		return "addTopic";
 	}
 
+	// adding new topic to database
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addTopic", method = RequestMethod.POST)
 	public String addTopic(Model model, @RequestParam("title") String title,
@@ -119,14 +121,17 @@ public class TopicController {
 
 	}
 
+	//shows add Entry form
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addEntry", method = RequestMethod.GET)
 	public String showAddEntryForm(Model model, @RequestParam int topicId) {
+		//saving to which topic the new entry should belong
 		model.addAttribute("topicId", topicId);
 
 		return "addEntry";
 	}
 
+	//adding new entry
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addEntry", method = RequestMethod.POST)
 	public String addEntry(Model model, @RequestParam("entryText") String entry, @RequestParam("topicId") int topicId,
@@ -163,6 +168,7 @@ public class TopicController {
 
 	}
 
+	//show edit Entry form
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editEntry", method = RequestMethod.GET)
 	public String showEditEntry(Model model, @RequestParam int id, Principal principal) {
@@ -170,6 +176,7 @@ public class TopicController {
 		EntryModel entry = entryDao.getEntry(id);
 
 		String usernameOwner = entry.getOwner().getUserName();
+		//only the entry owner and admins can change entry
 		if (usernameOwner.equals(principal.getName()) || principal.getName().equalsIgnoreCase("admin")) {
 
 			model.addAttribute("entry", entry);
@@ -180,11 +187,13 @@ public class TopicController {
 		}
 	}
 
+	//editing existing entry
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editEntry", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam int id, @RequestParam("entryText") String text, Principal principal) {
 		EntryModel entry = entryDao.getEntry(id);
 		entry.setContent(text);
+		//if an entry is edited it will be shown on the webpage
 		entry.setEdited(true);
 		entryDao.merge(entry);
 
@@ -206,6 +215,7 @@ public class TopicController {
 		return "listEntries";
 	}
 
+	//only entry owner and admins can delete it
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deleteEntry")
 	public String deleteEntry(Model model, @RequestParam int id, @RequestParam int topicId, Principal principal) {
@@ -238,6 +248,7 @@ public class TopicController {
 
 	}
 
+	//listing all topics that have the searchstring in title or owner name
 	@RequestMapping("/searchTopics")
 	public String searchIt(Model model, @RequestParam String searchString, Principal principal) {
 			

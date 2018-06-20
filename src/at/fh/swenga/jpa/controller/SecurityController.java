@@ -68,14 +68,7 @@ public class SecurityController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/guest", method = RequestMethod.GET)
-	public void fillGuestData() {
-		
-		
-		handleLogin();
-	}
-	
-	
+	//providing test data
 	@RequestMapping("/fillUsers")
 	@Transactional
 	public String fillData(Model model) {
@@ -467,11 +460,13 @@ public class SecurityController {
 		return "forward:login";
 	}
 
+	//after sign up user is added to database
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String addNewUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
 			@RequestParam("password1") String password1, Model model) {
 		User user = userDao.getUser(userName);
 		if (user == null) {
+			//passwords need to be equal
 			if (password.equals(password1)) {
 
 				user = new User(userName, password);
