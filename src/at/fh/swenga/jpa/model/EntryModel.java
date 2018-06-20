@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "entries")
 public class EntryModel implements java.io.Serializable {
@@ -27,6 +29,7 @@ public class EntryModel implements java.io.Serializable {
 	private User owner;
 	
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	public Date dateOfCreation;
 	
 	@Column(name = "content", length = 1000)
