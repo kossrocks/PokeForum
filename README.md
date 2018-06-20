@@ -38,6 +38,7 @@
 11. To login use the usernames and password that were send to you per email
 12. Have fun with PokéForum!
 
+### Release note
 The use with Chrome is not recommended.
 
-Nicht mit Chrome kompatibel 
+
