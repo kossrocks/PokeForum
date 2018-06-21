@@ -59,12 +59,17 @@
 </head>
 
 <body>
+<!-- ------------------------------------------------------ Menu section ---------------------------------------------------------------------------- -->
 <div class="container" role="main">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+
+<!-- ------------------------------------------------------ Header section ---------------------------------------------------------------------------- -->
+	
+	
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -87,14 +92,15 @@
 		</div>
 	</div>
 </div>
-
+<!-- ------------------------------------------ Main Content: User Information, Upload of Profile Picture ---------------------------------------------------------------------------- -->
 <div class="container tableDesign">
 	<div class="row">
 		<div class="col-md-7 col-md-offset-1">
+		<!-- ------------------------------------- Form for editing the user information ------------------------------------- -->
 			<form class="form-horizontal" method="post" th:action="@{/editUser}">
 				<fieldset>
 				<legend>Edit Your User Profile</legend>
-					<!-- --------------  username ---------------- -->
+					<!-- --------------  display the input field for the username (username can't be changed -> readonly) ---------------- -->
 					<div class="form-group">
 						<label for="inputUserName" class="col-md-2 control-label">User Name</label>
 						<div class="col-md-10">
@@ -102,7 +108,7 @@
 						</div>
 					</div>
 					
-					<!-- --------------  password ---------------- -->
+					<!-- --------------  display the input field for the password ---------------- -->
 					<div class="form-group">
 						<label for="inputPassword" class="col-md-2 control-label">New Password</label>
 						<div class="col-md-10">
@@ -110,7 +116,7 @@
 						</div>
 					</div>
 					
-					<!-- --------------  password1 ---------------- -->
+					<!-- --------------  display the input field for the confirmation password ---------------- -->
 					<div class="form-group">
 						<label for="inputPassword1" class="col-md-2 control-label">Confirm New Password</label>
 						<div class="col-md-10">
@@ -118,7 +124,7 @@
 						</div>
 					</div>
 	
-					<!-- --------------  first Name ---------------- -->
+					<!-- -------------- display the input field for the first name ---------------- -->
 					<div class="form-group">
 						<label for="inputFirstName" class="col-md-2 control-label">First Name
 						</label>
@@ -126,7 +132,7 @@
 							<input class="form-control" id="firstName" type="text" name="firstName" th:value="${user.firstName}">
 						</div>
 					</div>
-					<!-- --------------  last Name ---------------- -->
+					<!-- -------------- display the input field for the last name ---------------- -->
 					<div class="form-group">
 						<label for="inputLastName" class="col-md-2 control-label">Last Name</label>
 						<div class="col-md-10">
@@ -134,7 +140,7 @@
 						</div>
 					</div>
 					
-					<!-- --------------  buttons ---------------- -->
+					<!-- -------------- submit and cancel buttons of the form ---------------- -->
 					<div class="form-group">
 						<div class="col-md-10 col-md-offset-2">
 							<button type="submit" class="btn btn-success">Submit</button>
@@ -146,7 +152,8 @@
 				</fieldset>
 			</form>
 		</div>
-	
+		
+<!-- ----------------------------------------------------- Form for file upload ------------------------------------------------------------------------- -->	
 		<div class="col-md-3">
 			<form class="form-horizontal" enctype="multipart/form-data" method="post" th:action="@{/upload(${_csrf.parameterName}=${_csrf.token})}"> 
 				

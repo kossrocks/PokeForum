@@ -135,12 +135,16 @@ input:checked + .slider:before {
   
 </head>
 <body>
-<div class="container" role="main">
+
+<!-- ------------------------------------------------------ Menu section ----------------------------------------------------------------------------------- -->
+<div class="container">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+	
+<!-- ------------------------------------------------------ Header section ----------------------------------------------------------------------------------- -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -163,7 +167,8 @@ input:checked + .slider:before {
 		</div>
 	</div>
 </div>
-	
+
+<!-- ------------------------------------------------------ Main Content: List of all users ----------------------------------------------------------------------------------- -->	
 <div class="container tableDesign">
 <div class="title">List of all Users</div>
 	<div class="col-md-12 ">
@@ -172,7 +177,8 @@ input:checked + .slider:before {
 				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
 		   		</form>
-		
+		   		
+<!-- ------------------------------------------------------ seachbar to search for users ----------------------------------------------------------------------------------- -->		
 				<form class="navbar-form navbar-right" action="searchUsers">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search for..." name="searchString">
@@ -183,6 +189,7 @@ input:checked + .slider:before {
 				</form>
 		</div>
 
+<!-- ----------------------------------------------------- table with all the attributes of a user (they are sortable) ----------------------------------------------------------------------------------- -->
 		<table data-toggle="table" class="table table-striped">
 			<thead>
 				<tr>
@@ -197,10 +204,10 @@ input:checked + .slider:before {
 					<th><i class="fa fa-external-link swoopRight" style="color:#0077b3;"></i> Visit</th>				
 				</tr>
 				</thead>
-			
+				
+<!-- ------------ lists all users (for every user it displays the userName, firstName, lastName (only admin can see this), dateOfEntry, number of topics created, number of entries, if the user is enabled/disabled and link to the profile page of that user ----------------------------------------------------------- -->
+		
 			<tbody>
-					
-				<!--  list all items ----------------------------------------------------------- -->
 				<tr th:each="user : ${users}">
 					<td th:text="${user.userName != null ? user.userName : 'no user name yet'}"></td>
 					<td th:text="${user.firstName != null ? user.firstName : '' }"></td>
@@ -208,7 +215,7 @@ input:checked + .slider:before {
 					<td th:text="${#dates.format(user.dateOfEntry,'dd.MM.yyyy')}"></td>
 					<td th:text="${user.topics.size()}"></td>
 					<td th:text="${user.entries.size()}"></td>
-					<td sec:authorize="hasRole('ADMIN')" th:text="${user.enabled}"></td>
+					<td sec:authorize="hasRole('ADMIN')" th:text="${user.enabled}"></td> <!-- only the admin can enable/disable a user -->
 						
 					<td sec:authorize="hasRole('ADMIN')"> <span th:if="${user.enabled}"> <a th:href="@{/disableUser(id=${user.id})}" class="btn btn-danger">Disable</a> </span>
 					 <span th:unless="${user.enabled}"><a th:href="@{/enableUser(id=${user.id})}" class="btn btn-success">Enable</a></span></td>

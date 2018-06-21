@@ -76,10 +76,13 @@
 </style>
 </head>
 <body>
+<!-- ---------------------------------------------------------------- Main Content: Sign Up Form --------------------------------------------------------------------------- -->
 	<div class="container" role="main">
 		<div class="row">
 			<div class="col-md-4 col-sm-4 col-xs-12"></div>
 			<div class="col-md-4 col-sm-4 col-xs-12">
+	
+<!--------------------------------- form for adding a new user to the database (method addUser) ----------------------------->
 				<form class="form-container" method="post" th:action="@{/addUser}">
 					<h1 class="signUp">Sign Up</h1>
 					<!--  Error message ----------------------------------------------------------- -->
@@ -98,28 +101,25 @@
 						class="alert alert-success" role="warning"></div>
 					<!--   message ----------------------------------------------------------- -->
 
-					<!-- --------------  username ---------------- -->
+					<!-- --------------  input for the username ---------------- -->
 					<div class="form-group">
-						<label for="inputUserName">User Name</label> <input
-							class="form-control" id="inputUserName" type="text" required
-							name="userName">
+						<label for="inputUserName">User Name</label> 
+							<input class="form-control" id="inputUserName" type="text" required name="userName">
 					</div>
 
-					<!-- --------------  password ---------------- -->
+					<!-- -------------- input for the password ---------------- -->
 					<div class="form-group">
-						<label for="inputPassword">Password</label> <input
-							class="form-control" id="inputPassword" type="password" required
-							name="password">
+						<label for="inputPassword">Password</label> 
+							<input class="form-control" id="inputPassword" type="password" required name="password">
 					</div>
 
-					<!-- --------------  password1 ---------------- -->
+					<!-- -------------- input for the confirmation password ---------------- -->
 					<div class="form-group">
-						<label for="inputPassword1">Confirm Password</label> <input
-							class="form-control" id="inputPassword1" type="password" required
-							name="password1">
+						<label for="inputPassword1">Confirm Password</label> 
+							<input class="form-control" id="inputPassword1" type="password" required name="password1">
 					</div>
 
-					<!-- --------------  buttons ---------------- -->
+					<!-- -------------- signUp and cancel buttons ---------------- -->
 
 					<button type="submit" class="btn custom custom1">Sign Up</button>
 					<a href="login" class="btn custom custom2">Cancel</a>

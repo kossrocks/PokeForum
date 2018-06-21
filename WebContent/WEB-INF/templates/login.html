@@ -92,6 +92,7 @@
 
 </head>
   <body>
+ <!-- -------------------------------------------------------------- Login section ------------------------------------------------------------------ -->
  
 	<div class="container" role="main">
 		<div class="row">
@@ -120,16 +121,20 @@
 
 						<div th:if="${param.logout}" class="alert alert-success">You
 							have been logged out.</div>
-						
+							
+<!-- -------------------------------------------------------------- Input for the username (this is required) ------------------------------------------------------------------ -->				
   						<div class="form-group">
     						<label for="InputEmail">Username</label>
     						<input type="text" class="form-control" id="username" placeholder="Username" required autofocus name="username">
   						</div>
+  						
+ <!-- -------------------------------------------------------------- Input for the password (this is required) ------------------------------------------------------------------ -->
   						<div class="form-group">
     						<label for="InputPassword">Password</label>
     						<input type="password" class="form-control password" id="password" placeholder="Password" required name="password">
   						</div>
-  
+ 
+ <!-- ------------------------------------------- buttons for login, signUp and entry as a guest user ------------------------------------------------------------------ --> 
  					 	<button type="submit" class="btn customLogin">Log In</button>
  					 	<a th:href="@{/signUp}" class="btn custom custom1">Sign up</a>
  					 	<button onclick="fillGuest()" type="submit" class="btn custom custom2"> Guest</button>
@@ -138,6 +143,9 @@
 			<div class="col-md-4 col-sm-4 col-xs-12"></div>
 		</div>
 	</div>
+
+<!-- ------------------------------- fill the credentials for the guest user ------------------------------------------------------------------ -->
+
 	<script>
 	function fillGuest() {
     document.getElementById("password").value = "guest";

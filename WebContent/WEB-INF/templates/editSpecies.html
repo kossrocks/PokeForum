@@ -58,14 +58,16 @@
 </style>
 </head>
 <body>
+<!-- ------------------------------------------------------ Menu section ----------------------------------------------------------------------------------- -->
 
-<div class="container" role="main">
+<div class="container">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
-
 		</div>
 	</div>
+	
+<!-- ------------------------------------------------------ Header section ----------------------------------------------------------------------------------- -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -88,14 +90,18 @@
 		</div>
 	</div>
 </div>
-<div class="col-md-10 col-md-offset-1 tableDesign swoopDown">
+
+<!-- ------------------------------------- Main Content: Add a new Species or edit a already existing Species --------------------------------------------- -->
+<div class="container col-md-10 col-md-offset-1 tableDesign swoopDown">
+
+<!-- -------------- Display form for editing or adding a species (if the species exists, the information is displayed else a new species can be added (method addSpecies) ---- -->
 		<form class="form-horizontal" method="post"
 				th:action="${species} ? @{/editSpecies(id=${species.id})} : @{/addSpecies}">
 					
 		<fieldset>
 			<legend th:text="${species}? 'Change Species' : 'New Species'">New Species</legend>
 			
-			<!-- --------------  Name ---------------- -->
+			<!-- --------------  display the name or add the name for the new species---------------- -->
 			<div class="form-group">
 				<label for="inputName" class="col-md-2 control-label">Name</label>
 					<div class="col-md-10">
@@ -104,9 +110,9 @@
 							name="name" th:value="${species} ? ${species.name}" maxlength="15" required>
 					</div>
 			</div>
-			<!-- --------------  Type1 ---------------- -->
+			<!-- --------------  display type1 or add a type1 for the new species---------------- -->
 			<div class="form-group">
-				<label for="inputType1" class="col-md-2 control-label">Type1</label>
+				<label for="inputType1" class="col-md-2 control-label">Type 1</label>
 					<div class="col-md-10">
 						
 						<select name="type1" id="type1" class="form-control">
@@ -114,9 +120,9 @@
 						</select>
 					</div>
 			</div>
-			<!-- --------------  Type2 ---------------- -->
+			<!-- --------------  display type2 or add a type2 for the new species (type2 is not mandatory) ---------------- -->
 			<div class="form-group">
-				<label for="inputType2" class="col-md-2 control-label">Type2</label>
+				<label for="inputType2" class="col-md-2 control-label">Type 2</label>
 					<div class="col-md-10">
 						
 						<select name="type2" id="type2" class="form-control">
@@ -125,61 +131,63 @@
 						</select>
 					</div>
 			</div>
-			<!-- --------------  baseHealthPoints ---------------- -->
+			<!-- -------------- display baseHealthPoints or add a baseHealthPoints for the new species---------------- -->
+			 
+
 			<div class="form-group">
-				<label for="inputBaseHealthPoints" class="col-md-2 control-label">BaseHealthPoints</label>
+				<label for="inputBaseHealthPoints" class="col-md-2 control-label">Base HealthPoints</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseHealthPoints" type="number" 
 							name="baseHealthPoints" th:value="${species} ? ${species.baseHealthPoints}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  baseAttack ---------------- -->
+			<!-- -------------- display baseAttack or add a baseAttack for the new species  ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseAttack" class="col-md-2 control-label">BaseAttack</label>
+				<label for="inputBaseAttack" class="col-md-2 control-label">Base Attack</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseAttack" type="number" 
 							name="baseAttack" th:value="${species} ? ${species.baseAttack}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  baseDefense ---------------- -->
+			<!-- -------------- display baseDefense or add a baseDefense for the new species  ---------------- -->
 			<div class="form-group">
-				<label for="inputDefense" class="col-md-2 control-label">BaseDefense</label>
+				<label for="inputDefense" class="col-md-2 control-label">Base Defense</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseDefense" type="number" 
 							name="baseDefense" th:value="${species} ? ${species.baseDefense}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  baseSpecialAttack ---------------- -->
+			<!-- -------------- display baseSpecialAttack or add a baseSpecialAttack for the new species  ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseSpecialAttack" class="col-md-2 control-label">BaseSpecialAttack</label>
+				<label for="inputBaseSpecialAttack" class="col-md-2 control-label">Base SpecialAttack</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseSpecialAttack" type="number" 
 							name="baseSpecialAttack" th:value="${species} ? ${species.baseSpecialAttack}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  baseSpecialDefense ---------------- -->
+			<!-- -------------- display baseSpecialDefense or add a baseSpecialDefense for the new species  ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseSpecialDefense" class="col-md-2 control-label">BaseSpecialDefense</label>
+				<label for="inputBaseSpecialDefense" class="col-md-2 control-label">Base SpecialDefense</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseSpecialDefense" type="number" 
 							name="baseSpecialDefense" th:value="${species} ? ${species.baseSpecialDefense}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  baseSpeed ---------------- -->
+			<!-- -------------- display baseSpeed or add a baseSpeed for the new species  ---------------- -->
 			<div class="form-group">
-				<label for="inputBaseSpeed" class="col-md-2 control-label">BaseSpeed</label>
+				<label for="inputBaseSpeed" class="col-md-2 control-label">Base Speed</label>
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputBaseSpeed" type="number" 
 							name="baseSpeed" th:value="${species} ? ${species.baseSpeed}" min="1" required>
 					</div>
 			</div>
-			<!-- --------------  buttons ---------------- -->
+			<!-- -------------- submit and cancel buttons ---------------- -->
 			<div class="form-group">
 				<div class="col-md-10 col-md-offset-2">
 					<button type="submit" class="btn btn-success">Submit</button>
