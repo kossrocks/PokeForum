@@ -48,9 +48,7 @@ public class DocumentController {
 
 			User user = userDao.getUser(principal.getName());
 
-			// !!!!! MIME TYPE images -> if(!contentType.startsWith("image/"))
-			// Create a new document and set all available infos
-
+			//only creating document if it is a picture format
 			if (file.getContentType().startsWith("image/")) {
 
 				int pictureId = 0;
@@ -68,6 +66,7 @@ public class DocumentController {
 
 				model.addAttribute("user", user);
 
+				//deleting old picture if there was one
 				if (pictureId > 0) {
 					documentDao.deleteById(pictureId);
 				}
@@ -81,18 +80,6 @@ public class DocumentController {
 		}
 
 		User user = userDao.getUser(principal.getName());
-		if (user.getPicture() != null) {
-
-			DocumentModel pp = user.getPicture();
-			byte[] profilePicture = pp.getContent();
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/jpeg;base64,");
-			sb.append(Base64.encodeBase64String(profilePicture));
-			String image = sb.toString();
-
-			model.addAttribute("image", image);
-		}
 
 		int id = userDao.getUser(principal.getName()).getId();
 

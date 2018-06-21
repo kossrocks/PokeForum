@@ -40,6 +40,7 @@ public class PokemonController {
 	@Autowired
 	UserDao userDao;
 
+	//shows form to add new pokemon to team
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.GET)
 	public String showAddPokemonForm(Model model) {
@@ -53,6 +54,7 @@ public class PokemonController {
 		return "editTeamMember";
 	}
 
+	// add pokemon with help of various RequestParameters
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.POST)
 	public String addNewPokemon(Model model, Principal principal, @RequestParam("name") String name,
@@ -60,6 +62,7 @@ public class PokemonController {
 			@RequestParam("attack1") String attack1, @RequestParam("attack2") String attack2,
 			@RequestParam("attack3") String attack3, @RequestParam("attack4") String attack4,
 			@RequestParam("gender") String gender, @RequestParam("shiny") String shiny) {
+		
 		if (attack1.equals(attack2) || attack1.equals(attack3) || attack1.equals(attack4) || attack2.equals(attack3)
 				|| attack2.equals(attack4) || attack3.equals(attack4)) {
 			model.addAttribute("errorMessage", "a Pokemon cannot learn the same attack more than once!");
@@ -69,12 +72,14 @@ public class PokemonController {
 
 			SpeciesModel newSpecies = speciesDao.searchSpeciesByName(species);
 
+			//a pokemon can have one or two types
 			TypeModel type1 = newSpecies.getTypes().get(0);
 			if (newSpecies.getTypes().size() > 1) {
 				TypeModel type2 = newSpecies.getTypes().get(1);
 				newPokemon.addType(type2);
 			}
-
+			
+			// the user who adds the pokemon to their team is the owner of the pokemon
 			User currentUser = userDao.getUser(principal.getName());
 
 			AttackModel newAttack1 = attackDao.getAttackByName(attack1);
@@ -86,6 +91,7 @@ public class PokemonController {
 			if (shiny.equals("yes"))
 				newShiny = true;
 
+			//setting the different base stats of the pokemon
 			float hp = newSpecies.getBaseHealthPoints();
 			float atk = newSpecies.getBaseAttack();
 			float def = newSpecies.getBaseDefense();
@@ -111,6 +117,7 @@ public class PokemonController {
 			newPokemon.setShiny(newShiny);
 			newPokemon.setOwner(currentUser);
 
+			//stats that are relevant for battle are calculated depending on base stats and level of pokemon
 			newPokemon.recalculateStats();
 
 			newPokemon.addAttack(newAttack1);
@@ -139,7 +146,6 @@ public class PokemonController {
 			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
 		}
 		
-		
 		if(isAdmin) {
 			model.addAttribute("userRole", "Admin");
 		}else {
@@ -147,10 +153,10 @@ public class PokemonController {
 		}
 		model.addAttribute("user", user);
 		
-
 		return "profile";
 	}
 
+	//shows page to edit an existing pokmeon. Only owner of pokemon can change it. Admin can change it too
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.GET)
 	public String showEditPokemonForm(Model model, @RequestParam int id, Principal principal) {
@@ -199,7 +205,7 @@ public class PokemonController {
 			return "profile";
 		}
 	}
-
+	//editing a pokemon of own team with help of RequestParameters
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.POST)
 	public String editNewPokemon(Model model, Principal principal, @RequestParam int id,
@@ -300,6 +306,7 @@ public class PokemonController {
 		return "profile";
 	}
 
+	// only owner of pokemon can delete it. Admin can delete it too
 	@Secured({ "ROLE_USER" })
 	@RequestMapping("/deletePokemon")
 	public String deletePokemon(Model model, @RequestParam int id, Principal principal) {
