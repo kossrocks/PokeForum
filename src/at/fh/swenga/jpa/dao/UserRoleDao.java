@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.jpa.model.User;
 import at.fh.swenga.jpa.model.UserRole;
  
 @Repository

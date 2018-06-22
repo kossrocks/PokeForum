@@ -1,7 +1,5 @@
 package at.fh.swenga.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +16,6 @@ import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRepository;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
@@ -56,9 +53,6 @@ public class SecurityController {
 
 	@Autowired
 	AttackDao attackDao;
-
-	@Autowired
-	UserRepository userRepository;
 	
 	@Autowired
 	PokemonDao pokemonDao;
@@ -453,6 +447,8 @@ public class SecurityController {
 		adminPet.setOwner(admin);
 		
 		pokemonDao.persist(adminPet);
+		
+		
 		
 		
 		

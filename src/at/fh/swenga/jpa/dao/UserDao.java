@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.User;
 
 @Repository

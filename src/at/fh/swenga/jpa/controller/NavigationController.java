@@ -3,27 +3,21 @@ package at.fh.swenga.jpa.controller;
 import java.security.Principal;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.jpa.dao.AttackDao;
-import at.fh.swenga.jpa.dao.EntryDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TopicModel;
@@ -41,9 +35,6 @@ public class NavigationController {
 	AttackDao attackDao;
 	
 	@Autowired
-	EntryDao entryDao;
-	
-	@Autowired
 	PokemonDao pokemonDao;
 	
 	@Autowired
@@ -54,9 +45,6 @@ public class NavigationController {
 	
 	@Autowired
 	UserDao userDao;
-	
-	@Autowired
-	UserRoleDao userRoleDao;
 	
 	//getting to the index page where all existing topics are listed
 	@RequestMapping(value = { "/", "index" })

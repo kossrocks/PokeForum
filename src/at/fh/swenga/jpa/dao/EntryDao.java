@@ -6,12 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.jpa.model.EntryModel;
-import at.fh.swenga.jpa.model.TopicModel;
 @Repository
 @Transactional
 public class EntryDao {

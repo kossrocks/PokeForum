@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import at.fh.swenga.jpa.dao.DocumentDao;
-import at.fh.swenga.jpa.dao.DocumentRepository;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRepository;
 import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
@@ -25,12 +22,6 @@ import at.fh.swenga.jpa.model.UserRole;
 
 @Controller
 public class DocumentController {
-
-	@Autowired
-	DocumentRepository documentRepository;
-
-	@Autowired
-	UserRepository userRepository;
 
 	@Autowired
 	DocumentDao documentDao;
@@ -67,7 +58,7 @@ public class DocumentController {
 				model.addAttribute("user", user);
 
 				//deleting old picture if there was one
-				if (pictureId > 0) {
+				if (pictureId > 4) {
 					documentDao.deleteById(pictureId);
 				}
 

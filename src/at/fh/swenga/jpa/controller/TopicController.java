@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.EntryDao;
-import at.fh.swenga.jpa.dao.EntryRepository;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.EntryModel;
@@ -35,9 +34,6 @@ public class TopicController {
 
 	@Autowired
 	UserDao userDao;
-
-	@Autowired
-	EntryRepository entryRepository;
 
 	// deleting specific topic and all its entries
 	@Secured({ "ROLE_USER" })

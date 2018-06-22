@@ -1,8 +1,5 @@
 package at.fh.swenga.jpa.controller;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +15,12 @@ import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.CategoryDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
-import at.fh.swenga.jpa.model.EntryModel;
-import at.fh.swenga.jpa.model.SpeciesModel;
-import at.fh.swenga.jpa.model.TopicModel;
 import at.fh.swenga.jpa.model.TypeModel;
-import at.fh.swenga.jpa.model.User;
-
 @Controller
 public class AttackController {
 
 	@Autowired
 	AttackDao attackDao;
-	
 	
 	@Autowired
 	TypeDao typeDao;

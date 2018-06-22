@@ -1,26 +1,19 @@
 package at.fh.swenga.jpa.controller;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import at.fh.swenga.jpa.dao.DocumentRepository;
+import at.fh.swenga.jpa.dao.DocumentDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRoleDao;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
 import at.fh.swenga.jpa.model.UserRole;
@@ -30,12 +23,12 @@ public class UserController {
 
 	@Autowired
 	UserDao userDao;
-
-	@Autowired
-	UserRoleDao userRoleDao;
 	
 	@Autowired
 	PokemonDao pokemonDao;
+	
+	@Autowired
+	DocumentDao documentDao;
 	
 	//searching specific users. Each user is shown that has the searchstring in their username, firstname, or lastname
 	@RequestMapping("/searchUsers")
@@ -105,7 +98,8 @@ public class UserController {
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
 			@RequestParam("password") String password, @RequestParam("password1") String password1,
-			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,Principal principal) {
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("profilePicture") int pictureId ,
+			Principal principal) {
 		User user = userDao.getUser(username);
 		if (password != null) {
 			//password can only be changed if they are not empty and equals to the confirmation password
@@ -114,7 +108,10 @@ public class UserController {
 				user.encryptPassword();
 			} else {
 				model.addAttribute("errorMessage", "Confirmation password is not the same as password");
-				return "forward:editUser";
+				
+
+				model.addAttribute("user", user);
+				return "editUser";
 			}
 		}
 
@@ -125,7 +122,20 @@ public class UserController {
 		if (lastName != null) {
 			user.setLastName(lastName);
 		}
-
+		
+		//the ids 1-4 are reserved for Pictures the user can choose from
+		if(pictureId > 0) {
+			int oldId = 0;
+			
+			if(user.getPicture() != null) {
+				oldId = user.getPicture().getId();
+			}
+			user.setPicture(documentDao.searchPictureById(pictureId));
+			if(oldId > 4) {
+				documentDao.deleteById(oldId);
+			}
+		}
+		
 		userDao.merge(user);
 
 		model.addAttribute("user", user);

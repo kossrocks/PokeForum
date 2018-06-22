@@ -8,11 +8,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.SpeciesModel;
 
 
 @Repository
@@ -22,11 +22,12 @@ public class AttackDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 	
+	
 	public void persist(AttackModel attack) {
 		entityManager.persist(attack);
 	}
 	
-	
+	@Secured({ "ROLE_ADMIN" })
 	public void merge(AttackModel attack) {
 		entityManager.merge(attack);
 	}
@@ -86,7 +87,7 @@ public class AttackDao {
 		}
 	}
 	
-	
+	@Secured({ "ROLE_ADMIN" })
 	public int deleteById(int id) {
 		int count = entityManager.createQuery("DELETE FROM AttackModel a WHERE a.id = :id").setParameter("id", id).executeUpdate();
 		return count;

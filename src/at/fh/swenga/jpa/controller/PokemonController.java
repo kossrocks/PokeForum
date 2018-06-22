@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.UserDao;
 import at.fh.swenga.jpa.model.AttackModel;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
 import at.fh.swenga.jpa.model.TypeModel;
