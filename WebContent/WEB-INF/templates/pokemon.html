@@ -8,10 +8,8 @@
 <title>Pok&eacute;Forum - Pok&eacute;mon</title>
 <div th:replace="~{includes/bootstrap :: bootstrapCSS}" />
 <!-- Bootstrap CSS CDN -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- Our Custom CSS -->
-<link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
 
 .header {
@@ -81,17 +79,17 @@
 
 			<!--  Error message ----------------------------------------------------------- -->
 			<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-				class="alert alert-danger col-md-offset-1" role="alert"></div>
+				class="alert alert-danger" role="alert"></div>
 			<!--  Error message ----------------------------------------------------------- -->
 	
 			<!--  Warning message ----------------------------------------------------------- -->
 			<div th:unless="${warningMessage} == null" th:utext="${warningMessage}"
-				class="alert alert-warning col-md-offset-1" role="warning"></div>
+				class="alert alert-warning" role="warning"></div>
 			<!--  Warning message ----------------------------------------------------------- -->
 	
 			<!--   message ----------------------------------------------------------- -->
 			<div th:unless="${message} == null" th:utext="${message}"
-				class="alert alert-success col-md-offset-1" role="warning"></div>
+				class="alert alert-success" role="warning"></div>
 			<!--   message ----------------------------------------------------------- -->
 		</div>
 	</div>
