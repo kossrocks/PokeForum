@@ -6,12 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import at.fh.swenga.jpa.model.PokemonModel;
-import at.fh.swenga.jpa.model.User;
 
 @Repository
 @Transactional
@@ -23,7 +23,7 @@ public class PokemonDao {
 	public void persist(PokemonModel pokemon) {
 		entityManager.persist(pokemon);
 	}
-
+	@Secured({ "ROLE_USER" })
 	public void merge(PokemonModel pokemon) {
 		entityManager.merge(pokemon);
 	}
@@ -52,6 +52,7 @@ public class PokemonDao {
 		return typedResultList;
 	}
 
+	@Secured({ "ROLE_USER" })
 	public int deleteById(int id) {
 		int count = entityManager.createQuery("DELETE FROM PokemonModel WHERE id = :id").setParameter("id", id).executeUpdate();
 		return count;

@@ -1,26 +1,22 @@
 package at.fh.swenga.jpa.controller;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import at.fh.swenga.jpa.dao.DocumentRepository;
+import at.fh.swenga.jpa.dao.DocumentDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRoleDao;
-import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.User;
 import at.fh.swenga.jpa.model.UserRole;
@@ -32,24 +28,34 @@ public class UserController {
 	UserDao userDao;
 
 	@Autowired
-	UserRoleDao userRoleDao;
-	
-	@Autowired
 	PokemonDao pokemonDao;
-	
-	//searching specific users. Each user is shown that has the searchstring in their username, firstname, or lastname
+
+	@Autowired
+	DocumentDao documentDao;
+
+	// searching specific users. Each user is shown that has the searchstring in
+	// their username, firstname, or lastname
 	@RequestMapping("/searchUsers")
 	public String searchUser(Model model, @RequestParam String searchString) {
 
-		List<User> users = userDao.searchUser(searchString);
+		List<User> users = userDao.getAllEnabledUsers();
 
-		model.addAttribute("users", users);
-		
-		if(users.size() == 1) {
-			model.addAttribute("message", "You found " + users.size() + " user.");
-		}else {
-		model.addAttribute("message", "You found " + users.size() + " users.");
+		// symbols are not allowed in searchStrings
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(searchString);
+
+		if (m.find()) {
+			model.addAttribute("errorMessage", "Symbols are not allowed!");
+		} else {
+			users = userDao.searchUser(searchString);
+			if (users.size() == 1) {
+				model.addAttribute("message", "You found " + users.size() + " user.");
+			} else {
+				model.addAttribute("message", "You found " + users.size() + " users.");
+			}
 		}
+		model.addAttribute("users", users);
+
 		return "users";
 	}
 
@@ -64,7 +70,7 @@ public class UserController {
 		} else {
 			user.setEnabled(false);
 			userDao.merge(user);
-			model.addAttribute("message", "Successfully disabled user " + user.getUserName() +".");
+			model.addAttribute("message", "Successfully disabled user " + user.getUserName() + ".");
 		}
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
@@ -81,7 +87,7 @@ public class UserController {
 		User user = userDao.getUserById(id);
 		user.setEnabled(true);
 		userDao.merge(user);
-		model.addAttribute("message", "Successfully enabled user " + user.getUserName() +".");
+		model.addAttribute("message", "Successfully enabled user " + user.getUserName() + ".");
 		List<User> users = userDao.getAllUsers();
 		model.addAttribute("users", users);
 
@@ -100,21 +106,26 @@ public class UserController {
 		return "editUser";
 	}
 
-	// users can change their personal data like firstname, lastname or their password
+	// users can change their personal data like firstname, lastname or their
+	// password
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
 	public String editedEntry(Model model, @RequestParam("userName") String username,
 			@RequestParam("password") String password, @RequestParam("password1") String password1,
-			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,Principal principal) {
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+			@RequestParam("profilePicture") int pictureId, Principal principal) {
 		User user = userDao.getUser(username);
 		if (password != null) {
-			//password can only be changed if they are not empty and equals to the confirmation password
+			// password can only be changed if they are not empty and equals to the
+			// confirmation password
 			if (password.equals(password1)) {
 				user.setPassword(password);
 				user.encryptPassword();
 			} else {
 				model.addAttribute("errorMessage", "Confirmation password is not the same as password");
-				return "forward:editUser";
+
+				model.addAttribute("user", user);
+				return "editUser";
 			}
 		}
 
@@ -126,35 +137,54 @@ public class UserController {
 			user.setLastName(lastName);
 		}
 
+		// the ids 1-4 are reserved for Pictures the user can choose from
+		if (pictureId > 0) {
+			int oldId = 0;
+
+			if (user.getPicture() != null) {
+				oldId = user.getPicture().getId();
+			}
+			user.setPicture(documentDao.searchPictureById(pictureId));
+			userDao.merge(user);
+			if (oldId > 4) {
+				documentDao.deleteById(oldId);
+			}
+		}
+
 		userDao.merge(user);
 
 		model.addAttribute("user", user);
 		int id = userDao.getUser(principal.getName()).getId();
 		model.addAttribute("id", id);
-		
+
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
 		model.addAttribute("message", "You successfully edited your data.");
-		
+
 		model.addAttribute("user", user);
-		
+
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
-		
+
 		boolean isAdmin = false;
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
 		}
-		
-		
-		if(isAdmin) {
+
+		if (isAdmin) {
 			model.addAttribute("userRole", "Admin");
-		}else {
-			model.addAttribute("userRole", "User");}
+		} else {
+			model.addAttribute("userRole", "User");
+		}
 
 		return "profile";
 	}
 
-	
-	
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
 }

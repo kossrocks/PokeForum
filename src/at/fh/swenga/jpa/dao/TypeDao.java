@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.jpa.model.TypeModel;
-import at.fh.swenga.jpa.model.User;
 
 @Repository
 @Transactional

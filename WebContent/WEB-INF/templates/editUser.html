@@ -140,7 +140,25 @@
 						</div>
 					</div>
 					
+
+					<!-- --------------  profilePicture ---------------- -->
+					<div class="form-group">
+						<label for="inputProfilePicture" class="col-md-2 control-label">Profile Picture</label>
+							<div class="col-md-10">
+						
+								<select name="profilePicture" id="profilePicture" class="form-control">
+										  <option value="0" th:text="None"></option>
+										  <option value="1" th:text="Pikachu" th:selected="${user.picture != null && user.picture.id == 1}"></option>
+										  <option value="2" th:text="Bulbasaur" th:selected="${user.picture != null && user.picture.id == 2}"></option>
+										  <option value="3" th:text="Charmander" th:selected="${user.picture != null && user.picture.id == 3}"></option>
+										  <option value="4" th:text="Squirtle" th:selected="${user.picture != null && user.picture.id == 4}"></option>
+								</select>
+							</div>
+					</div>
+					
+
 					<!-- -------------- submit and cancel buttons of the form ---------------- -->
+
 					<div class="form-group">
 						<div class="col-md-10 col-md-offset-2">
 							<button type="submit" class="btn btn-success">Submit</button>
@@ -160,7 +178,7 @@
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>	
 				
 				<fieldset>
-					<legend th:text="'Upload picture for ' + ${user.userName}"></legend>
+					<legend th:text="'Upload your picture here'"></legend>
 
 					<div class="form-group picture">
 						<label for="inputFile" class="col-md-2 control-label">File:</label>

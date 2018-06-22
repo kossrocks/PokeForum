@@ -10,9 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.jpa.model.EmployeeModel;
 import at.fh.swenga.jpa.model.TopicModel;
-import at.fh.swenga.jpa.model.User;
 
 @Repository
 @Transactional
@@ -57,7 +55,7 @@ public class TopicDao {
 	public void persist(TopicModel topic) {
 		entityManager.persist(topic);
 	}
-	
+	@Secured({ "ROLE_USER" })
 	public void merge(TopicModel topic) {
 		entityManager.merge(topic);
 	}
@@ -71,7 +69,7 @@ public class TopicDao {
 		return typedResultList;
 	}
 
-	
+	@Secured({ "ROLE_USER" })
 	public int deleteById(int id) {
 		int count = entityManager.createQuery("DELETE FROM TopicModel WHERE id = :id").setParameter("id", id).executeUpdate();
 		return count;

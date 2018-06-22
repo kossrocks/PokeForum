@@ -7,12 +7,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
-import at.fh.swenga.jpa.model.TypeModel;
 
 @Repository
 @Transactional
@@ -32,6 +31,7 @@ public class SpeciesDao {
 		entityManager.persist(species);
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	public void merge(SpeciesModel species) {
 		entityManager.merge(species);
 	}
@@ -72,6 +72,7 @@ public class SpeciesDao {
 		}
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	public int deleteById(int id) {
 		int count = entityManager.createQuery("DELETE FROM SpeciesModel s WHERE s.id = :id").setParameter("id", id).executeUpdate();
 		return count;

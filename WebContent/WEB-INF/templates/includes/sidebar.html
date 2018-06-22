@@ -307,7 +307,7 @@ html { height: 100%;}
                 <li sec:authorize="hasRole('USER')"><a href="users">Users</a></li>
                 <li><a href="attacks">Attacks</a></li>
                 <li><a href="pokemon">Pok&eacute;mon</a></li>
-                <li><a href="calculator">Calculator</a></li>
+                <li sec:authorize="hasRole('USER')"><a href="calculator">Calculator</a></li>
                 <li sec:authorize="hasRole('GUEST')"><a href="signUp">Sign Up</a></li>
                 
             </ul>

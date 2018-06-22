@@ -145,7 +145,11 @@
 
 		<div class="col-md-3 profilePicture">
 			<img th:if="${user.picture} == null" src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
-			<img th:unless="${user.picture} == null" th:src="${user.pictureConversion()}" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${user.picture != null && user.picture.id == 1}" src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${user.picture != null && user.picture.id == 2}" src="images/bisasam_profile.png" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${user.picture != null && user.picture.id == 3}" src="images/glumanda_profile.png" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${user.picture != null && user.picture.id == 4}" src="images/schiggy_profile.png" class="img-circle center" height="183" width="183" alt="Avatar">
+			<img th:if="${user.picture != null && user.picture.id > 4}" th:src="${user.pictureConversion()}" class="img-circle center" height="183" width="183" alt="Avatar">
 			
 <!-- ---------------------------------------------------------------- button for editing a user (method editUser) --------------------------------------------------------------------------- -->			
 			<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
@@ -177,7 +181,7 @@
                                 First Name                                                
                             </strong>
                         </td>
-                        <td th:text="${user.firstName != null ? user.firstName : 'no first name yet'}" class="text-primary"></td>
+                        <td th:text="${user.firstName != null ? user.firstName : ''}" class="text-primary"></td>
                     </tr>
 
                     <tr>        
@@ -187,7 +191,7 @@
                                 Last Name                                                
                             </strong>
                         </td>
-                        <td th:text="${user.lastName != null ? user.lastName : 'no last name yet'}" class="text-primary"></td>
+                        <td th:text="${user.lastName != null ? user.lastName : ''}" class="text-primary"></td>
                     </tr>
 					<tr>        
                         <td>
@@ -224,7 +228,6 @@
                             </strong>
                         </td>
                         <td th:text="${userRole}"class="text-primary">
-                            MATHIAS schreib die Rolle eini --> beim td rein
                         </td>
                     </tr>                           
                 </tbody>

@@ -1,27 +1,27 @@
 package at.fh.swenga.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.jpa.dao.AttackDao;
 import at.fh.swenga.jpa.dao.CategoryDao;
+import at.fh.swenga.jpa.dao.DocumentDao;
 import at.fh.swenga.jpa.dao.EntryDao;
 import at.fh.swenga.jpa.dao.PokemonDao;
 import at.fh.swenga.jpa.dao.SpeciesDao;
 import at.fh.swenga.jpa.dao.TopicDao;
 import at.fh.swenga.jpa.dao.TypeDao;
 import at.fh.swenga.jpa.dao.UserDao;
-import at.fh.swenga.jpa.dao.UserRepository;
 import at.fh.swenga.jpa.dao.UserRoleDao;
 import at.fh.swenga.jpa.model.AttackModel;
 import at.fh.swenga.jpa.model.CategoryModel;
+import at.fh.swenga.jpa.model.DocumentModel;
 import at.fh.swenga.jpa.model.EntryModel;
 import at.fh.swenga.jpa.model.PokemonModel;
 import at.fh.swenga.jpa.model.SpeciesModel;
@@ -58,17 +58,17 @@ public class SecurityController {
 	AttackDao attackDao;
 
 	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
 	PokemonDao pokemonDao;
+
+	@Autowired
+	DocumentDao documentDao;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String handleLogin() {
 		return "login";
 	}
-	
-	//providing test data
+
+	// providing test data
 	@RequestMapping("/fillUsers")
 	@Transactional
 	public String fillData(Model model) {
@@ -76,11 +76,11 @@ public class SecurityController {
 		UserRole userRole = userRoleDao.getRole("ROLE_USER");
 		if (userRole == null)
 			userRole = new UserRole("ROLE_USER");
-		
+
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null)
 			adminRole = new UserRole("ROLE_ADMIN");
-		
+
 		UserRole guestRole = userRoleDao.getRole("ROLE_GUEST");
 		if (guestRole == null)
 			guestRole = new UserRole("ROLE_GUEST");
@@ -95,8 +95,8 @@ public class SecurityController {
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
-		
-		User guest = new User("guest","guest");
+
+		User guest = new User("guest", "guest");
 		guest.encryptPassword();
 		guest.addUserRole(guestRole);
 		userDao.persist(guest);
@@ -249,7 +249,7 @@ public class SecurityController {
 		steel.addWeakAgainst("water");
 		steel.addWeakAgainst("electric");
 		steel.addNoDamageAgainst("");
-		
+
 		fire.addGoodAgainst("grass");
 		fire.addGoodAgainst("steel");
 		fire.addGoodAgainst("ice");
@@ -290,7 +290,7 @@ public class SecurityController {
 		ice.addWeakAgainst("water");
 		ice.addWeakAgainst("ice");
 		ice.addNoDamageAgainst("");
-		
+
 		dragon.addGoodAgainst("dragon");
 		dragon.addWeakAgainst("steel");
 		dragon.addNoDamageAgainst("fairy");
@@ -416,10 +416,9 @@ public class SecurityController {
 		attackDao.persist(solarBeam);
 		attackDao.persist(surf);
 		attackDao.persist(razorLeaf);
-		
+
 		PokemonModel adminPet = new PokemonModel();
-		
-		
+
 		float hp = pikachu.getBaseHealthPoints();
 		float atk = pikachu.getBaseAttack();
 		float def = pikachu.getBaseDefense();
@@ -427,11 +426,11 @@ public class SecurityController {
 		float spdef = pikachu.getBaseSpecialDefense();
 		float spe = pikachu.getBaseSpeed();
 		String pikaName = pikachu.getName();
-		
+
 		adminPet.setName("Pika");
-		
+
 		adminPet.setSpecies(pikaName);
-		
+
 		adminPet.addType(electric);
 		adminPet.setBaseHP(hp);
 		adminPet.setBaseATK(atk);
@@ -443,37 +442,42 @@ public class SecurityController {
 		adminPet.setGender("female");
 		adminPet.setShiny(true);
 		adminPet.setOwner(admin);
-		
+
 		adminPet.recalculateStats();
-		
+
 		adminPet.addAttack(surf);
 		adminPet.addAttack(thunder);
 		adminPet.addAttack(tackle);
 		adminPet.addAttack(thunderShock);
 		adminPet.setOwner(admin);
-		
+
 		pokemonDao.persist(adminPet);
-		
-		
-		
+
+		DocumentModel pic1 = new DocumentModel();
+		DocumentModel pic2 = new DocumentModel();
+		DocumentModel pic3 = new DocumentModel();
+		DocumentModel pic4 = new DocumentModel();
+		documentDao.persist(pic1);
+		documentDao.persist(pic2);
+		documentDao.persist(pic3);
+		documentDao.persist(pic4);
 
 		return "forward:login";
 	}
 
-	//after sign up user is added to database
+	// after sign up user is added to database
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String addNewUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
 			@RequestParam("password1") String password1, Model model) {
 		User user = userDao.getUser(userName);
 		if (user == null) {
-			//passwords need to be equal
+			// passwords need to be equal
 			if (password.equals(password1)) {
 
 				user = new User(userName, password);
 				user.encryptPassword();
 
 				UserRole userRole = userRoleDao.getRole("ROLE_USER");
-				
 
 				user.addUserRole(userRole);
 				userDao.merge(user);
@@ -491,12 +495,11 @@ public class SecurityController {
 
 		return "login";
 	}
-	/*
-	 * @ExceptionHandler(Exception.class) public String handleAllException(Exception 
-	 * ex) {
-	 * 
-	 * return "error";
-	 * 
-	 * }
-	 */
+
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
 }
