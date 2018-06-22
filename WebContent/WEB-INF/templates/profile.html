@@ -102,13 +102,16 @@
 </style>
 </head>
 <body>
+
+<!-- ---------------------------------------------------------------- Menu section --------------------------------------------------------------------------- -->
 <div class="container" role="main">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
-	
+
+<!-- ---------------------------------------------------------------- Header section --------------------------------------------------------------------------- -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -132,22 +135,25 @@
 	</div>
 </div>
 
+<!-- ---------------------------------------------------------------- Main Content: profile page of a user --------------------------------------------------------------------------- -->
 <div class="container profileUser">
 
 	<div class="row">
 
-<!-- ----------------------------------- Profile Picture --------------------------------------------------------- -->
+<!-- ----------------------------------- displays the profile picture of a user --------------------------------------------------------- -->
 
 
 		<div class="col-md-3 profilePicture">
 			<img th:if="${user.picture} == null" src="images/images.jpeg" class="img-circle center" height="183" width="183" alt="Avatar">
 			<img th:unless="${user.picture} == null" th:src="${user.pictureConversion()}" class="img-circle center" height="183" width="183" alt="Avatar">
+			
+<!-- ---------------------------------------------------------------- button for editing a user (method editUser) --------------------------------------------------------------------------- -->			
 			<span class="button"><a th:if="${user.id.equals(id)}" href="editUser" class="btn btn-success">
 				Edit Profile
 			</a> </span>
 		</div>
 		
-<!-- ----------------------------------- User Information--------------------------------------------------------- -->
+<!-- ------------- displays user information (username, firstName if avaiable, lastName if available, dateOfEntry, number of topics created, number of entries and the role of the user (admin or user) --------------------------------------------------------- -->
 
 		<div class="col-md-7 user">
 			<strong th:text="${profileHeader}" class="font">Your User Information</strong><br>
@@ -227,10 +233,12 @@
 		</div>
 	</div>
 
+<!-- ---------------------------------------------------------------- displays the team of a user --------------------------------------------------------------------------- -->
  <div class="row">
  	<div class="col-md-12 team">
  		<strong th:text="${teamHeader}" class="font">Your Team</strong><br>
 
+<!-- ------------------------ displays name, species, type(s), level, attack(s), gender and the option shiny of the pokemon in the team of a user --------------------------------------------------------------------------- -->
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
@@ -249,37 +257,36 @@
 						</tr>
 					</thead>
 
+<!----------------------  list all pokemon in a team of a user ----------------------------------------------------------- -->
 					<tbody>
-
-						<!--  list all items ----------------------------------------------------------- -->
-							
-							<tr th:each="pokemon : ${pokemons}">	
-							<td th:text="${pokemon.name == '' ? pokemon.species : pokemon.name}">NAME</td>
-							<td th:text="${pokemon.species}">SPECIES</td>
-							<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
-							<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
-							<td th:text="${pokemon.level}">LEVEL</td>
-							<td th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
-							<td th:text="${pokemon.attacks.size() > 1 ? pokemon.attacks.get(1).name : '------' }">ATTACK2</td>
-							<td th:text="${pokemon.attacks.size() > 2 ? pokemon.attacks.get(2).name : '------' }">ATTACK3</td>
-							<td th:text="${pokemon.attacks.size() > 3 ? pokemon.attacks.get(3).name : '------' }">ATTACK4</td>
-							<td th:text="${pokemon.gender}">GENDER</td>
-							<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
-							<td>
-								<a th:if="${user.id.equals(id)}" th:href="@{/editPokemon(id=${pokemon.id})}" class="btn btn-success">
-									Edit
-								</a>
-								<a th:if="${user.id.equals(id)}" th:href="@{/deletePokemon(id=${pokemon.id})}" class="btn btn-danger"> 
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								</a> 
-							</td>
-						</tr>
+						<tr th:each="pokemon : ${pokemons}">	
+						<td th:text="${pokemon.name == '' ? pokemon.species : pokemon.name}">NAME</td>
+						<td th:text="${pokemon.species}">SPECIES</td>
+						<td th:text="${pokemon.types.get(0).name}">TYPE1</td>
+						<td th:text="${pokemon.types.size() > 1 ? pokemon.types.get(1).name : '------' }">TYPE2</td>
+						<td th:text="${pokemon.level}">LEVEL</td>
+						<td th:text="${pokemon.attacks.get(0).name}">ATTACK1</td>
+						<td th:text="${pokemon.attacks.size() > 1 ? pokemon.attacks.get(1).name : '------' }">ATTACK2</td>
+						<td th:text="${pokemon.attacks.size() > 2 ? pokemon.attacks.get(2).name : '------' }">ATTACK3</td>
+						<td th:text="${pokemon.attacks.size() > 3 ? pokemon.attacks.get(3).name : '------' }">ATTACK4</td>
+						<td th:text="${pokemon.gender}">GENDER</td>
+						<td th:text="${pokemon.shiny ? 'Shiny' : '------'}">SHINY</td>
+						<td>
 						
-						<!--  list all items ----------------------------------------------------------- -->
-					</tbody>
-				</table>
+<!--------------------------------- only the user can edit their own team and delete pokemon from their own team ----------------------------->
+							<a th:if="${user.id.equals(id)}" th:href="@{/editPokemon(id=${pokemon.id})}" class="btn btn-success">
+								Edit
+							</a>
+							<a th:if="${user.id.equals(id)}" th:href="@{/deletePokemon(id=${pokemon.id})}" class="btn btn-danger"> 
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</a> 
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		 
+
+<!--------------------------------- only the user can add a new pokemon to their team ----------------------------->		 
 		<div class="col-md-12 containerButtons">
 		 		<a th:if="${user.id.equals(id)}" href="addPokemon" class="btn btn-success navbar-btn ">
 					New Pok&eacute;mon

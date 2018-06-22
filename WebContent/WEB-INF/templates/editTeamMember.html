@@ -56,14 +56,15 @@
 
 </style>
 </head>
-
 <body>	
+<!-- -------------------------------------------------------------- Menu section ------------------------------------------------------------------ -->
 <div class="container" role="main">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+<!-- -------------------------------------------------------------- Header section ------------------------------------------------------------------ -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -86,14 +87,17 @@
 		</div>
 	</div>
 </div>	
+<!-- ------------------------------------- Main Content: Add a Pokèmon or edit a already existing Pokémon --------------------------------------------- -->
 <div class="col-md-10 col-md-offset-1 tableDesign swoopDown">
+
+<!-- -------------- Display form for editing or adding a Pokémon (if the Pokémon exists, the information is displayed else a new Pokémon can be added ( method addPokémon) ---- -->
 		<form class="form-horizontal" method="post"
 				th:action="${pokemon} ? @{/editPokemon(id=${pokemon.id})} : @{/addPokemon}">
 					
 		<fieldset>
-			<legend th:text="${pokemon}? 'Change Pokemon' : 'New Pokemon'">New Pok&eacute;mon</legend>
+			<legend th:text="${pokemon} ? 'Change Pokemon' : 'New Pokemon'">New Pok&eacute;mon</legend>
 			
-			<!-- --------------  Name ---------------- -->
+			<!-- --------------  display the name or add the name for the new Pokémon---------------- -->
 			<div class="form-group">
 				<label for="inputName" class="col-md-2 control-label">Nickname</label>
 					<div class="col-md-10">
@@ -102,17 +106,19 @@
 							name="name" th:value="${pokemon} ? ${pokemon.name}" maxlength="15">
 					</div>
 			</div>
-			<!-- --------------  Species ---------------- -->
+			<!-- --------------  display the species of the pokemon or a species can be chosen (choose from a dropdown list)---------------- -->
 			<div class="form-group">
 				<label for="inputSpecies" class="col-md-2 control-label">Species</label>
 					<div class="col-md-10">
 						
 						<select name="species" id="species" class="form-control">
-								  <option th:each="oneSpecies : ${specieses}" th:value="${oneSpecies.name}" th:text="${oneSpecies.name}" th:selected="${pokemon != null && pokemon.species.equals(oneSpecies.name)}"></option>
+								  <option th:each="oneSpecies : ${specieses}" th:value="${oneSpecies.name}" th:text="${oneSpecies.name}" 
+								  th:selected="${pokemon != null && pokemon.species.equals(oneSpecies.name)}"></option>
+								  <!-- if the pokemon is not null and the species of the edited pokemon equals the name of a species, this species is preselected -->
 						</select>
 					</div>
 			</div>
-			<!-- --------------  Level ---------------- -->
+			<!-- --------------  displays the Level of a pokemon or it can be added---------------- -->
 			<div class="form-group">
 				<label for="inputLevel" class="col-md-2 control-label">Level</label>
 					<div class="col-md-10">
@@ -121,47 +127,47 @@
 							name="level" th:value="${pokemon} ? ${pokemon.level}" min="1" max="100">
 					</div>
 			</div>
-			<!-- --------------  Attack1 ---------------- -->
+			<!-- --------------  displays the attack1 of a pokemon or it can be added  (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputAttack1" class="col-md-2 control-label">Attack1</label>
 					<div class="col-md-10">
 						
 					<select name="attack1" id="attack1" class="form-control">
 								  <option th:each="attack : ${attacks}" th:value="${attack.name}" th:text="${attack.name}" th:selected="${pokemon != null && (pokemon.attacks.size() > 0 && pokemon.attacks.get(0).name.equals(attack.name))}"></option>
-								</select>
+								</select> <!-- when editing the pokemon the attack is preselected if the pokemon and the number of attacks is bigger than 0 and the name of the attack equals an attack name -->
 					</div>
 			</div>
-			<!-- --------------  Attack2 ---------------- -->
+			<!-- --------------  displays the attack2 of a pokemon or it can be added (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputAttack2" class="col-md-2 control-label">Attack2</label>
 					<div class="col-md-10">
 						
 					<select name="attack2" id="attack2" class="form-control">
 								  <option th:each="attack : ${attacks}" th:value="${attack.name}" th:text="${attack.name}" th:selected="${pokemon != null && pokemon.attacks.size() > 1 && pokemon.attacks.get(1).name == attack.name}"></option>
-								</select>
+								</select> <!-- when editing the pokemon the attack is preselected if the pokemon and the number of attacks is bigger than 1 and the name of the attack equals an attack name -->
 					</div>
 			</div>
-			<!-- --------------  Attack3 ---------------- -->
+			<!-- --------------  displays the attack3 of a pokemon or it can be added (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputAttack3" class="col-md-2 control-label">Attack3</label>
 					<div class="col-md-10">
 						
 					<select name="attack3" id="attack3" class="form-control">
 								  <option th:each="attack : ${attacks}" th:value="${attack.name}" th:text="${attack.name}" th:selected="${pokemon != null && pokemon.attacks.size() > 2 && pokemon.attacks.get(2).name == attack.name}"></option>
-								</select>
+								</select> <!-- when editing the pokemon the attack is preselected if the pokemon and the number of attacks is bigger than 2 and the name of the attack equals an attack name -->
 					</div>
 			</div>
-			<!-- --------------  Attack4 ---------------- -->
+			<!-- --------------   displays the attack4 of a pokemon or it can be added (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputAttack4" class="col-md-2 control-label">Attack4</label>
 					<div class="col-md-10">
 						
 					<select name="attack4" id="attack4" class="form-control">
 								  <option th:each="attack : ${attacks}" th:value="${attack.name}" th:text="${attack.name}" th:selected="${pokemon != null && pokemon.attacks.size() > 3 && pokemon.attacks.get(3).name == attack.name}"></option>
-								</select>
+								</select> <!-- when editing the pokemon the attack is preselected if the pokemon and the number of attacks is bigger than 3 and the name of the attack equals an attack name -->
 					</div>
 			</div>
-			<!-- --------------  Gender ---------------- -->
+			<!-- --------------  Gender (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputGender" class="col-md-2 control-label">Gender</label>
 					<div class="col-md-10">
@@ -170,10 +176,10 @@
 								  <option th:selected="${pokemon != null && pokemon.gender.equals('none')}" value="none">None</option>
 								  <option th:selected="${pokemon != null && pokemon.gender.equals('male')}" value="male">Male</option>
 								  <option th:selected="${pokemon != null && pokemon.gender.equals('female')}" value="female">Female</option>
-								</select>
+								</select> 
 					</div>
 			</div>
-			<!-- --------------  Shiny ---------------- -->
+			<!-- --------------  Shiny (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputShiny" class="col-md-2 control-label">Shiny</label>
 					<div class="col-md-10">
@@ -185,7 +191,7 @@
 					</div>
 			</div>
 
-			<!-- --------------  buttons ---------------- -->
+			<!-- -------------- submit and cancel buttons ---------------- -->
 			<div class="form-group">
 				<div class="col-md-10 col-md-offset-2">
 					<button type="submit" class="btn btn-success">Submit</button>

@@ -14,7 +14,14 @@
 	margin-top: 10px;
 	float: left;
 	margin-left: -12px;
+	margin-right: 10px;
 }
+
+.backToTopic {
+	margin-top: 10px;
+	float: left;
+}
+
 .signOutButton {
 	margin-right: -12px;
 }
@@ -63,6 +70,8 @@
 	border-right-style: solid;
 	border-top-style: solid;
 	border-color: #bfbfbf;
+	padding-top: 10px;
+	padding-left: 10px;
 	
 }
 
@@ -129,12 +138,16 @@
 </style>
 </head>
 <body>
-<div class="container" role="main">
+<!-- -------------------------------------------------------------- Menu section ------------------------------------------------------------------ -->
+
+<div class="container">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+	
+<!-- -------------------------------------------------------------- Header section ------------------------------------------------------------------ -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -158,20 +171,25 @@
 	</div>
 </div>
 	
-	
+<!-- -------------------------------------------------------------- Main Content: List the Entries of a particular topic  ------------------------------------------------------------------ -->	
 <div class="container text-center tableDesign">
-
+<!-- ------------------------------------ only a user with the role 'USER' can add a new entry ------------------------------------------------------------------ -->
 	<div class="container-fluid navbarSwoopDown">	
 		<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
 			New Entry
 		</a>
+		<a th:href="@{/index}" class="btn btn-success backToTopic">
+			Back to Topics
+		</a>
+		
 		<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		     <input class="btn btn-danger signOutButton" type="submit" value="Sign Out"/>
 		</form>
 	</div>
 	
 	<div th:text="${topic.title}" class="col-md-12  textTitle"></div>
-		
+	
+<!-- --------------------------- for every entry of a topic a box is displayed: the user with profile picture and date of entry on the left and the content of the entry on the right ------------------------------------------------------------------ -->	
 	<div th:each="entry : ${entries}">
 		<div class="row">
 			<div class="col-md-3">
@@ -195,11 +213,12 @@
 				</div>
 			</div>
 		</div>
+<!-- ------------------------ if the owner or the admin edited the content it is show in this box ------------------------------------------------------------------ -->
 		
     	<div class="col-md-9">
       		<div class="edited">
       		<hr>
-      			 <i th:text="${entry.edited} ? 'this entry has been edited by owner or admin'"></i>
+      			 <i th:text="${entry.edited} ? 'this entry has been edited by owner of the entry or admin'"></i>
       			<a th:if="${user.id.equals(entry.owner.id)} or ${isAdmin}" th:href="@{/deleteEntry(id=${entry.id},topicId=${topic.id})}" class="btn btn-xs btn-danger editButton">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

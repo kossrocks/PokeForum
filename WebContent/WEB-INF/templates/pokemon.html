@@ -64,12 +64,16 @@
 
 </head>
 <body>
+
+<!-- -------------------------------------------------------------- Menu section ------------------------------------------------------------------ -->
 <div class="container" role="main">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+	
+<!-- -------------------------------------------------------------- Header section ------------------------------------------------------------------ -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -93,12 +97,13 @@
 	</div>
 </div>
 
-	
+<!-- -------------------------------------------------------------- Main Content: list of all available species  ------------------------------------------------------------------ -->	
 <div class="container tableDesign">
 <div class="title"> List of all Pok&eacute;mon </div>
 		<div class="col-md-12">
 			<div class="container-fluid navbar navbar-default">
-			
+
+<!-- ---------------------------------------- only the admin can add a new species ------------------------------------------------------------------ -->			
 				<a sec:authorize="hasRole('ADMIN')" href="addSpecies" class="btn btn-success navbar-btn">
 					New Species
 				</a>
@@ -106,7 +111,8 @@
 				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
 		   		</form>
-		   		
+
+<!-- -------------------------------------------------------------- search bar to search all the species ------------------------------------------------------------------ -->	   		
 				<form class="navbar-form navbar-right" action="searchSpecies">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search for..." name="searchString">
@@ -116,7 +122,8 @@
 					</div>
 				</form>	
 			</div>
-		
+
+<!-- ----------------------------------------------------- table with all the attributes of species (they are sortable) ----------------------------------------------------------------------------------- -->		
 		<table data-toggle="table" class="table table-striped">
 		
 			<thead>
@@ -127,14 +134,15 @@
 					<th data-sortable="true">HP</th>
 					<th data-sortable="true">Attack</th>
 					<th data-sortable="true">Defense</th>
-					<th data-sortable="true">SpecialAttack</th>
-					<th data-sortable="true">SpecialDefense</th>
+					<th data-sortable="true">Special Attack</th>
+					<th data-sortable="true">Special Defense</th>
 					<th data-sortable="true">Speed</th>
 					<th>More Infos</th>	
-					<th sec:authorize="hasRole('ADMIN')">Action</th>
+					<th sec:authorize="hasRole('ADMIN')">Action</th> <!-- only the admin can edit and delete species -->
 				</tr>
 			</thead>
 
+<!-- ------------ lists all species (for every species it displays the name, type(s), baseHealthPoints, baseAttack, baseDefense, baseSpecialAttack, baseSpecialDefense and the baseSpeed ----------------------------------------------------------- -->
 			<tbody>
 				<!--  list all items ----------------------------------------------------------- -->
 				<tr th:each="species : ${pokemons}">	
@@ -148,9 +156,9 @@
 					<td th:text="${species.baseSpecialDefense}">SPDEF</td>
 					<td th:text="${species.baseSpeed}">INIT</td>
 					<td> <a th:href="'http://pokemon.wikia.com/wiki/'+${species.name}" target="_blank" class="btn btn-success">
-						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> <!-- links to a pokemon wiki page to learn more about that particuar species -->
 					</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasRole('ADMIN')"> 
 						<a th:href="@{/editSpecies(id=${species.id})}" class="btn btn-success">Edit</a>
 						<a th:href="@{/deleteSpecies(id=${species.id})}" class="btn btn-danger">
 						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>

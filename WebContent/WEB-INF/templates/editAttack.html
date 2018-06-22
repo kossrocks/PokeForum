@@ -53,12 +53,15 @@
 </head>
 <body>
 <body>
-<div class="container" role="main">
+<!-- --------------------------------------------------------------- Menu section ----------------------------------------------------------------------------------- -->
+<div class="container">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+
+<!-- -------------------------------------------------------------- Header section ----------------------------------------------------------------------------------- -->
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -82,14 +85,16 @@
 	</div>
 </div>		
 
-<div class="col-md-8 col-md-offset-2 swoopDown tableDesign">
-		<form class="form-horizontal" method="post"
-				th:action="${attack} ? @{/editAttack(id=${attack.id})} : @{/addAttack}">
+<!-- ---------------------------------------------- Main Content: edit a already existing attack or add a new attack ----------------------------------------------------------------------------------- -->
+<div class="container col-md-8 col-md-offset-2 swoopDown tableDesign">
+<!-- -------------------------------------Form for editing or adding a pokemon ----------------------------------------------------------------------------------- -->
+
+	<form class="form-horizontal" method="post" th:action="${attack} ? @{/editAttack(id=${attack.id})} : @{/addAttack}">
 					
 		<fieldset>
 			<legend th:text="${attack}? 'Change Attack' : 'New Attack'">New Attack</legend>
 			
-			<!-- --------------  Name ---------------- -->
+			<!-- -------------- display the name of the attack or add a name for the attack ---------------- -->
 			<div class="form-group">
 				<label for="inputName" class="col-md-2 control-label">Name</label>
 					<div class="col-md-10">
@@ -98,7 +103,7 @@
 							name="name" th:value="${attack} ? ${attack.name}" maxlength="15" required>
 					</div>
 			</div>
-			<!-- --------------  Type ---------------- -->
+			<!-- --------------  display the type of the attack or add a type for the attack (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputType" class="col-md-2 control-label">Type</label>
 					<div class="col-md-10">
@@ -110,7 +115,7 @@
 					
 			</div>
 			
-			<!-- --------------  Category ---------------- -->
+			<!-- --------------  display the category of the attack or add a category for the attack (choose from a dropdown list) ---------------- -->
 			<div class="form-group">
 				<label for="inputCategory" class="col-md-2 control-label">Category</label>
 					<div class="col-md-10">
@@ -122,7 +127,7 @@
 					
 					</div>
 			</div>
-			<!-- --------------  powerPoints ---------------- -->
+			<!-- -------------- display the powerPoints of the attack or add a powerPoints for the attack  ---------------- -->
 			<div class="form-group">
 				<label for="inputBaseHealthPoints" class="col-md-2 control-label">PowerPoints</label>
 					<div class="col-md-10">
@@ -131,7 +136,7 @@
 							name="powerPoints" th:value="${attack} ? ${attack.powerPoints}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  basePower ---------------- -->
+			<!-- -------------- display the basePower of the attack or add a basePower for the attack  ---------------- -->
 			<div class="form-group">
 				<label for="inputBasePower" class="col-md-2 control-label">BasePower</label>
 					<div class="col-md-10">
@@ -140,7 +145,7 @@
 							name="basePower" th:value="${attack} ? ${attack.basePower}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  accuracy ---------------- -->
+			<!-- -------------- display the accuracy of the attack or add a accuracy for the attack   ---------------- -->
 			<div class="form-group">
 				<label for="inputAccuracy" class="col-md-2 control-label">Accuracy</label>
 					<div class="col-md-10">
@@ -149,7 +154,7 @@
 							name="accuracy" th:value="${attack} ? ${attack.accuracy}" min="0" required>
 					</div>
 			</div>
-			<!-- --------------  battleEffect ---------------- -->
+			<!-- --------------  display the battleEffect of the attack or add a battleEffect for the attack  ---------------- -->
 			<div class="form-group">
 				<label for="inputBattleEffect" class="col-md-2 control-label">BattleEffect</label>
 					<div class="col-md-10">
@@ -160,7 +165,7 @@
 			</div>
 			
 			
-			<!-- --------------  buttons ---------------- -->
+			<!-- -------------- submit and cancel buttons ---------------- -->
 			<div class="form-group">
 				<div class="col-md-10 col-md-offset-2">
 					<button type="submit" class="btn btn-success">Submit</button>
@@ -168,10 +173,8 @@
 				</div>
 			</div>
 		</fieldset>
-		</form>
-	</div>
-		
-	</div>
+	</form>
+</div>
 <!-- ---------------------------------------------------------------Footer ----------------------------------------------------------------------------------- -->	
 <footer class="footer">
 	<div class="row">

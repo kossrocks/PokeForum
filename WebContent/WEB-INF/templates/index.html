@@ -80,15 +80,35 @@
 	padding-bottom: 40px;
 }
 
+.titleGuest {
+	display: block;
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+.font {
+	background-color: rgba(255, 99, 71, 0.5);
+	padding-top: 5px;
+	padding-left: 8px;
+	padding-bottom: 5px;
+	padding-right: 8px;
+	font-size: 28px;
+}
+
 </style>
 </head>
 <body>
 <div class="container" role="main">
+
+<!--------------------------------------------------------- Menu section ------------------------------------------------------------------------------- -->
 <div class="row">
-		<div class="col-md-1">
-			<nav th:replace="~{includes/sidebar}"></nav>
-		</div>
+	<div class="col-md-1">
+		<nav th:replace="~{includes/sidebar}"></nav>
 	</div>
+</div>
+<!--------------------------------------------------------- Header section ------------------------------------------------------------------------------- -->
+
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -112,9 +132,19 @@
 	</div>
 </div>
 
+<!-------------------------------------- Main Content: All the topics of the PokéForum ------------------------------------------------------------------------------- -->
+
 <div class="container tableDesign">
-	<div class="title">Welcome to Pok&eacute;Forum!</div>
-		<div class="col-md-10 col-md-offset-1" >
+	<div class="col-md-12 title">Welcome to Pok&eacute;Forum!
+		
+	</div>
+	<div sec:authorize="hasRole('GUEST')" class="col-md-12 titleGuest">
+		<b class="font">Sign up to use all the features of Pok&eacute;Forum!</b>
+	</div>
+		<div class="col-md-10 col-md-offset-1">
+	
+<!------- Navbar for the signUp button (only accessible for guest users), the addTopic button and the searchField to search for topics  ------------------------------------------------------------------------------- -->
+<div class="row">
 			<div class="container-fluid navbar navbar-default">
 			
 				<a sec:authorize="hasRole('GUEST')" th:href="@{/signUp}" class="btn btn-success navbar-btn">Sign up</a>
@@ -122,6 +152,7 @@
 				<a sec:authorize="hasRole('USER')" href="addTopic" class="btn btn-success navbar-btn newTopicButton">
 					New Topic
 				</a>
+				
 				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
 		   		</form>
@@ -136,6 +167,7 @@
 				</form>
 			</div>
 			
+<!---------------------Table of all the topics in the PokéForum ------------------------------------------------------------------------------- -->
 
 		
 		<table data-toggle="table" class="table table-striped">
@@ -150,18 +182,21 @@
 			</thead>
 			<tbody>
 				
-				<!--  list all items ----------------------------------------------------------- -->
+<!--  -------- list all items -> for every topic in all the topics list the title, the name of the person who created the topic, the date it was last edited and the number of entries for that topic----------------------------------------------------------- -->
 				<tr th:each="topic : ${topics}">
 					<td th:text="${topic.title}"></td>
 					<td th:text="${topic.owner.userName}"></td>
 					<td th:text="${#dates.format(topic.lastEdited,'dd.MM.yyyy')}"></td>
 					<td th:text="${topic.entries.size()}"></td>
+
+<!------------ Buttons to visit the topic (opens the page listEntries with all the entries for that particular topic ------------------------------------------------------------------------------- -->
+
 					<td><a th:href="@{/listEntries(id=${topic.id})}" class="btn btn-success">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 							Visit
 						</a>
 
-
+<!------------ Buttons to delete the topic (only the admin and the person who created the topic can delete it (compare the id of the topic owner with the id of the current user, or if it is the admin) ------------------------------------------------------------------------------- -->
 						<a th:if="${topic.owner.id.equals(user.id)} or ${isAdmin}" th:href="@{/deleteTopic(id=${topic.id})}" class="btn btn-danger" >
 							
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -172,12 +207,14 @@
 					</td>
 					
 				</tr>
-				<!--  list all items ----------------------------------------------------------- -->
+
 			</tbody>
-		</table>
-						
+		</table>				
 	</div>
 </div>
+</div>
+
+<!-------------------------------------------------------------------------- Footer ------------------------------------------------------------------------------- -->
 <footer class="footer">
 	<div class="row">
 		<div class="col-md-12 foot">

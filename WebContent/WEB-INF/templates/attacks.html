@@ -65,12 +65,17 @@
 
 </head>
 <body>
-<div class="container" role="main">
+<!-- ------------------------------------------------------ Menu section ----------------------------------------------------------------------------------- -->
+
+<div class="container">
 	<div class="row">
 		<div class="col-md-1">
 			<nav th:replace="~{includes/sidebar}"></nav>
 		</div>
 	</div>
+
+<!-- ------------------------------------------------------ Header section ----------------------------------------------------------------------------------- -->
+
 	<div class="row">
 		<div class="col-md-12 header">
 
@@ -92,11 +97,15 @@
 			<!--   message ----------------------------------------------------------- -->
 		</div>
 	</div>
-</div>	
+</div>
+	
+<!-- ------------------------------------------------------ Main Content: List of all available attacks ----------------------------------------------------------------------------------- -->
 <div class="container tableDesign">
 	<div class="title">List of all Attacks</div>
 		<div class="col-md-12">
 			<div class="container-fluid navbar navbar-default">
+			
+<!-- ------------------------------------------------------ only the admin can add a new attack ----------------------------------------------------------------------------------- -->
 			
 				<a sec:authorize="hasRole('ADMIN')" href="addAttack" class="btn btn-success navbar-btn">
 					New Attack
@@ -105,6 +114,7 @@
 				<form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
 		      		<input class="btn btn-danger" type="submit" value="Sign Out"/>
 		   		</form>
+<!-- ------------------------------------------------------ seachbar to search for attacks ----------------------------------------------------------------------------------- -->
 		   		
 				<form class="navbar-form navbar-right" action="searchAttacks">
 					<div class="input-group">
@@ -116,6 +126,8 @@
 					</div>
 				</form>
 			</div>
+
+<!-- ----------------------------------------------------- table with all the attributes of attacks (they are sortable) ----------------------------------------------------------------------------------- -->
 		
 		<table data-toggle="table" class="table table-striped">	
 			<thead>
@@ -123,11 +135,11 @@
 					<th data-sortable="true">Attack</th>
 					<th data-sortable="true">Type</th>
 					<th data-sortable="true">Category</th>
-					<th data-sortable="true">PowerPoints</th>
-					<th data-sortable="true">BasePower</th>
+					<th data-sortable="true">Power Points</th>
+					<th data-sortable="true">Base Power</th>
 					<th data-sortable="true">Accuracy</th>
-					<th>BattleEffect</th>
-					<th sec:authorize="hasRole('ADMIN')">Action</th>
+					<th>Battle Effect</th>
+					<th sec:authorize="hasRole('ADMIN')">Action</th> <!-- only the admin can edit and delete attacks -->
 				</tr>
 			</thead>
 
@@ -135,7 +147,7 @@
 			<tbody>
 
 
-			<!--  list all items ----------------------------------------------------------- -->
+<!-- ------------ lists all attacks (for every attack it displays the name, type, category, powerPoints, basePower, accuracy and the battleEffect ----------------------------------------------------------- -->
 
 				
 				<tr th:each="attack : ${attacks}">	
@@ -152,7 +164,6 @@
 						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 					</td>
 				</tr>
-			<!--  list all items ----------------------------------------------------------- -->
 			</tbody>
 		</table>
 	</div>
