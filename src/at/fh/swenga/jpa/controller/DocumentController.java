@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class DocumentController {
 
 			User user = userDao.getUser(principal.getName());
 
-			//only creating document if it is a picture format
+			// only creating document if it is a picture format
 			if (file.getContentType().startsWith("image/")) {
 
 				int pictureId = 0;
@@ -57,7 +58,7 @@ public class DocumentController {
 
 				model.addAttribute("user", user);
 
-				//deleting old picture if there was one
+				// deleting old picture if there was one
 				if (pictureId > 4) {
 					documentDao.deleteById(pictureId);
 				}
@@ -82,18 +83,26 @@ public class DocumentController {
 
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
-		
+
 		boolean isAdmin = false;
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
 		}
-		
-		
-		if(isAdmin) {
+
+		if (isAdmin) {
 			model.addAttribute("userRole", "Admin");
-		}else {
-			model.addAttribute("userRole", "User");}
-		
+		} else {
+			model.addAttribute("userRole", "User");
+		}
+
 		return "profile";
+	}
+
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
 	}
 }

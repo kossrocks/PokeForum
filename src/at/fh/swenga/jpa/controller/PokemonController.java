@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +39,7 @@ public class PokemonController {
 	@Autowired
 	UserDao userDao;
 
-	//shows form to add new pokemon to team
+	// shows form to add new pokemon to team
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/addPokemon", method = RequestMethod.GET)
 	public String showAddPokemonForm(Model model) {
@@ -60,7 +61,7 @@ public class PokemonController {
 			@RequestParam("attack1") String attack1, @RequestParam("attack2") String attack2,
 			@RequestParam("attack3") String attack3, @RequestParam("attack4") String attack4,
 			@RequestParam("gender") String gender, @RequestParam("shiny") String shiny) {
-		
+
 		if (attack1.equals(attack2) || attack1.equals(attack3) || attack1.equals(attack4) || attack2.equals(attack3)
 				|| attack2.equals(attack4) || attack3.equals(attack4)) {
 			model.addAttribute("errorMessage", "a Pokemon cannot learn the same attack more than once!");
@@ -70,13 +71,13 @@ public class PokemonController {
 
 			SpeciesModel newSpecies = speciesDao.searchSpeciesByName(species);
 
-			//a pokemon can have one or two types
+			// a pokemon can have one or two types
 			TypeModel type1 = newSpecies.getTypes().get(0);
 			if (newSpecies.getTypes().size() > 1) {
 				TypeModel type2 = newSpecies.getTypes().get(1);
 				newPokemon.addType(type2);
 			}
-			
+
 			// the user who adds the pokemon to their team is the owner of the pokemon
 			User currentUser = userDao.getUser(principal.getName());
 
@@ -89,7 +90,7 @@ public class PokemonController {
 			if (shiny.equals("yes"))
 				newShiny = true;
 
-			//setting the different base stats of the pokemon
+			// setting the different base stats of the pokemon
 			float hp = newSpecies.getBaseHealthPoints();
 			float atk = newSpecies.getBaseAttack();
 			float def = newSpecies.getBaseDefense();
@@ -115,7 +116,8 @@ public class PokemonController {
 			newPokemon.setShiny(newShiny);
 			newPokemon.setOwner(currentUser);
 
-			//stats that are relevant for battle are calculated depending on base stats and level of pokemon
+			// stats that are relevant for battle are calculated depending on base stats and
+			// level of pokemon
 			newPokemon.recalculateStats();
 
 			newPokemon.addAttack(newAttack1);
@@ -135,39 +137,42 @@ public class PokemonController {
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
-		
+
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
-		
+
 		boolean isAdmin = false;
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
 		}
-		
-		if(isAdmin) {
+
+		if (isAdmin) {
 			model.addAttribute("userRole", "Admin");
-		}else {
+		} else {
 			model.addAttribute("userRole", "User");
 		}
 		model.addAttribute("user", user);
-		
+
 		return "profile";
 	}
 
-	//shows page to edit an existing pokmeon. Only owner of pokemon can change it. Admin can change it too
-	@Secured({"ROLE_USER"})
+	// shows page to edit an existing pokmeon. Only owner of pokemon can change it.
+	// Admin can change it too
+	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.GET)
 	public String showEditPokemonForm(Model model, @RequestParam int id, Principal principal) {
 
 		PokemonModel pokemon = pokemonDao.getPokemonById(id);
 		model.addAttribute("pokemon", pokemon);
-		
+
 		User user = userDao.getUser(principal.getName());
-		
+
 		boolean isAdmin = false;
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
-		} 
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
+		}
 
 		if (pokemon.getOwner().getId() == userDao.getUser(principal.getName()).getId() || isAdmin) {
 
@@ -178,32 +183,31 @@ public class PokemonController {
 			model.addAttribute("specieses", specieses);
 
 			return "editTeamMember";
-		}else {
-			
+		} else {
+
 			model.addAttribute("user", user);
 			model.addAttribute("id", user.getId());
 
 			List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 			model.addAttribute("pokemons", pokemons);
 			model.addAttribute("errorMessage", "You cannot edit Pokemon that are not yours!");
-			
+
 			model.addAttribute("teamHeader", "Your Team");
 			model.addAttribute("profileHeader", "Your Profile");
-			
-			
-			if(isAdmin) {
-				model.addAttribute("userRole", "Admin");
-			}else {
-				model.addAttribute("userRole", "User");}
 
-			
+			if (isAdmin) {
+				model.addAttribute("userRole", "Admin");
+			} else {
+				model.addAttribute("userRole", "User");
+			}
+
 			model.addAttribute("user", user);
-			
 
 			return "profile";
 		}
 	}
-	//editing a pokemon of own team with help of RequestParameters
+
+	// editing a pokemon of own team with help of RequestParameters
 	@Secured({ "ROLE_USER" })
 	@RequestMapping(value = "/editPokemon", method = RequestMethod.POST)
 	public String editNewPokemon(Model model, Principal principal, @RequestParam int id,
@@ -228,7 +232,6 @@ public class PokemonController {
 				TypeModel type2 = newSpecies.getTypes().get(1);
 				pokemon.addType(type2);
 			}
-
 
 			AttackModel newAttack1 = attackDao.getAttackByName(attack1);
 			AttackModel newAttack2 = attackDao.getAttackByName(attack2);
@@ -283,23 +286,23 @@ public class PokemonController {
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
-		
+
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
-		
-		boolean isAdmin = false;
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
-		}
-		
-		
-		if(isAdmin) {
-			model.addAttribute("userRole", "Admin");
-		}else {
-			model.addAttribute("userRole", "User");}
 
-			model.addAttribute("user", user);
-		
+		boolean isAdmin = false;
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
+		}
+
+		if (isAdmin) {
+			model.addAttribute("userRole", "Admin");
+		} else {
+			model.addAttribute("userRole", "User");
+		}
+
+		model.addAttribute("user", user);
 
 		return "profile";
 	}
@@ -313,11 +316,12 @@ public class PokemonController {
 		User user = userDao.getUserById(userId);
 
 		PokemonModel pokemon = pokemonDao.getPokemonById(id);
-		
+
 		boolean isAdmin = false;
-		
-		for(UserRole role : user.getUserRoles()) {
-			if(role.getRole().equalsIgnoreCase("role_admin")) isAdmin = true;
+
+		for (UserRole role : user.getUserRoles()) {
+			if (role.getRole().equalsIgnoreCase("role_admin"))
+				isAdmin = true;
 		}
 
 		if (pokemon.getOwner().getId() == userId || isAdmin) {
@@ -332,22 +336,26 @@ public class PokemonController {
 
 		List<PokemonModel> pokemons = pokemonDao.getAllPokemonsOfUser(principal.getName());
 		model.addAttribute("pokemons", pokemons);
-		
-		
 
 		model.addAttribute("user", user);
-		
+
 		model.addAttribute("teamHeader", "Your Team");
 		model.addAttribute("profileHeader", "Your Profile");
-		
-		
-		if(isAdmin) {
+
+		if (isAdmin) {
 			model.addAttribute("userRole", "Admin");
-		}else {
-			model.addAttribute("userRole", "User");}
-		
+		} else {
+			model.addAttribute("userRole", "User");
+		}
 
 		return "profile";
+
+	}
+
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
 
 	}
 

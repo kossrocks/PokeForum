@@ -218,12 +218,12 @@ public class NavigationController {
 	}
 	
 	
-	 @ExceptionHandler(Exception.class) public String handleAllException(Exception 
-	 ex) {
-	 
-	 return "error";
-	 
-	 }
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
 	 
 	 
 	
