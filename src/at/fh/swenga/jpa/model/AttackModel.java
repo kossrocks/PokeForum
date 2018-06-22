@@ -102,7 +102,7 @@ public class AttackModel implements java.io.Serializable {
 	}
 	
 	public void setAccuracy(float accuracy) {
-	        this.accuracy = 1;
+	        this.accuracy = accuracy;
 	}
 	
 	public float getAccuracy() {
