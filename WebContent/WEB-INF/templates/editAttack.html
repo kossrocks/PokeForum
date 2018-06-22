@@ -100,7 +100,7 @@
 					<div class="col-md-10">
 						
 					<input class="form-control" id="inputName" type="text" 
-							name="name" th:value="${attack} ? ${attack.name}" maxlength="15" required>
+							name="name" th:value="${attack} ? ${attack.name}" maxlength="45" required>
 					</div>
 			</div>
 			<!-- --------------  display the type of the attack or add a type for the attack (choose from a dropdown list) ---------------- -->
@@ -151,7 +151,7 @@
 					<div class="col-md-10">
 						
 					<input class="form-control" id="accuracy" type="number" 
-							name="accuracy" th:value="${attack} ? ${attack.accuracy}" min="0" required>
+							name="accuracy" th:value="${attack} ? ${attack.accuracy}" min="0" max="100" required>
 					</div>
 			</div>
 			<!-- --------------  display the battleEffect of the attack or add a battleEffect for the attack  ---------------- -->
@@ -160,7 +160,7 @@
 					<div class="col-md-10">
 						
 					<input class="form-control" id="battleEffect" type="text" 
-							name="battleEffect" th:value="${attack} ? ${attack.battleEffect}" maxlength="40" required>
+							name="battleEffect" th:value="${attack} ? ${attack.battleEffect}" maxlength="100" required>
 					</div>
 			</div>
 			
