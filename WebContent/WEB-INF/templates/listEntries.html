@@ -17,6 +17,11 @@
 	margin-right: 10px;
 }
 
+.newTopicButton2 {
+	margin-top: 10px;
+	float: left;
+}
+
 .backToTopic {
 	margin-top: 10px;
 	float: left;
@@ -234,7 +239,7 @@
     	</div>	
 	</div>
 </div>		
-	<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton">
+	<a sec:authorize="hasRole('USER')" th:href="@{/addEntry(topicId=${topic.id})}" class="btn btn-success newTopicButton2">
 		New Entry
 	</a>
 </div>
