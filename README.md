@@ -22,8 +22,7 @@
 
 1. First step: download the project source from github
 2. Import project into Eclipse
-6. Go to the src folder and open db.properties --> setup your database connection 
-   with the login credentials that were send to your per email like this:
+6. Go to the src folder and open db.properties --> setup your database connection like this:
      * db.url=jdbc:mysql://`<yourServerIP>`/`<yourDatabase>`
      * db.username=`<yourUsername>`
      * db.password=`<yourPassword>`
