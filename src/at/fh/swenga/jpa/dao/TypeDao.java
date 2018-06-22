@@ -15,21 +15,20 @@ import at.fh.swenga.jpa.model.TypeModel;
 @Repository
 @Transactional
 public class TypeDao {
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
+
 	public void persist(TypeModel type) {
 		entityManager.persist(type);
 	}
-	
+
 	public List<TypeModel> getAllTypes() {
-		TypedQuery<TypeModel> typedQuery = entityManager.createQuery("select e from TypeModel e",
-				TypeModel.class);
+		TypedQuery<TypeModel> typedQuery = entityManager.createQuery("select e from TypeModel e", TypeModel.class);
 		List<TypeModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public TypeModel getType(int id) {
 		try {
 			TypedQuery<TypeModel> typedQuery = entityManager.createQuery("select u from TypeModel u where u.id = :id",
@@ -40,6 +39,5 @@ public class TypeDao {
 			return null;
 		}
 	}
-
 
 }

@@ -1,6 +1,5 @@
 package at.fh.swenga.jpa.dao;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,25 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.jpa.model.AttackModel;
 
-
 @Repository
 @Transactional
 public class AttackDao {
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
-	
+
 	public void persist(AttackModel attack) {
 		entityManager.persist(attack);
 	}
-	
+
 	@Secured({ "ROLE_ADMIN" })
 	public void merge(AttackModel attack) {
 		entityManager.merge(attack);
 	}
-	
-	
+
 	public List<AttackModel> getAllAttacks() {
 		TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select e from AttackModel e order by e.name",
 				AttackModel.class);
@@ -50,50 +46,42 @@ public class AttackDao {
 		List<AttackModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public AttackModel getAttackByName(String name) {
-		TypedQuery<AttackModel> typedQuery = entityManager.createQuery(
-				"select e from AttackModel e where e.name = :search",
-				AttackModel.class);
+		TypedQuery<AttackModel> typedQuery = entityManager
+				.createQuery("select e from AttackModel e where e.name = :search", AttackModel.class);
 		typedQuery.setParameter("search", name);
 		AttackModel typedResultList = typedQuery.getSingleResult();
 		return typedResultList;
 	}
-	
-	
+
 	public AttackModel searchAttackByName(String name) {
 		try {
-			TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select u from AttackModel u where u.name = :name",
-					AttackModel.class);
+			TypedQuery<AttackModel> typedQuery = entityManager
+					.createQuery("select u from AttackModel u where u.name = :name", AttackModel.class);
 			typedQuery.setParameter("name", name);
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
-	
-	
-	
-	
-	
+
 	public AttackModel searchAttackById(int id) {
 		try {
-			TypedQuery<AttackModel> typedQuery = entityManager.createQuery("select a from AttackModel a where a.id = :name",
-					AttackModel.class);
+			TypedQuery<AttackModel> typedQuery = entityManager
+					.createQuery("select a from AttackModel a where a.id = :name", AttackModel.class);
 			typedQuery.setParameter("name", id);
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
-	
+
 	@Secured({ "ROLE_ADMIN" })
 	public int deleteById(int id) {
-		int count = entityManager.createQuery("DELETE FROM AttackModel a WHERE a.id = :id").setParameter("id", id).executeUpdate();
+		int count = entityManager.createQuery("DELETE FROM AttackModel a WHERE a.id = :id").setParameter("id", id)
+				.executeUpdate();
 		return count;
 	}
-	
-	
-	
 
 }

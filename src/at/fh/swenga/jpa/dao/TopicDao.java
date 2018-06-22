@@ -15,24 +15,23 @@ import at.fh.swenga.jpa.model.TopicModel;
 @Repository
 @Transactional
 public class TopicDao {
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
+
 	public List<TopicModel> getAllTopics() {
 		TypedQuery<TopicModel> typedQuery = entityManager.createQuery("select e from TopicModel e order by e.id",
 				TopicModel.class);
 		List<TopicModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public List<TopicModel> getAllTopicsSortById() {
-		TypedQuery<TopicModel> typedQuery = entityManager.createQuery(" select e from TopicModel e ",
-				TopicModel.class);
+		TypedQuery<TopicModel> typedQuery = entityManager.createQuery(" select e from TopicModel e ", TopicModel.class);
 		List<TopicModel> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public TopicModel getTopic(int topicID) {
 		TypedQuery<TopicModel> typedQuery = entityManager.createQuery("select u from TopicModel u where u.id = :id",
 				TopicModel.class);
@@ -40,21 +39,22 @@ public class TopicDao {
 		TopicModel typedResultList = typedQuery.getResultList().get(0);
 		return typedResultList;
 	}
-	
+
 	public TopicModel getTopicByName(String name) {
-		TypedQuery<TopicModel> typedQuery = entityManager.createQuery("select u from TopicModel u where u.title = :name",
-				TopicModel.class);
+		TypedQuery<TopicModel> typedQuery = entityManager
+				.createQuery("select u from TopicModel u where u.title = :name", TopicModel.class);
 		typedQuery.setParameter("name", name);
-		if(typedQuery.getResultList().isEmpty()) {
+		if (typedQuery.getResultList().isEmpty()) {
 			return null;
 		}
 		TopicModel typedResultList = typedQuery.getResultList().get(0);
 		return typedResultList;
 	}
-	
+
 	public void persist(TopicModel topic) {
 		entityManager.persist(topic);
 	}
+
 	@Secured({ "ROLE_USER" })
 	public void merge(TopicModel topic) {
 		entityManager.merge(topic);
@@ -71,7 +71,8 @@ public class TopicDao {
 
 	@Secured({ "ROLE_USER" })
 	public int deleteById(int id) {
-		int count = entityManager.createQuery("DELETE FROM TopicModel WHERE id = :id").setParameter("id", id).executeUpdate();
+		int count = entityManager.createQuery("DELETE FROM TopicModel WHERE id = :id").setParameter("id", id)
+				.executeUpdate();
 		return count;
 	}
 

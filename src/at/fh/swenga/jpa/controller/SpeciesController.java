@@ -34,8 +34,8 @@ public class SpeciesController {
 
 		List<SpeciesModel> specieses = speciesDao.getAllSpecies();
 		List<SpeciesModel> filteredSpecieses = new ArrayList<SpeciesModel>();
-		
-		//symbols are not allowed in searchStrings
+
+		// symbols are not allowed in searchStrings
 		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(searchString);
 		if (m.find()) {
@@ -195,10 +195,11 @@ public class SpeciesController {
 
 		return "pokemon";
 	}
-	@ExceptionHandler(Exception.class) public String handleAllException(Exception 
-			 ex) {
-			 
-			 return "error";
-			 
-			 }
+
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+
+		return "error";
+
+	}
 }

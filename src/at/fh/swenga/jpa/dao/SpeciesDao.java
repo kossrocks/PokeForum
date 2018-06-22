@@ -52,19 +52,19 @@ public class SpeciesDao {
 
 	public SpeciesModel searchSpeciesByName(String name) {
 		try {
-			TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery("select u from SpeciesModel u where u.name = :name",
-					SpeciesModel.class);
+			TypedQuery<SpeciesModel> typedQuery = entityManager
+					.createQuery("select u from SpeciesModel u where u.name = :name", SpeciesModel.class);
 			typedQuery.setParameter("name", name);
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
-	
+
 	public SpeciesModel searchSpeciesById(int id) {
 		try {
-			TypedQuery<SpeciesModel> typedQuery = entityManager.createQuery("select u from SpeciesModel u where u.id = :name",
-					SpeciesModel.class);
+			TypedQuery<SpeciesModel> typedQuery = entityManager
+					.createQuery("select u from SpeciesModel u where u.id = :name", SpeciesModel.class);
 			typedQuery.setParameter("name", id);
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
@@ -74,7 +74,8 @@ public class SpeciesDao {
 
 	@Secured({ "ROLE_ADMIN" })
 	public int deleteById(int id) {
-		int count = entityManager.createQuery("DELETE FROM SpeciesModel s WHERE s.id = :id").setParameter("id", id).executeUpdate();
+		int count = entityManager.createQuery("DELETE FROM SpeciesModel s WHERE s.id = :id").setParameter("id", id)
+				.executeUpdate();
 		return count;
 	}
 }
