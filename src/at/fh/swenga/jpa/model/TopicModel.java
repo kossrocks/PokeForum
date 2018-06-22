@@ -22,29 +22,29 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "topics")
-public class TopicModel implements java.io.Serializable{
-	
+public class TopicModel implements java.io.Serializable {
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "title", length = 100)
 	private String title;
-	
-	@ManyToOne (cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User owner;
-	
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date lastEdited;
-	
-	@OneToMany(mappedBy = "topic",fetch=FetchType.EAGER,cascade = CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "topic", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Set<EntryModel> entries;
-	
+
 	@Version
 	long version;
-	
+
 	public TopicModel() {
 		// TODO Auto-generated constructor stub
 	}
@@ -54,8 +54,7 @@ public class TopicModel implements java.io.Serializable{
 		this.title = title;
 		this.owner = owner;
 		this.lastEdited = new Date();
-		
-		
+
 	}
 
 	public String getTitle() {
@@ -93,20 +92,16 @@ public class TopicModel implements java.io.Serializable{
 	public int getId() {
 		return id;
 	}
-	
+
 	public boolean isEmpty() {
 		return title.isEmpty();
 	}
-	
+
 	public void addEntry(EntryModel entry) {
-		if (entries== null) {
-			entries= new HashSet<EntryModel>();
+		if (entries == null) {
+			entries = new HashSet<EntryModel>();
 		}
 		entries.add(entry);
 	}
 
-	
-	
-	
-	
 }

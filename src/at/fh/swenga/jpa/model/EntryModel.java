@@ -24,32 +24,29 @@ public class EntryModel implements java.io.Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@ManyToOne (cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User owner;
-	
+
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	public Date dateOfCreation;
-	
+
 	@Column(name = "content", length = 1000)
 	private String content;
-	
+
 	@Column(name = "edited")
 	private boolean edited;
-	
-	@ManyToOne (cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private TopicModel topic;
-	
+
 	@Version
 	long version;
-	
-	
+
 	public EntryModel() {
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 	public EntryModel(User owner, String content, TopicModel topic, boolean edited) {
 		super();
@@ -60,73 +57,48 @@ public class EntryModel implements java.io.Serializable {
 		this.edited = edited;
 	}
 
-
-
 	public User getOwner() {
 		return owner;
 	}
-
-
 
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 
-
-
 	public Date getDayOfCreation() {
 		return dateOfCreation;
 	}
-
-
 
 	public void setDayOfCreation(Date dayOfCreation) {
 		this.dateOfCreation = dayOfCreation;
 	}
 
-
-
 	public String getContent() {
 		return content;
 	}
-
-
 
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-
-
 	public boolean isEdited() {
 		return edited;
 	}
-
-
 
 	public void setEdited(boolean edited) {
 		this.edited = edited;
 	}
 
-
-
 	public TopicModel getTopic() {
 		return topic;
 	}
-
-
 
 	public void setTopic(TopicModel topic) {
 		this.topic = topic;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
-	
-	
-	
-	
+
 }

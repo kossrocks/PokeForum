@@ -16,41 +16,41 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "attacks")
 public class AttackModel implements java.io.Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
-	
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private TypeModel type;
-	
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private CategoryModel category;
-	
+
 	@Column(name = "PP")
 	private float powerPoints;
-	
+
 	@Column(name = "BP")
 	private float basePower;
-	
-	@Column(nullable=true, name="acc")
+
+	@Column(nullable = true, name = "acc")
 	private float accuracy;
-	
+
 	@Column(name = "effect", length = 100)
 	private String battleEffect;
-	
-	@ManyToMany(mappedBy = "attacks",fetch=FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "attacks", fetch = FetchType.LAZY)
 	private List<PokemonModel> pokemons;
-	
+
 	public AttackModel() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttackModel(String name, TypeModel type, CategoryModel category, int basePower, int accuracy, int powerPoints,
-			String battleEffect) {
+	public AttackModel(String name, TypeModel type, CategoryModel category, int basePower, int accuracy,
+			int powerPoints, String battleEffect) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -100,15 +100,15 @@ public class AttackModel implements java.io.Serializable {
 	public void setBasePower(float basePower) {
 		this.basePower = basePower;
 	}
-	
+
 	public void setAccuracy(float accuracy) {
-	        this.accuracy = accuracy;
+		this.accuracy = accuracy;
 	}
-	
+
 	public float getAccuracy() {
 		return accuracy;
 	}
-	
+
 	public String getBattleEffect() {
 		return battleEffect;
 	}
@@ -128,6 +128,5 @@ public class AttackModel implements java.io.Serializable {
 	public void setPokemons(List<PokemonModel> pokemons) {
 		this.pokemons = pokemons;
 	}
-	
-	
+
 }

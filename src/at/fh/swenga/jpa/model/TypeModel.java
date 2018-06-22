@@ -16,40 +16,37 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name = "types")
-public class TypeModel implements java.io.Serializable{
+public class TypeModel implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
-	
-	
+
 	private String goodAgainst;
 
-	
 	private String weakAgainst;
-	
-	
+
 	private String noDamageAgainst;
-	
-	@OneToMany(mappedBy = "type",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<AttackModel> attacks;
-	
-	@ManyToMany(mappedBy = "typesSpecies",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "typesSpecies", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SpeciesModel> specieses;
-	
-	@ManyToMany(mappedBy = "types",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "types", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PokemonModel> pokemons;
-	
+
 	@Version
 	long version;
-	
+
 	public TypeModel() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public TypeModel(String name) {
 		super();
 		this.name = name;
@@ -99,7 +96,6 @@ public class TypeModel implements java.io.Serializable{
 		return specieses;
 	}
 
-
 	public List<PokemonModel> getPokemons() {
 		return pokemons;
 	}
@@ -115,27 +111,26 @@ public class TypeModel implements java.io.Serializable{
 	public void setPokemons(List<PokemonModel> pokemons) {
 		this.pokemons = pokemons;
 	}
-	
+
 	public void addGoodAgainst(String type) {
-		if (goodAgainst== null) {
-			goodAgainst= new String();
+		if (goodAgainst == null) {
+			goodAgainst = new String();
 		}
 		goodAgainst += "," + type;
 	}
-	
+
 	public void addWeakAgainst(String type) {
-		if (weakAgainst== null) {
-			weakAgainst= new String();
+		if (weakAgainst == null) {
+			weakAgainst = new String();
 		}
 		weakAgainst += "," + type;
 	}
-	
+
 	public void addNoDamageAgainst(String type) {
-		if (noDamageAgainst== null) {
-			noDamageAgainst= new String();
+		if (noDamageAgainst == null) {
+			noDamageAgainst = new String();
 		}
 		noDamageAgainst += "," + type;
 	}
-	
-	
+
 }

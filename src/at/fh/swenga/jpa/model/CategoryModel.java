@@ -15,17 +15,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "category")
 public class CategoryModel implements java.io.Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
-	
-	@OneToMany(mappedBy = "category",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<AttackModel> attacks;
-	
+
 	public CategoryModel() {
 		// TODO Auto-generated constructor stub
 	}
@@ -58,7 +58,5 @@ public class CategoryModel implements java.io.Serializable {
 	public void setAttacks(List<AttackModel> attacks) {
 		this.attacks = attacks;
 	}
-	
-	
 
 }

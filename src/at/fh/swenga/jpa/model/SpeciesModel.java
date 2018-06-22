@@ -15,7 +15,7 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name = "specieses")
-public class SpeciesModel implements java.io.Serializable{
+public class SpeciesModel implements java.io.Serializable {
 
 	@Id
 	@Column(name = "id")
@@ -24,35 +24,35 @@ public class SpeciesModel implements java.io.Serializable{
 
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
+
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<TypeModel> typesSpecies;
-	
+
 	@Column(name = "baseHP")
 	private float baseHealthPoints;
-	
+
 	@Column(name = "baseATK")
 	private float baseAttack;
-	
+
 	@Column(name = "baseDEF")
 	private float baseDefense;
-	
+
 	@Column(name = "baseSPATK")
 	private float baseSpecialAttack;
-	
+
 	@Column(name = "baseSPDEF")
 	private float baseSpecialDefense;
-	
+
 	@Column(name = "baseSPE")
-	private float baseSpeed;	
+	private float baseSpeed;
 
 	@Version
 	long version;
-	
+
 	public SpeciesModel() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public SpeciesModel(String name, int baseHealthPoints, int baseAttack, int baseDefense, int baseSpecialAttack,
 			int baseSpecialDefense, int baseSpeed) {
 		super();
@@ -64,7 +64,6 @@ public class SpeciesModel implements java.io.Serializable{
 		this.baseSpecialDefense = baseSpecialDefense;
 		this.baseSpeed = baseSpeed;
 	}
-	
 
 	public String getName() {
 		return name;
@@ -77,13 +76,10 @@ public class SpeciesModel implements java.io.Serializable{
 	public List<TypeModel> getTypes() {
 		return typesSpecies;
 	}
-	
-
 
 	public void setTypes(List<TypeModel> types) {
 		this.typesSpecies = types;
 	}
-	
 
 	public float getBaseHealthPoints() {
 		return baseHealthPoints;
@@ -136,10 +132,10 @@ public class SpeciesModel implements java.io.Serializable{
 	public int getId() {
 		return id;
 	}
-	
+
 	public void addType(TypeModel type) {
-		if (typesSpecies== null) {
-			typesSpecies= new ArrayList<TypeModel>();
+		if (typesSpecies == null) {
+			typesSpecies = new ArrayList<TypeModel>();
 		}
 		typesSpecies.add(type);
 	}
