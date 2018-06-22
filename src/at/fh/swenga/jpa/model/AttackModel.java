@@ -39,7 +39,7 @@ public class AttackModel implements java.io.Serializable {
 	@Column(nullable=true, name="acc")
 	private float accuracy;
 	
-	@Column(name = "effect")
+	@Column(name = "effect", length = 100)
 	private String battleEffect;
 	
 	@ManyToMany(mappedBy = "attacks",fetch=FetchType.LAZY)
