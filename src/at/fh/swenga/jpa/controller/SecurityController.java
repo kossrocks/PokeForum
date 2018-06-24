@@ -309,6 +309,18 @@ public class SecurityController {
 		fairy.addWeakAgainst("steel");
 		fairy.addWeakAgainst("fire");
 		fairy.addNoDamageAgainst("");
+		
+		grass.addGoodAgainst("ground");
+		grass.addGoodAgainst("rock");
+		grass.addGoodAgainst("water");
+		grass.addWeakAgainst("steel");
+		grass.addWeakAgainst("fire");
+		grass.addWeakAgainst("poison");
+		grass.addWeakAgainst("dragon");
+		grass.addWeakAgainst("flying");
+		grass.addWeakAgainst("bug");
+		grass.addWeakAgainst("grass");
+		grass.addNoDamageAgainst("");
 
 		typeDao.persist(normal);
 		typeDao.persist(water);
