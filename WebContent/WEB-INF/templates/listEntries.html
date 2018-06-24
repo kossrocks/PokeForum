@@ -203,11 +203,11 @@
 					<p th:text="${entry.owner.userName}"></p>
 					<p><a th:href="@{/userProfile(id=${entry.owner.id})}">My Profile</a></p>
 						<img th:if="${entry.owner.picture} == null" src="images/images.jpeg" class="img-circle center" height="65" width="65" alt="Avatar">
-						<img th:if="${entry.owner.picture != null && user.picture.id == 1}" src="images/images.jpeg" class="img-circle center" height="65" width="65" alt="Avatar">
-						<img th:if="${entry.owner.picture != null && user.picture.id == 2}" src="images/bisasam_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
-						<img th:if="${entry.owner.picture != null && user.picture.id == 3}" src="images/glumanda_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
-						<img th:if="${entry.owner.picture != null && user.picture.id == 4}" src="images/schiggy_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
-						<img th:if="${entry.owner.picture != null && user.picture.id > 4}" th:src="${user.pictureConversion()}" class="img-circle center" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture != null && entry.owner.picture.id == 1}" src="images/images.jpeg" class="img-circle center" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture != null && entry.owner.picture.id == 2}" src="images/bisasam_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture != null && entry.owner.picture.id == 3}" src="images/glumanda_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture != null && entry.owner.picture.id == 4}" src="images/schiggy_profile.png" class="img-circle center" height="65" width="65" alt="Avatar">
+						<img th:if="${entry.owner.picture != null && entry.owner.picture.id > 4}" th:src="${entry.owner.pictureConversion()}" class="img-circle center" height="65" width="65" alt="Avatar">
 					<p></p>	
 					<p th:text="${#dates.format(entry.dateOfCreation,'dd.MM.yyyy')}"></p>
 				</div>

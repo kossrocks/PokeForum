@@ -115,7 +115,7 @@ public class UserController {
 			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
 			@RequestParam("profilePicture") int pictureId, Principal principal) {
 		User user = userDao.getUser(username);
-		if (password != null) {
+		if (password != "") {
 			// password can only be changed if they are not empty and equals to the
 			// confirmation password
 			if (password.equals(password1)) {
